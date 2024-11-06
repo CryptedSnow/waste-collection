@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model,SoftDeletes};
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class Motorista extends Model
 {
@@ -12,22 +14,32 @@ class Motorista extends Model
     protected $table = 'motoristas';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'uuid',
+        'empresa_id',
         'nome',
         'cpf',
-        'empresa_id',
         'cnh',
         'categoria',
         'email',
         'telefone',
     ];
 
-    public function empresa()
+    protected static function boot()
     {
-        return $this->belongsTo(Empresa::class, 'empresa_id');
+        parent::boot();
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
     }
 
-    public function coleta()
+    public function getRouteKeyName()
     {
-        return $this->hasMany(Coleta::class, 'coleta_id');
+        return 'uuid';
     }
+
+    public function empresa(): BelongsTo
+    {
+        return $this->belongsTo(Empresa::class);
+    }
+
 }

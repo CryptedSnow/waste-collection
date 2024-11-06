@@ -12,18 +12,21 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\{TextInput,Hidden};
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Facades\Auth;
 
 class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-key';
 
     protected static ?string $navigationLabel = 'Permissões';
 
-    protected static ?int $navigationSort = 10;
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $navigationGroup = 'Configurações';
 
@@ -31,6 +34,7 @@ class PermissionResource extends Resource
     {
         return $form
             ->schema([
+                Hidden::make('uuid'),
                 TextInput::make('name')
                     ->required()
                     ->label('Permissão'),
@@ -41,11 +45,13 @@ class PermissionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->label('Permissão')->searchable()->sortable(),
-                TextColumn::make('created_at')->label('Criado em')->sortable()->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d/m/Y H:i:s')),
+                TextColumn::make('name')
+                    ->label('Permissão')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make()->label('Exibir usuários excluídos'),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -74,7 +80,7 @@ class PermissionResource extends Resource
         return [
             'index' => Pages\ListPermissions::route('/'),
             'create' => Pages\CreatePermission::route('/create'),
-            'edit' => Pages\EditPermission::route('/{record}/edit'),
+            'edit' => Pages\EditPermission::route('/{record:uuid}/edit'),
         ];
     }
 
@@ -84,5 +90,35 @@ class PermissionResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canEdit($record): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canDelete($record): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canRestore($record): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canRestoreBulk(): bool
+    {
+        return Auth::user()->hasRole('Admin');
     }
 }

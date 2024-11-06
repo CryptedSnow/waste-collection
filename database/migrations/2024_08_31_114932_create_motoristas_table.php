@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('motoristas', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
+            $table->foreignId("empresa_id")->constrained("empresas");
             $table->string("nome");
             $table->string("cpf", 14);
-            $table->foreignId("empresa_id")->constrained("empresas");
             $table->string("cnh", 11);
             $table->string("categoria");
             $table->string("email");

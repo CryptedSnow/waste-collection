@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model,SoftDeletes};
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Str;
 
 class LocalColeta extends Model
 {
@@ -12,6 +15,8 @@ class LocalColeta extends Model
     protected $table = 'locais_coleta';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'uuid',
+        'empresa_id',
         'cliente_id',
         'uf',
         'cidade',
@@ -20,14 +25,27 @@ class LocalColeta extends Model
         'numero',
     ];
 
-    public function cliente()
+    protected static function boot()
     {
-        return $this->belongsTo(Cliente::class, 'cliente_id');
+        parent::boot();
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
     }
 
-    public function coleta()
+    public function getRouteKeyName()
     {
-        return $this->hasMany(Coleta::class, 'coleta_id');
+        return 'uuid';
+    }
+
+    public function empresa(): BelongsTo
+    {
+        return $this->belongsTo(Empresa::class);
+    }
+
+    public function clientes(): BelongsTo
+    {
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
 }

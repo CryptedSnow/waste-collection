@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tipos_residuos', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
+            $table->foreignId("empresa_id")->constrained("empresas");
             $table->string("descricao");
             $table->timestamps();
             $table->softDeletes();

@@ -5,16 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EmpresaResource\Pages;
 use App\Filament\Resources\EmpresaResource\RelationManagers;
 use App\Models\{Empresa,UF};
-use App\Rules\{UniqueValueTable};
+use App\Rules\UniqueValueTable;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Forms\Components\{Select,TextInput};
+use Filament\Forms\Components\{Select,TextInput,Hidden};
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class EmpresaResource extends Resource
 {
@@ -22,19 +23,22 @@ class EmpresaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?string $recordTitleAttribute = 'nome';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Hidden::make('uuid'),
                 TextInput::make('nome')
                     ->required(),
                 TextInput::make('cnpj')
                     ->label('CNPJ')
                     ->required()
                     ->mask('99.999.999/9999-99')
-                    ->rules(['cnpj'])
+                    ->rules(['cnpj', new UniqueValueTable('cnpj', ['depositos_residuos'])])
                     ->unique(ignoreRecord: true),
                 Select::make('uf')
                     ->label('Estado')
@@ -81,7 +85,7 @@ class EmpresaResource extends Resource
                 TextColumn::make('telefone')->label('Telefone')->sortable(),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make()->label('Exibir empresas excluídas'),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -110,7 +114,7 @@ class EmpresaResource extends Resource
         return [
             'index' => Pages\ListEmpresas::route('/'),
             'create' => Pages\CreateEmpresa::route('/create'),
-            'edit' => Pages\EditEmpresa::route('/{record}/edit'),
+            'edit' => Pages\EditEmpresa::route('/{record:uuid}/edit'),
         ];
     }
 
@@ -120,5 +124,35 @@ class EmpresaResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canEdit($record): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canDelete($record): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canRestore($record): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canRestoreBulk(): bool
+    {
+        return Auth::user()->hasRole('Admin');
     }
 }

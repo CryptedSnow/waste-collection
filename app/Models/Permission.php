@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model,SoftDeletes};
+use Illuminate\Support\Str;
 
 class Permission extends Model
 {
@@ -13,6 +14,7 @@ class Permission extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'uuid',
         'name',
         'guard_name',
     ];
@@ -24,5 +26,18 @@ class Permission extends Model
                 $permission->guard_name = 'web';
             }
         });
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
     }
 }

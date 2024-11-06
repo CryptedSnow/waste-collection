@@ -12,10 +12,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select,TextInput};
+use Filament\Forms\Components\{Select,TextInput,Hidden};
 use Filament\Tables\Columns\TextColumn;
 use App\Rules\UniqueValueTable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource
 {
@@ -25,7 +26,11 @@ class UserResource extends Resource
 
     protected static ?string $navigationLabel = 'Usuários';
 
-    protected static ?int $navigationSort = 8;
+    protected static ?string $navigationBadgeTooltip = 'Número de usuários';
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationGroup = 'Configurações';
 
@@ -33,6 +38,7 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                Hidden::make('uuid'),
                 TextInput::make('name')
                     ->required()
                     ->label('Nome'),
@@ -51,8 +57,16 @@ class UserResource extends Resource
                     ->required(fn (string $context): bool => $context === 'create')
                     ->hidden(fn (string $context): bool => $context !== 'create'),
                 Select::make('roles')
+                    ->required()
+                    ->label('Papéis')
                     ->multiple()
                     ->relationship('roles', 'name')
+                    ->preload(),
+                Select::make('empresas')
+                    ->required()
+                    ->label('Empresas')
+                    ->multiple()
+                    ->relationship('empresas', 'nome', fn ($query) => $query->orderBy('id'))
                     ->preload(),
             ]);
     }
@@ -61,12 +75,43 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->label('Nome')->searchable()->sortable(),
-                TextColumn::make('email')->label('Email')->searchable()->sortable(),
-                TextColumn::make('created_at')->label('Criado em')->sortable()->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d/m/Y H:i:s')),
+                TextColumn::make('name')
+                    ->label('Nome')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('email')
+                    ->label('Email')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('roles')
+                    ->label('Papéis')
+                    ->formatStateUsing(function ($record) {
+                        if ($record->roles->isNotEmpty()) {
+                            return $record->roles->pluck('name')->join(', ');
+                        }
+                    })
+                    ->searchable(query: function (Builder $query, string $search) {
+                        $query->whereHas('roles', function ($query) use ($search) {
+                            $query->where('name', 'like', "%{$search}%");
+                        });
+                    })
+                    ->placeholder('Sem papéis'),
+                TextColumn::make('empresas')
+                    ->label('Empresas')
+                    ->formatStateUsing(function ($record) {
+                        if ($record->empresas->isNotEmpty()) {
+                            return $record->empresas->pluck('nome')->join(', ');
+                        }
+                    })
+                    ->searchable(query: function (Builder $query, string $search) {
+                        $query->whereHas('empresas', function ($query) use ($search) {
+                            $query->where('nome', 'like', "%{$search}%");
+                        });
+                    })
+                    ->placeholder('Sem empresas'),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make()->label('Exibir usuários excluídos'),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -95,7 +140,7 @@ class UserResource extends Resource
         return [
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'edit' => Pages\EditUser::route('/{record:uuid}/edit'),
         ];
     }
 
@@ -106,4 +151,10 @@ class UserResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::withoutTrashed()->count();
+    }
+
 }

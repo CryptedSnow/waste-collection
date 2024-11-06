@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model,SoftDeletes};
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
-class Empresa extends Model
+class Empresa extends Model implements HasName
 {
     use HasFactory, SoftDeletes;
 
     protected $table = 'empresas';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'uuid',
         'nome',
         'cnpj',
         'uf',
@@ -23,29 +27,57 @@ class Empresa extends Model
         'telefone',
     ];
 
-    public function veiculo()
+    protected static function boot()
     {
-        return $this->hasMany(Veiculo::class, 'veiculo_id');
+        parent::boot();
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
     }
 
-    public function motorista()
+    public function getRouteKeyName()
     {
-        return $this->hasMany(Motorista::class, 'motorista_id');
+        return 'uuid';
     }
 
-    public function coleta()
+    public function getFilamentName(): string
     {
-        return $this->hasMany(Coleta::class, 'coleta_id');
+        return "{$this->nome}";
     }
 
-    public function user_empresa()
+    public function clienteTenant(): HasMany
     {
-        return $this->hasMany(UserEmpresa::class, 'user_empresa_id');
+        return $this->hasMany(Cliente::class);
     }
 
-    public function cliente_empresa()
+    public function veiculoTenant(): HasMany
     {
-        return $this->hasMany(ClienteEmpresa::class, 'cliente_empresa_id');
+        return $this->hasMany(Veiculo::class);
+    }
+
+    public function motoristaTenant(): HasMany
+    {
+        return $this->hasMany(Veiculo::class);
+    }
+
+    public function tipoResiduoTenant(): HasMany
+    {
+        return $this->hasMany(TipoResiduo::class);
+    }
+
+    public function depositoResiduoTenant(): HasMany
+    {
+        return $this->hasMany(DepositoResiduo::class);
+    }
+
+    public function localColetaTenant(): HasMany
+    {
+        return $this->hasMany(LocalColeta::class);
+    }
+
+    public function coletaTenant(): HasMany
+    {
+        return $this->hasMany(Coleta::class);
     }
 
 }

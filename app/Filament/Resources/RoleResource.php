@@ -12,18 +12,21 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{TextInput,Select};
+use Filament\Forms\Components\{TextInput,Select,Hidden};
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Facades\Auth;
 
 class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-identification';
 
     protected static ?string $navigationLabel = 'Papéis';
 
-    protected static ?int $navigationSort = 9;
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationGroup = 'Configurações';
 
@@ -31,12 +34,14 @@ class RoleResource extends Resource
     {
         return $form
             ->schema([
+                Hidden::make('uuid'),
                 TextInput::make('name')
                     ->required()
                     ->label('Papel'),
                 Select::make('permissions')
+                    ->label('Permissões')
                     ->multiple()
-                    ->relationship('permissions', 'name')
+                    ->relationship('permissions', 'name', fn ($query) => $query->orderBy('id'))
                     ->preload(),
             ]);
     }
@@ -46,10 +51,19 @@ class RoleResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Papel')->searchable()->sortable(),
-                TextColumn::make('created_at')->label('Criado em')->sortable()->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d/m/Y H:i:s')),
+                TextColumn::make('permissions')
+                        ->label('Permissões')
+                        ->formatStateUsing(function ($record) {
+                            if ($record->permissions->isNotEmpty()) {
+                                return $record->permissions->pluck('name')->join(', ');
+                            }
+                            return 'Sem permissões';
+                        })
+                        ->searchable()
+                        ->placeholder('Sem permissões'),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make()->label('Exibir tipos os papéis excluídos'),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -78,7 +92,7 @@ class RoleResource extends Resource
         return [
             'index' => Pages\ListRoles::route('/'),
             'create' => Pages\CreateRole::route('/create'),
-            'edit' => Pages\EditRole::route('/{record}/edit'),
+            'edit' => Pages\EditRole::route('/{record:uuid}/edit'),
         ];
     }
 
@@ -88,5 +102,35 @@ class RoleResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canEdit($record): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canDelete($record): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canRestore($record): bool
+    {
+        return Auth::user()->hasRole('Admin');
+    }
+
+    public static function canRestoreBulk(): bool
+    {
+        return Auth::user()->hasRole('Admin');
     }
 }

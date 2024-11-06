@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('locais_coleta', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
+            $table->foreignId("empresa_id")->constrained("empresas");
             $table->foreignId("cliente_id")->constrained("clientes");
             $table->string("uf", 2);
             $table->string("cidade");
