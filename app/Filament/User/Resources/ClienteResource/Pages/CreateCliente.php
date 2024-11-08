@@ -5,6 +5,7 @@ namespace App\Filament\User\Resources\ClienteResource\Pages;
 use App\Filament\User\Resources\ClienteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Notifications\Notification;
 
 class CreateCliente extends CreateRecord
 {
@@ -13,5 +14,15 @@ class CreateCliente extends CreateRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+
+    public function getCreatedNotification(): ?Notification
+    {
+        $cliente = $this->record;
+
+        return Notification::make()
+            ->success()
+            ->title('Cliente criado(a)')
+            ->body("Cliente {$cliente->nome} foi criado(a).");
     }
 }

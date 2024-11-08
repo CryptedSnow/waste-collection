@@ -20,6 +20,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Blade;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Notifications\Notification;
 
 class ColetaResource extends Resource
 {
@@ -233,8 +234,21 @@ class ColetaResource extends Resource
                         }, "Comprovante de coleta para $cliente_nome" . '.pdf');
                     }),
                 Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\RestoreAction::make()->visible(fn ($record) => $record->trashed()),
+                Tables\Actions\DeleteAction::make()
+                    ->successNotification(function ($record) {
+                        return Notification::make()
+                            ->warning()
+                            ->title("{$record->codigo_coleta} excluída")
+                            ->body("Coleta {$record->codigo_coleta} está na lixeira.");
+                    }),
+                Tables\Actions\RestoreAction::make()
+                    ->successNotification(function ($record) {
+                        return Notification::make()
+                            ->success()
+                            ->title("{$record->codigo_coleta} restaurada")
+                            ->body("Coleta {$record->codigo_coleta} está restaurada.");
+                    })
+                ->visible(fn ($record) => $record->trashed()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

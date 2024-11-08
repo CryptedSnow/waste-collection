@@ -16,7 +16,7 @@ use Filament\Forms\Components\{Select,TextInput,Hidden};
 use Filament\Tables\Columns\TextColumn;
 use App\Rules\UniqueValueTable;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
 
 class UserResource extends Resource
 {
@@ -116,8 +116,21 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\RestoreAction::make()->visible(fn ($record) => $record->trashed()),
+                Tables\Actions\DeleteAction::make()
+                    ->successNotification(function ($record) {
+                        return Notification::make()
+                            ->warning()
+                            ->title("{$record->name} excluído(a)")
+                            ->body("Usuário {$record->name} está na lixeira.");
+                    }),
+                Tables\Actions\RestoreAction::make()
+                    ->successNotification(function ($record) {
+                        return Notification::make()
+                            ->success()
+                            ->title("{$record->name} restaurado(a)")
+                            ->body("Usuário {$record->name} está restaurado(a).");
+                    })
+                ->visible(fn ($record) => $record->trashed()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

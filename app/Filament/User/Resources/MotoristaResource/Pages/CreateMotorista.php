@@ -5,6 +5,7 @@ namespace App\Filament\User\Resources\MotoristaResource\Pages;
 use App\Filament\User\Resources\MotoristaResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Notifications\Notification;
 
 class CreateMotorista extends CreateRecord
 {
@@ -13,5 +14,15 @@ class CreateMotorista extends CreateRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+
+    public function getCreatedNotification(): ?Notification
+    {
+        $motorista = $this->record;
+
+        return Notification::make()
+            ->success()
+            ->title('Motorista criado(a)')
+            ->body("Motorista {$motorista->nome} foi criado(a).");
     }
 }

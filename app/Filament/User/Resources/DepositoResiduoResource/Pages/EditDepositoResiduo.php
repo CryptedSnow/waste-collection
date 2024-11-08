@@ -5,6 +5,7 @@ namespace App\Filament\User\Resources\DepositoResiduoResource\Pages;
 use App\Filament\User\Resources\DepositoResiduoResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Notifications\Notification;
 
 class EditDepositoResiduo extends EditRecord
 {
@@ -22,5 +23,15 @@ class EditDepositoResiduo extends EditRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+
+    public function getSavedNotification(): ?Notification
+    {
+        $deposito_residuo = $this->record;
+
+        return Notification::make()
+            ->info()
+            ->title('Depósito de resíduos alterado')
+            ->body("Depósito {$deposito_residuo->nome} foi alterado.");
     }
 }

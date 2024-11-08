@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
 
 class EditUser extends EditRecord
 {
@@ -25,10 +26,14 @@ class EditUser extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    protected function afterSave(): void
+    public function getSavedNotification(): ?Notification
     {
-        if (Auth::check() && $this->record->id === Auth::user()->id) {
-            Auth::login($this->record);
-        }
+        $user = $this->record;
+
+        return Notification::make()
+            ->info()
+            ->title('Usuário(a) alterado(a)')
+            ->body("Usuário(a) {$user->name} foi alterado(a).");
     }
+
 }

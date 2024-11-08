@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\{Select,TextInput,Hidden};
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
 
 class LocalColetaResource extends Resource
 {
@@ -83,8 +84,21 @@ class LocalColetaResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\RestoreAction::make()->visible(fn ($record) => $record->trashed()),
+                Tables\Actions\DeleteAction::make()
+                    ->successNotification(function ($record) {
+                        return Notification::make()
+                            ->warning()
+                            ->title("{$record->logradouro}, {$record->numero} excluído")
+                            ->body("Logradouro {$record->logradouro}, {$record->numero} está na lixeira.");
+                    }),
+                Tables\Actions\RestoreAction::make()
+                    ->successNotification(function ($record) {
+                        return Notification::make()
+                            ->success()
+                            ->title("{$record->logradouro}, {$record->numero} restaurado")
+                            ->body("Logradouro {$record->logradouro}, {$record->numero} está restaurado.");
+                    })
+                ->visible(fn ($record) => $record->trashed()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

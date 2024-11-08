@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\{TextInput,Hidden};
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
 
 class PermissionResource extends Resource
 {
@@ -56,8 +57,21 @@ class PermissionResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\RestoreAction::make()->visible(fn ($record) => $record->trashed()),
+                Tables\Actions\DeleteAction::make()
+                    ->successNotification(function ($record) {
+                        return Notification::make()
+                            ->warning()
+                            ->title("{$record->name} excluído(a)")
+                            ->body("Permissão {$record->name} está na lixeira.");
+                    }),
+                Tables\Actions\RestoreAction::make()
+                    ->successNotification(function ($record) {
+                        return Notification::make()
+                            ->success()
+                            ->title("{$record->name} restaurada")
+                            ->body("Permissão {$record->name} está restaurada.");
+                    })
+                ->visible(fn ($record) => $record->trashed()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
