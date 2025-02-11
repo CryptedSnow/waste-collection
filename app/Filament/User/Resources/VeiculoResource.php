@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select,TextInput,Hidden};
+use Filament\Forms\Components\{Select, TextInput};
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Validation\Rule;
 use Filament\Notifications\Notification;
@@ -27,6 +27,10 @@ class VeiculoResource extends Resource
 
     protected static ?string $navigationLabel = 'Veículos';
 
+    protected static ?string $label = 'Veículo';
+
+    protected static ?string $pluralLabel = 'Veículos';
+
     protected static ?string $recordTitleAttribute = 'modelo';
 
     protected static ?int $navigationSort = 4;
@@ -35,7 +39,6 @@ class VeiculoResource extends Resource
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 TextInput::make('placa_veiculo')
                     ->label('Placa do veículo')
                     ->required()
@@ -59,20 +62,25 @@ class VeiculoResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('placa_veiculo')->label('Placa')->searchable()->sortable(),
-                TextColumn::make('modelo')->label('Modelo')->searchable()->sortable(),
-                TextColumn::make('status')->label('Status')->colors([
-                    'warning' => 'Em manutenção',
-                    'success' => 'Disponível',
-                ])
-                ->icons([
-                    'heroicon-m-wrench-screwdriver' => 'Em manutenção',
-                    'heroicon-m-check-badge' => 'Disponível',
-                ])
-                ->colors([
-                    'warning' => 'Em manutenção',
-                    'success' => 'Disponível',
-                ])->badge(),
+                TextColumn::make('placa_veiculo')
+                    ->label('Placa')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('modelo')
+                    ->label('Modelo')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('status')
+                    ->label('Status')
+                    ->colors([
+                        'warning' => 'Em manutenção',
+                        'success' => 'Disponível',
+                    ])
+                    ->icons([
+                        'heroicon-m-wrench-screwdriver' => 'Em manutenção',
+                        'heroicon-m-check-badge' => 'Disponível',
+                    ])
+                    ->badge(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -84,15 +92,15 @@ class VeiculoResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->placa_veiculo} excluído(a)")
-                            ->body("Veículo {$record->placa_veiculo} está na lixeira.");
+                            ->title("Veículo inativo")
+                            ->body("x<strong>{$record->placa_veiculo}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->placa_veiculo} restaurado(a)")
-                            ->body("Veículo {$record->placa_veiculo} está restaurado.");
+                            ->title("Veículo restaurado")
+                            ->body("<strong>{$record->placa_veiculo}</strong> está restaurado.");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])

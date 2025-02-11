@@ -23,10 +23,27 @@ class UserEmpresaSeeder extends Seeder
                 'empresa_id' => 2,
             ],
             [
+                'user_id' => 2,
+                'empresa_id' => 3,
+            ],
+            [
+                'user_id' => 2,
+                'empresa_id' => 4,
+            ],
+            [
                 'user_id' => 3,
                 'empresa_id' => 3,
+            ],
+            [
+                'user_id' => 4,
+                'empresa_id' => 4,
+            ],
+            [
+                'user_id' => 5,
+                'empresa_id' => 2,
             ]
         ];
+
         DB::table('users_empresas')->insert($user_empresas);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Filament\User\Resources;
 
 use App\Filament\User\Resources\LocalColetaResource\Pages;
 use App\Filament\User\Resources\LocalColetaResource\RelationManagers;
-use App\Models\{LocalColeta,Cliente,UF};
+use App\Models\{LocalColeta, Cliente, UF};
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,10 +12,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select,TextInput,Hidden};
+use Filament\Forms\Components\{Select, TextInput};
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Support\Facades\Auth;
 use Filament\Notifications\Notification;
+use Filament\Facades\Filament;
 
 class LocalColetaResource extends Resource
 {
@@ -29,19 +29,22 @@ class LocalColetaResource extends Resource
 
     protected static ?string $navigationLabel = 'Locais de coleta';
 
+    protected static ?string $label = 'Local';
+
+    protected static ?string $pluralLabel = 'Locais';
+
     protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 Select::make('cliente_id')
                     ->label('Cliente')
                     ->options(function () {
-                        $user = Auth::user();
-                        if ($user && $user->empresas()->exists()) {
-                            return Cliente::whereIn('empresa_id', $user->empresas()->pluck('empresas.id'))
+                        $tenant = Filament::getTenant();
+                        if ($tenant) {
+                            return Cliente::where('empresa_id', $tenant->id)
                             ->orderBy('id')
                             ->pluck('nome', 'id');
                         }
@@ -71,12 +74,29 @@ class LocalColetaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('clientes.nome')->label('Cliente')->searchable()->sortable(),
-                TextColumn::make('uf')->label('Estado')->searchable()->sortable(),
-                TextColumn::make('cidade')->label('Cidade')->searchable()->sortable(),
-                TextColumn::make('bairro')->label('Bairro')->searchable()->sortable(),
-                TextColumn::make('logradouro')->label('Logradouro')->searchable()->sortable(),
-                TextColumn::make('numero')->label('Número')->sortable(),
+                TextColumn::make('clientes.nome')
+                    ->label('Cliente')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('uf')
+                    ->label('Estado')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('cidade')
+                    ->label('Cidade')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('bairro')
+                    ->label('Bairro')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('logradouro')
+                    ->label('Logradouro')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('numero')
+                    ->label('Número')
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -88,15 +108,15 @@ class LocalColetaResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->logradouro}, {$record->numero} excluído")
-                            ->body("Logradouro {$record->logradouro}, {$record->numero} está na lixeira.");
+                            ->title("Local de coleta inativo")
+                            ->body("<strong>{$record->logradouro}, {$record->numero}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->logradouro}, {$record->numero} restaurado")
-                            ->body("Logradouro {$record->logradouro}, {$record->numero} está restaurado.");
+                            ->title("Local de coleta restaurado")
+                            ->body("<strong>{$record->logradouro}, {$record->numero}</strong> está restaurado.");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])

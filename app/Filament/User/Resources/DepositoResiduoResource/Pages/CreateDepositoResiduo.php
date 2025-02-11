@@ -23,6 +23,6 @@ class CreateDepositoResiduo extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Depósito criado')
-            ->body("Depósito {$deposito_residuo->nome} foi criado.");
+            ->body("<strong>{$deposito_residuo->nome}</strong> foi criado.");
     }
 }

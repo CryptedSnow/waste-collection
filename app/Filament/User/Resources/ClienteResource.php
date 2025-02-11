@@ -4,7 +4,7 @@ namespace App\Filament\User\Resources;
 
 use App\Filament\User\Resources\ClienteResource\Pages;
 use App\Filament\User\Resources\ClienteResource\RelationManagers;
-use App\Models\{Cliente,UF};
+use App\Models\Cliente;
 use App\Rules\UniqueValueTable;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,7 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{TextInput,Hidden};
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Notifications\Notification;
 
@@ -25,6 +25,12 @@ class ClienteResource extends Resource
 
     protected static ?string $tenantRelationshipName = 'clienteTenant';
 
+    protected static ?string $navigationLabel = 'Clientes';
+
+    protected static ?string $label = 'Cliente';
+
+    protected static ?string $pluralLabel = 'Clientes';
+
     protected static ?string $recordTitleAttribute = 'nome';
 
     protected static ?int $navigationSort = 1;
@@ -33,7 +39,6 @@ class ClienteResource extends Resource
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 TextInput::make('nome')
                     ->required(),
                 TextInput::make('cpf')
@@ -46,7 +51,7 @@ class ClienteResource extends Resource
                     ->required()
                     ->email()
                     ->unique(ignoreRecord: true)
-                    ->rules([new UniqueValueTable('email', ['empresas','motoristas'])]),
+                    ->rules(['email', new UniqueValueTable('email', ['empresas','motoristas'])]),
                 TextInput::make('telefone')
                     ->label('Telefone')
                     ->required()
@@ -60,10 +65,19 @@ class ClienteResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nome')->label('Nome')->searchable()->sortable(),
-                TextColumn::make('cpf')->label('CPF')->sortable(),
-                TextColumn::make('email')->label('Email')->sortable(),
-                TextColumn::make('telefone')->label('Telefone')->sortable(),
+                TextColumn::make('nome')
+                    ->label('Nome')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('cpf')
+                    ->label('CPF')
+                    ->sortable(),
+                TextColumn::make('email')
+                    ->label('Email')
+                    ->sortable(),
+                TextColumn::make('telefone')
+                    ->label('Telefone')
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -75,15 +89,15 @@ class ClienteResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->nome} excluído(a)")
-                            ->body("Cliente {$record->nome} está na lixeira.");
+                            ->title("Cliente inativo(a)")
+                            ->body("<strong>{$record->nome}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->nome} restaurado(a)")
-                            ->body("Cliente {$record->nome} está restaurado(a).");
+                            ->title("Cliente restaurado(a)")
+                            ->body("<strong>{$record->nome}</strong> está restaurado(a).");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])

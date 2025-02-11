@@ -11,11 +11,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Forms\Components\{Select,TextInput,Hidden};
+use Filament\Forms\Components\{Select, TextInput};
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
 use Filament\Notifications\Notification;
 
 class EmpresaResource extends Resource
@@ -23,6 +22,12 @@ class EmpresaResource extends Resource
     protected static ?string $model = Empresa::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
+
+    protected static ?string $navigationLabel = 'Empresas';
+
+    protected static ?string $label = 'Empresa';
+
+    protected static ?string $pluralLabel = 'Empresas';
 
     protected static ?string $recordTitleAttribute = 'nome';
 
@@ -32,7 +37,6 @@ class EmpresaResource extends Resource
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 TextInput::make('nome')
                     ->required(),
                 TextInput::make('cnpj')
@@ -61,7 +65,7 @@ class EmpresaResource extends Resource
                     ->required()
                     ->email()
                     ->unique(ignoreRecord: true)
-                    ->rules([new UniqueValueTable('email', ['clientes','motoristas'])]),
+                    ->rules(['email', new UniqueValueTable('email', ['clientes','motoristas'])]),
                 TextInput::make('telefone')
                     ->label('Telefone')
                     ->required()
@@ -95,15 +99,15 @@ class EmpresaResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->nome} excluído(a)")
-                            ->body("Empresa {$record->nome} está na lixeira.");
+                            ->title("Empresa inativa")
+                            ->body("<strong>{$record->nome}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->nome} restaurada")
-                            ->body("Empresa {$record->nome} está restaurada.");
+                            ->title("Empresa restaurada")
+                            ->body("<strong>{$record->nome}</strong> está restaurada.");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
@@ -140,33 +144,4 @@ class EmpresaResource extends Resource
             ]);
     }
 
-    public static function canViewAny(): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canCreate(): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canEdit($record): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canDelete($record): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canRestore($record): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canRestoreBulk(): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
 }

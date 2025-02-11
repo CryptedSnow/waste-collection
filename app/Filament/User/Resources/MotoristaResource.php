@@ -13,8 +13,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select,TextInput,Hidden};
-use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\{Select, TextInput};
+use Filament\Tables\Columns\{TextColumn, SelectColumn};
 use Illuminate\Validation\Rule;
 use Filament\Notifications\Notification;
 
@@ -26,6 +26,12 @@ class MotoristaResource extends Resource
 
     protected static ?string $tenantRelationshipName = 'motoristaTenant';
 
+    protected static ?string $navigationLabel = 'Motoristas';
+
+    protected static ?string $label = 'Motorista';
+
+    protected static ?string $pluralLabel = 'Motoristas';
+
     protected static ?string $recordTitleAttribute = 'nome';
 
     protected static ?int $navigationSort = 5;
@@ -34,7 +40,6 @@ class MotoristaResource extends Resource
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 TextInput::make('nome')
                     ->required(),
                 TextInput::make('cpf')
@@ -63,7 +68,7 @@ class MotoristaResource extends Resource
                     ->required()
                     ->email()
                     ->unique(ignoreRecord: true)
-                    ->rules([new UniqueValueTable('email', ['empresas','clientes'])]),
+                    ->rules(['email', new UniqueValueTable('email', ['empresas','clientes'])]),
                 TextInput::make('telefone')
                     ->label('Telefone')
                     ->required()
@@ -76,12 +81,34 @@ class MotoristaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nome')->label('Nome')->searchable()->sortable(),
-                TextColumn::make('cpf')->label('CPF')->sortable(),
-                TextColumn::make('cnh')->label('CNH')->sortable(),
-                TextColumn::make('categoria')->label('Categoria')->sortable(),
-                TextColumn::make('email')->label('Email')->sortable(),
-                TextColumn::make('telefone')->label('Telefone')->sortable(),
+                TextColumn::make('nome')
+                    ->label('Nome')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('cpf')
+                    ->label('CPF')
+                    ->sortable(),
+                TextColumn::make('cnh')
+                    ->label('CNH')
+                    ->sortable(),
+                SelectColumn::make('categoria')
+                    ->label('Categoria')
+                    ->sortable()
+                    ->options([
+                        'A' => 'A',
+                        'B' => 'B',
+                        'C' => 'C',
+                        'D' => 'D',
+                        'E' => 'E',
+                    ])
+                    ->selectablePlaceholder(false)
+                    ->rules(['required', Rule::in(['A', 'B', 'C', 'D', 'E'])]),
+                TextColumn::make('email')
+                    ->label('Email')
+                    ->sortable(),
+                TextColumn::make('telefone')
+                    ->label('Telefone')
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -93,15 +120,15 @@ class MotoristaResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->nome} excluído(a)")
-                            ->body("Motorista {$record->nome} está na lixeira.");
+                            ->title("Motorista inativo(a)")
+                            ->body("<strong>{$record->nome}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->nome} restaurado(a)")
-                            ->body("Motorista {$record->nome} está restaurado.");
+                            ->title("Motorista restaurado(a)")
+                            ->body("<strong>{$record->nome}</strong> está restaurado(a).");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])

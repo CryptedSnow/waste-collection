@@ -23,6 +23,6 @@ class CreateVeiculo extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Veículo criado')
-            ->body("Veículo {$veiculo->placa_veiculo} foi criado.");
+            ->body("<strong>{$veiculo->placa_veiculo}</strong> foi criado.");
     }
 }

@@ -4,7 +4,7 @@ namespace App\Filament\User\Resources;
 
 use App\Filament\User\Resources\ColetaResource\Pages;
 use App\Filament\User\Resources\ColetaResource\RelationManagers;
-use App\Models\{Coleta,LocalColeta,TipoResiduo,Motorista,Veiculo,DepositoResiduo};
+use App\Models\{Coleta, LocalColeta, TipoResiduo, Motorista, Veiculo, DepositoResiduo};
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,15 +12,15 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select,TextInput,DatePicker,TimePicker,Hidden};
+use Filament\Forms\Components\{Select, TextInput, DatePicker, TimePicker, Hidden};
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Blade;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Notifications\Notification;
+use Filament\Facades\Filament;
 
 class ColetaResource extends Resource
 {
@@ -30,7 +30,11 @@ class ColetaResource extends Resource
 
     protected static ?string $tenantRelationshipName = 'coletaTenant';
 
-    protected static ?string $navigationBadgeTooltip = 'Número de coletas';
+    protected static ?string $navigationLabel = 'Coletas';
+
+    protected static ?string $label = 'Coleta';
+
+    protected static ?string $pluralLabel = 'Coletas';
 
     protected static ?string $recordTitleAttribute = 'codigo_coleta';
 
@@ -40,13 +44,15 @@ class ColetaResource extends Resource
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
+                Hidden::make('codigo_coleta')
+                    ->default(fn () => self::generateCodigoColeta())
+                    ->required(),
                 Select::make('local_coleta_id')
                     ->label('Local da coleta')
                     ->options(function () {
-                        $user = Auth::user();
-                        if ($user && $user->empresas()->exists()) {
-                            return LocalColeta::whereIn('empresa_id', $user->empresas()->pluck('empresas.id'))
+                        $tenant = Filament::getTenant();
+                        if ($tenant) {
+                            return LocalColeta::where('empresa_id', $tenant->id)
                             ->get()
                             ->mapWithKeys(function ($local) {
                                 return [$local->id => "{$local->logradouro}, {$local->numero} ({$local->clientes->nome})"];
@@ -59,9 +65,9 @@ class ColetaResource extends Resource
                 Select::make('tipo_residuo_id')
                     ->label('Resíduo')
                     ->options(function () {
-                        $user = Auth::user();
-                        if ($user && $user->empresas()->exists()) {
-                            return TipoResiduo::where('empresa_id', $user->empresas()->pluck('empresas.id'))
+                        $tenant = Filament::getTenant();
+                        if ($tenant) {
+                            return TipoResiduo::where('empresa_id', $tenant->id)
                             ->orderBy('id')
                             ->pluck('descricao', 'id');
                         }
@@ -72,9 +78,9 @@ class ColetaResource extends Resource
                 Select::make('motorista_id')
                     ->label('Motorista')
                     ->options(function () {
-                        $user = Auth::user();
-                        if ($user && $user->empresas()->exists()) {
-                            return Motorista::where('empresa_id', $user->empresas()->pluck('empresas.id'))
+                        $tenant = Filament::getTenant();
+                        if ($tenant) {
+                            return Motorista::where('empresa_id', $tenant->id)
                             ->orderBy('id')
                             ->pluck('nome', 'id');
                         }
@@ -85,9 +91,9 @@ class ColetaResource extends Resource
                 Select::make('veiculo_id')
                     ->label('Veículo')
                     ->options(function () {
-                        $user = Auth::user();
-                        if ($user && $user->empresas()->exists()) {
-                            return Veiculo::whereIn('empresa_id', $user->empresas()->pluck('empresas.id'))
+                        $tenant = Filament::getTenant();
+                        if ($tenant) {
+                            return Veiculo::where('empresa_id', $tenant->id)
                             ->where('status', 'Disponível')
                             ->get()
                             ->mapWithKeys(function ($veiculo) {
@@ -101,9 +107,9 @@ class ColetaResource extends Resource
                 Select::make('deposito_residuo_id')
                     ->label('Local para descarte')
                     ->options(function () {
-                        $user = Auth::user();
-                        if ($user && $user->empresas()->exists()) {
-                            return DepositoResiduo::where('empresa_id', $user->empresas()->pluck('empresas.id'))
+                        $tenant = Filament::getTenant();
+                        if ($tenant) {
+                            return DepositoResiduo::where('empresa_id', $tenant->id)
                             ->orderBy('id')
                             ->pluck('nome', 'id');
                         }
@@ -149,9 +155,6 @@ class ColetaResource extends Resource
                         'Cancelado' => 'Cancelado',
                     ])
                     ->rules([Rule::in(['Em andamento', 'Concluído', 'Cancelado'])]),
-                Hidden::make('codigo_coleta')
-                    ->default(fn () => self::generateCodigoColeta())
-                    ->required(),
             ]);
     }
 
@@ -159,35 +162,80 @@ class ColetaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('codigo_coleta')->label('Código de coleta')->searchable()->sortable(),
-                TextColumn::make('cliente.nome')->label('Cliente')->searchable()->sortable()->toggleable(),
-                TextColumn::make('localColeta.uf')->label('UF')->searchable()->sortable()->toggleable(),
-                TextColumn::make('localColeta.cidade')->label('Cidade')->searchable()->sortable()->toggleable(),
-                TextColumn::make('localColeta.bairro')->label('Bairro')->searchable()->sortable()->toggleable(),
-                TextColumn::make('localColeta.logradouro')->label('Logradouro')->searchable()->sortable()->toggleable(),
-                TextColumn::make('localColeta.numero')->label('Número')->searchable()->sortable()->toggleable(),
-                TextColumn::make('tipoResiduo.descricao')->label('Tipo de resíduo')->searchable()->sortable()->toggleable(),
-                TextColumn::make('motorista.nome')->label('Motorista')->searchable()->sortable()->toggleable(),
-                TextColumn::make('veiculo.modelo')->label('Veículo')->searchable()->sortable()->toggleable(),
-                TextColumn::make('veiculo.placa_veiculo')->label('Placa')->searchable()->sortable()->toggleable(),
-                TextColumn::make('depositoResiduo.nome')->label('Local de descarte')->searchable()->sortable()->toggleable(),
+                TextColumn::make('codigo_coleta')
+                    ->label('Código de coleta')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('cliente.nome')
+                    ->label('Cliente')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('localColeta.uf')
+                    ->label('UF')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('localColeta.cidade')
+                    ->label('Cidade')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('localColeta.bairro')
+                    ->label('Bairro')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('localColeta.logradouro')
+                    ->label('Logradouro')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('localColeta.numero')
+                    ->label('Número')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('tipoResiduo.descricao')
+                    ->label('Tipo de resíduo')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('motorista.nome')
+                    ->label('Motorista')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('veiculo.modelo')
+                    ->label('Veículo')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('veiculo.placa_veiculo')
+                    ->label('Placa')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('depositoResiduo.nome')
+                    ->label('Local de descarte')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('quantidade_residuos')
                     ->label('Quantidade de resíduos (KG)')
                     ->sortable(),
                 TextColumn::make('data_coleta')
                     ->label('Data da coleta')
-                    ->sortable()
-                    ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d/m/Y')),
+                    ->dateTime('d/m/Y'),
                 TextColumn::make('hora_coleta')
                     ->label('Hora da coleta')
-                    ->sortable()
-                    ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('H:i A')),
+                    ->dateTime('H:i A'),
                 TextColumn::make('valor_coleta')
                     ->label('Valor')
-                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
+                    ->money('BRL')
                     ->summarize([
                         Sum::make()
-                            ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
+                            ->money('BRL')
                             ->query(fn ($query) => $query->where('status', '!=', 'Cancelado')),
                     ]),
                 TextColumn::make('finalidade')
@@ -205,16 +253,10 @@ class ColetaResource extends Resource
                         'heroicon-m-check-badge' => 'Concluído',
                         'heroicon-m-x-circle' => 'Cancelado',
                     ])
-                    ->colors([
-                        'warning' => 'Em andamento',
-                        'success' => 'Concluído',
-                        'danger' => 'Cancelado',
-                    ])->badge(),
+                    ->badge(),
                 TextColumn::make('created_at')
                     ->label('Criado em')
-                    ->sortable()
-                    ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d/m/Y H:i:s')),
-
+                    ->dateTime('d/m/Y H:i:s'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -238,15 +280,15 @@ class ColetaResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->codigo_coleta} excluída")
-                            ->body("Coleta {$record->codigo_coleta} está na lixeira.");
+                            ->title("Coleta inativa")
+                            ->body("<strong>{$record->codigo_coleta}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->codigo_coleta} restaurada")
-                            ->body("Coleta {$record->codigo_coleta} está restaurada.");
+                            ->title("Coleta restaurada")
+                            ->body("<strong>{$record->codigo_coleta}</strong> está restaurada.");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
@@ -259,7 +301,7 @@ class ColetaResource extends Resource
             ])
             ->groups([
                 Tables\Grouping\Group::make('created_at')
-                    ->label('Data de compra')
+                    ->label('Data de criação')
                     ->date()
                     ->collapsible(),
             ])
@@ -289,16 +331,6 @@ class ColetaResource extends Resource
                 SoftDeletingScope::class,
             ])
             ->with(['localColeta','tipoResiduo','motorista','veiculo','depositoResiduo']);
-    }
-
-    public static function getNavigationBadge(): ?string
-    {
-        $user = Auth::user();
-        if (!$user) {
-            return null;
-        }
-        $empresa_id = $user->empresas->pluck('id');
-        return static::getModel()::whereIn('empresa_id', $empresa_id)->withoutTrashed()->count();
     }
 
     public static function generateCodigoColeta(): string

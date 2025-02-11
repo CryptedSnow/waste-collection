@@ -8,7 +8,7 @@ use Filament\Actions;
 use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\ListRecords;
-use Illuminate\Support\Facades\Auth;
+use Filament\Facades\Filament;
 
 class ListColetas extends ListRecords
 {
@@ -17,40 +17,47 @@ class ListColetas extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()->label('Criar coleta'),
         ];
     }
 
     public function getTabs(): array
     {
-        $user = Auth::user();
-        $empresa = $user->empresas->pluck('id')->toArray();
+        $tenant = Filament::getTenant();
+
+        if (!$tenant) {
+            return [];
+        }
+
+        $empresa_id = $tenant->id;
 
         return [
+
             "Todos" => Tab::make('Todos')
-                ->badge($this->statusCount(null, $empresa))
+                ->badge($this->statusCount(null, $empresa_id))
                 ->badgeColor('info'),
 
             "Em andamento" => Tab::make('Em andamento')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Em andamento')
-                ->whereIn('empresa_id', $empresa))
-                ->badge($this->statusCount('Em andamento', $empresa))->badgeColor('warning'),
+                    ->where('empresa_id', $empresa_id))
+                ->badge($this->statusCount('Em andamento', $empresa_id))->badgeColor('warning'),
 
             "Concluído" => Tab::make('Concluído')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Concluído')
-                ->whereIn('empresa_id', $empresa))
-                ->badge($this->statusCount('Concluído', $empresa))->badgeColor('success'),
+                    ->where('empresa_id', $empresa_id))
+                ->badge($this->statusCount('Concluído', $empresa_id))->badgeColor('success'),
 
             "Cancelado" => Tab::make('Cancelado')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Cancelado')
-                ->whereIn('empresa_id', $empresa))
-                ->badge($this->statusCount('Cancelado', $empresa))->badgeColor('danger'),
+                    ->where('empresa_id', $empresa_id))
+                ->badge($this->statusCount('Cancelado', $empresa_id))->badgeColor('danger'),
+
         ];
     }
 
-    private function statusCount(?string $status, array $empresa): int
+    private function statusCount(?string $status, int $empresa): int
     {
-        $query = Coleta::query()->whereIn('empresa_id', $empresa);
+        $query = Coleta::query()->where('empresa_id', $empresa);
 
         if ($status) {
             $query->where('status', $status);

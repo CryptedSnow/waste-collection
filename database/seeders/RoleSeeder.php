@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Spatie\Permission\Models\{Role,Permission};
+use Spatie\Permission\Models\{Role, Permission};
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -14,44 +14,45 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create([
+        $admin_role = Role::create([
             'uuid' => Str::uuid()->toString(),
             'name' => 'Admin'
         ]);
 
-        Role::create([
+        $user_role = Role::create([
             'uuid' => Str::uuid()->toString(),
             'name' => 'User'
         ]);
 
-        Permission::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Estudar Inglês'
-        ]);
+        $permissions = [
+            'Estudar Inglês',
+            'Estudar Italiano',
+            'Estudar Livewire',
+            'Estudar Cybersecurity',
+            'Estudar MongoDB',
+            'Estudar Filament v.3',
+        ];
 
-        Permission::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Estudar Espanhol'
-        ]);
+        foreach ($permissions as $permission_name) {
+            Permission::create([
+                'uuid' => Str::uuid()->toString(),
+                'name' => $permission_name
+            ]);
+        }
 
-        Permission::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Estudar Vue 3'
-        ]);
+        $admin_permissions = Permission::whereIn('name', [
+            'Estudar Inglês',
+            'Estudar Italiano',
+            'Estudar Livewire',
+        ])->get();
 
-        Permission::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Estudar Cybersecurity'
-        ]);
+        $user_permissions = Permission::whereIn('name', [
+            'Estudar Cybersecurity',
+            'Estudar MongoDB',
+            'Estudar Filament v.3',
+        ])->get();
 
-        Permission::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Estudar MongoDB'
-        ]);
-
-        Permission::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Estudar Filament 3'
-        ]);
+        $admin_role->syncPermissions($admin_permissions);
+        $user_role->syncPermissions($user_permissions);
     }
 }

@@ -12,9 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{TextInput,Select,Hidden};
+use Filament\Forms\Components\{TextInput, Select};
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Support\Facades\Auth;
 use Filament\Notifications\Notification;
 
 class RoleResource extends Resource
@@ -25,17 +24,20 @@ class RoleResource extends Resource
 
     protected static ?string $navigationLabel = 'Papéis';
 
+    protected static ?string $pluralLabel = 'Papéis';
+
+    protected static ?string $label = 'Papel';
+
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $navigationGroup = 'Configurações';
+    protected static ?string $navigationGroup = 'Controle de acesso';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 TextInput::make('name')
                     ->required()
                     ->label('Papel'),
@@ -73,15 +75,15 @@ class RoleResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->name} excluído")
-                            ->body("Papel {$record->name} está na lixeira.");
+                            ->title("Papel inativo")
+                            ->body("<strong>{$record->name}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->name} restaurado")
-                            ->body("Papel {$record->name} está restaurado.");
+                            ->title("Papel restaurado")
+                            ->body("<strong>{$record->name}</strong> está restaurado.");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
@@ -118,33 +120,4 @@ class RoleResource extends Resource
             ]);
     }
 
-    public static function canViewAny(): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canCreate(): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canEdit($record): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canDelete($record): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canRestore($record): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canRestoreBulk(): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
 }

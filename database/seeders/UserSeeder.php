@@ -25,6 +25,14 @@ class UserSeeder extends Seeder
 
         User::create([
             'uuid' => Str::uuid()->toString(),
+            'name' => 'Dio Brando',
+            'email' => 'dio.brando@email.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('12345678'),
+        ])->assignRole('Admin','User');
+
+        User::create([
+            'uuid' => Str::uuid()->toString(),
             'name' => 'Johnny Joestar',
             'email' => 'johnny.joestar@email.com',
             'email_verified_at' => now(),
@@ -35,6 +43,14 @@ class UserSeeder extends Seeder
             'uuid' => Str::uuid()->toString(),
             'name' => 'Gyro Zeppeli',
             'email' => 'gyro.zeppeli@email.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('12345678'),
+        ])->assignRole('User');
+
+        User::create([
+            'uuid' => Str::uuid()->toString(),
+            'name' => 'Diego Brando',
+            'email' => 'diego.brando@email.com',
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'),
         ])->assignRole('User');

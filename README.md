@@ -7,60 +7,118 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Attention!
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Follow the steps to set the application in your local machine.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Step N°1 - Run the following commands below to install the dependencies (Verify the existence of `Composer`, `Node` and `NPM` in your machine).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+composer install 
+cp .env.example .env 
+php artisan cache:clear 
+composer dump-autoload 
+php artisan key:generate
+```
 
-## Learning Laravel
+Step N°2 - In `.env` file set the following snippet to connect the application to your database (Verify your database, it is necessary create a database to create the migrations).
+```
+# MySQL
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=waste-collect
+DB_USERNAME=root
+DB_PASSWORD=
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# PostgreSQL
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=waste-collect
+DB_USERNAME=postgres
+DB_PASSWORD=
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Step N°3 - Execute the migrations.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+php artisan migrate
+```
 
-## Laravel Sponsors
+Step N°4 - Use the commands to create some populated tables to some selection fields at forms (and users table).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+php artisan db:seed
+```
 
-### Premium Partners
+Step N°5 - View the migrations been dones e verify status them.
+```
+php artisan migrate:status
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Step N°6 - Run the following command to install `Vite`.
+```
+npm install
+```
 
-## Contributing
+Step N°7 - You need decide an option to start the `Vite`.
+```
+# Run Vite to server development
+npm run dev
+ 
+# Create and version assets for production... (I usually choose this in my local machine)
+npm run build
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Step N°8 - Run the following command to start Apache to run the application.
+```
+php artisan serve
+```
 
-## Code of Conduct
+With help of **Laravel Spatie** and **Multi-tenancy**, exist two roles user: **Admin**,**User** and many companies. Making certains roles user has more privileges than others, it is very important you run the seeds to those users be created.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* User: Jonathan Joestar
+```
+Email: jonathan.joestar@email.com
+Password: 12345678
+Role: Admin
+Permission: Many permissions
+Companies: Scarlet Overdrive
+```
 
-## Security Vulnerabilities
+* User: Dio Brando
+```
+Email: dio.brando@email.com
+Password: 12345678
+Role: Admin, User
+Permission: Many permissions
+Companies: The World, Tusk Act IV, Ball Breaker
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* User: Johnny Joestar
+```
+Email: johnny.joestar@email.com
+Password: 12345678
+Role: User
+Permission: Many permissions
+Companies: Tusk Act IV
+```
 
-## License
+* User: Gyro Zeppeli
+```
+Email: gyro.zeppeli@email.com
+Password: 12345678
+Role: User
+Permission: Many permissions
+Companies: Ball Breaker
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* User: Diego Brando
+```
+Email: diego.brando@email.com
+Password: 12345678
+Role: User
+Permission: Many permissions
+Companies: The World
+```

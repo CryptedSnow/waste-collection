@@ -32,6 +32,6 @@ class EditVeiculo extends EditRecord
         return Notification::make()
             ->info()
             ->title('Veículo alterado')
-            ->body("Veículo {$veiculo->placa_veiculo} foi alterado.");
+            ->body("<strong>{$veiculo->placa_veiculo}</strong> foi alterado.");
     }
 }

@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->profile()
             ->passwordReset()
+            ->databaseNotifications()
             ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'primary' => "#F7931A",

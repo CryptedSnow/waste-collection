@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{TextInput,Hidden};
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Notifications\Notification;
 
@@ -24,7 +24,11 @@ class TipoResiduoResource extends Resource
 
     protected static ?string $tenantRelationshipName = 'tipoResiduoTenant';
 
-    protected static ?string $navigationLabel = 'Tipos de resíduo';
+    protected static ?string $navigationLabel = 'Tipos de resíduos';
+
+    protected static ?string $label = 'Resíduo';
+
+    protected static ?string $pluralLabel = 'Resíduos';
 
     protected static ?string $recordTitleAttribute = 'descricao';
 
@@ -34,7 +38,6 @@ class TipoResiduoResource extends Resource
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 TextInput::make('descricao')
                     ->label('Descrição')
                     ->required(),
@@ -45,7 +48,10 @@ class TipoResiduoResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('descricao')->label('Descrição')->searchable()->sortable(),
+                TextColumn::make('descricao')
+                    ->label('Descrição')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -57,15 +63,15 @@ class TipoResiduoResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->descricao} excluído")
-                            ->body("Resíduo {$record->descricao} está na lixeira.");
+                            ->title("Resíduo inativo")
+                            ->body("<strong>{$record->descricao}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->descricao} restaurado")
-                            ->body("Resíduo {$record->descricao} está restaurado.");
+                            ->title("Resíduo restaurado")
+                            ->body("<strong>{$record->descricao}</strong> está restaurado.");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])

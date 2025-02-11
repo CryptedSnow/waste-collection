@@ -32,6 +32,6 @@ class EditTipoResiduo extends EditRecord
         return Notification::make()
             ->info()
             ->title('Resíduo alterado')
-            ->body("Resíduo {$tipo_residuo->descricao} foi alterado.");
+            ->body("<strong>{$tipo_residuo->descricao}</strong> foi alterado.");
     }
 }

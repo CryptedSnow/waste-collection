@@ -32,6 +32,6 @@ class EditCliente extends EditRecord
         return Notification::make()
             ->info()
             ->title('Cliente alterado(a)')
-            ->body("Cliente {$cliente->nome} foi alterado(a).");
+            ->body("<strong>{$cliente->nome}</strong> foi alterado(a).");
     }
 }

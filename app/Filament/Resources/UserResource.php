@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\{User,Role};
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,19 +12,23 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select,TextInput,Hidden};
+use Filament\Forms\Components\{Select, TextInput};
 use Filament\Tables\Columns\TextColumn;
 use App\Rules\UniqueValueTable;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\{Hash, Auth};
 use Filament\Notifications\Notification;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
     protected static ?string $navigationLabel = 'Usuários';
+
+    protected static ?string $label = 'Usuário';
+
+    protected static ?string $pluralLabel = 'Usuários';
 
     protected static ?string $navigationBadgeTooltip = 'Número de usuários';
 
@@ -32,13 +36,12 @@ class UserResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationGroup = 'Configurações';
+    protected static ?string $navigationGroup = 'Controle de acesso';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 TextInput::make('name')
                     ->required()
                     ->label('Nome'),
@@ -47,7 +50,7 @@ class UserResource extends Resource
                     ->label('Email')
                     ->email()
                     ->unique(ignoreRecord: true)
-                    ->rules([new UniqueValueTable('email', ['empresas','motoristas','clientes'])]),
+                    ->rules(['email', new UniqueValueTable('email', ['empresas','motoristas','clientes'])]),
                 TextInput::make('password')
                     ->password()
                     ->label('Senha')
@@ -120,15 +123,15 @@ class UserResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->name} excluído(a)")
-                            ->body("Usuário {$record->name} está na lixeira.");
+                            ->title("Usuário(a) inativo(a)")
+                            ->body("<strong>{$record->name}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->name} restaurado(a)")
-                            ->body("Usuário {$record->name} está restaurado(a).");
+                            ->title("Usuário(a) restaurado(a)")
+                            ->body("<strong>{$record->name}</strong> está restaurado(a).");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
@@ -168,6 +171,24 @@ class UserResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::withoutTrashed()->count();
+    }
+
+    public static function canEdit($record): bool
+    {
+      $user = Auth::user();
+      return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
+    }
+
+    public static function canView($record): bool
+    {
+      $user = Auth::user();
+      return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
+    }
+
+    public static function canDelete($record): bool
+    {
+      $user = Auth::user();
+      return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
     }
 
 }

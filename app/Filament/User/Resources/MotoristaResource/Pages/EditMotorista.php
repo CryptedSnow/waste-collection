@@ -32,6 +32,6 @@ class EditMotorista extends EditRecord
         return Notification::make()
             ->info()
             ->title('Motorista alterado')
-            ->body("Motorista {$motorista->nome} foi alterado.");
+            ->body("<strong>{$motorista->nome}</strong> foi alterado.");
     }
 }

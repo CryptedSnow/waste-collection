@@ -5,7 +5,7 @@ namespace App\Filament\User\Resources;
 use App\Filament\User\Resources\DepositoResiduoResource\Pages;
 use App\Filament\User\Resources\DepositoResiduoResource\RelationManagers;
 use App\Rules\UniqueValueTable;
-use App\Models\{DepositoResiduo,UF};
+use App\Models\{DepositoResiduo, UF};
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,7 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select,TextInput,Hidden};
+use Filament\Forms\Components\{Select, TextInput};
 use Filament\Tables\Columns\TextColumn;
 use Filament\Notifications\Notification;
 
@@ -27,6 +27,10 @@ class DepositoResiduoResource extends Resource
 
     protected static ?string $navigationLabel = 'Depósito de resíduos';
 
+    protected static ?string $label = 'Depósito';
+
+    protected static ?string $pluralLabel = 'Depósitos';
+
     protected static ?string $recordTitleAttribute = 'nome';
 
     protected static ?int $navigationSort = 2;
@@ -35,7 +39,6 @@ class DepositoResiduoResource extends Resource
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 TextInput::make('nome')
                     ->required(),
                 TextInput::make('cnpj')
@@ -64,7 +67,7 @@ class DepositoResiduoResource extends Resource
                     ->required()
                     ->email()
                     ->unique(ignoreRecord: true)
-                    ->rules([new UniqueValueTable('email', ['clientes','motoristas','empresas'])]),
+                    ->rules(['email', new UniqueValueTable('email', ['clientes','motoristas','empresas'])]),
                 TextInput::make('telefone')
                     ->label('Telefone')
                     ->required()
@@ -78,15 +81,34 @@ class DepositoResiduoResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nome')->label('Nome')->searchable()->sortable(),
-                TextColumn::make('cnpj')->label('CNPJ')->sortable(),
-                TextColumn::make('uf')->label('Estado')->sortable(),
-                TextColumn::make('cidade')->label('Cidade')->sortable(),
-                TextColumn::make('bairro')->label('Bairro')->sortable(),
-                TextColumn::make('logradouro')->label('Logradouro')->sortable(),
-                TextColumn::make('numero')->label('Número')->sortable(),
-                TextColumn::make('email')->label('Email')->sortable(),
-                TextColumn::make('telefone')->label('Telefone')->sortable(),
+                TextColumn::make('nome')
+                    ->label('Nome')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('cnpj')
+                    ->label('CNPJ')
+                    ->sortable(),
+                TextColumn::make('uf')
+                    ->label('Estado')
+                    ->sortable(),
+                TextColumn::make('cidade')
+                    ->label('Cidade')
+                    ->sortable(),
+                TextColumn::make('bairro')
+                    ->label('Bairro')
+                    ->sortable(),
+                TextColumn::make('logradouro')
+                    ->label('Logradouro')
+                    ->sortable(),
+                TextColumn::make('numero')
+                    ->label('Número')
+                    ->sortable(),
+                TextColumn::make('email')
+                    ->label('Email')
+                    ->sortable(),
+                TextColumn::make('telefone')
+                    ->label('Telefone')
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -98,15 +120,15 @@ class DepositoResiduoResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->nome} excluído")
-                            ->body("Depósito {$record->nome} está na lixeira.");
+                            ->title("Depósito inativo")
+                            ->body("<strong>{$record->nome}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->nome} restaurado")
-                            ->body("Depósito {$record->nome} está restaurado.");
+                            ->title("Depósito restaurado")
+                            ->body("<strong>{$record->nome}</strong> está restaurado.");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])

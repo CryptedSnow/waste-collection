@@ -23,7 +23,7 @@ class CreateColeta extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Coleta criada')
-            ->body("Coleta {$coleta->codigo_coleta} foi criada.");
+            ->body("<strong>{$coleta->codigo_coleta}</strong> foi criada.");
     }
 
 }

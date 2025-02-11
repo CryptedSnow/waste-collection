@@ -32,6 +32,6 @@ class EditDepositoResiduo extends EditRecord
         return Notification::make()
             ->info()
             ->title('Depósito de resíduos alterado')
-            ->body("Depósito {$deposito_residuo->nome} foi alterado.");
+            ->body("<strong>{$deposito_residuo->nome}</strong> foi alterado.");
     }
 }

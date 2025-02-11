@@ -33,7 +33,7 @@ class EditUser extends EditRecord
         return Notification::make()
             ->info()
             ->title('Usuário(a) alterado(a)')
-            ->body("Usuário(a) {$user->name} foi alterado(a).");
+            ->body("<strong>{$user->name}</strong> foi alterado(a).");
     }
 
 }

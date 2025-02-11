@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use App\Observers\ColetaObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\{Model,SoftDeletes};
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
@@ -35,6 +36,7 @@ class Coleta extends Model
         static::creating(function ($model) {
             $model->uuid = (string) Str::uuid();
         });
+        static::observe(ColetaObserver::class);
     }
 
     public function getRouteKeyName()

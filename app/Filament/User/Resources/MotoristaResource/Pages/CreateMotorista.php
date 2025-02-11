@@ -23,6 +23,6 @@ class CreateMotorista extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Motorista criado(a)')
-            ->body("Motorista {$motorista->nome} foi criado(a).");
+            ->body("<strong>{$motorista->nome}</strong> foi criado(a).");
     }
 }

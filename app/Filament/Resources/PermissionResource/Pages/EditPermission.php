@@ -32,6 +32,6 @@ class EditPermission extends EditRecord
         return Notification::make()
             ->info()
             ->title('Permissão alterada')
-            ->body("Permissão {$permission->name} foi alterada.");
+            ->body("<strong>{$permission->name}</strong> foi alterada.");
     }
 }

@@ -23,6 +23,6 @@ class CreateTipoResiduo extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Resíduo criado')
-            ->body("Resíduo {$tipo_residuo->descricao} foi criado.");
+            ->body("<strong>{$tipo_residuo->descricao}</strong> foi criado.");
     }
 }

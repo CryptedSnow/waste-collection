@@ -32,6 +32,6 @@ class EditColeta extends EditRecord
         return Notification::make()
             ->info()
             ->title('Coleta alterada')
-            ->body("Coleta {$coleta->codigo_coleta} foi alterada.");
+            ->body("<strong>{$coleta->codigo_coleta}</strong> foi alterada.");
     }
 }

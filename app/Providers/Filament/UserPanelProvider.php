@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\User\Widgets\DashboardOverview;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -30,19 +31,21 @@ class UserPanelProvider extends PanelProvider
             ->profile()
             ->passwordReset()
             ->sidebarCollapsibleOnDesktop()
+            ->databaseNotifications()
             ->tenant(Empresa::class)
             ->colors([
-                'primary' => "#6D4AFF",
+                'primary' => Color::Indigo,
             ])
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\\Filament\\User\\Resources')
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\\Filament\\User\\Pages')
             ->pages([
-                //Pages\Dashboard::class,
+                Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/User/Widgets'), for: 'App\\Filament\\User\\Widgets')
             ->widgets([
                 //Widgets\AccountWidget::class,
                 //Widgets\FilamentInfoWidget::class,
+                DashboardOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,

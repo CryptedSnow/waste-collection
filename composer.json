@@ -12,7 +12,6 @@
         "laravel/tinker": "^2.9",
         "laravellegends/pt-br-validator": "^11.0",
         "leandrocfe/filament-ptbr-form-fields": "^3.0",
-        "rawilk/filament-password-input": "^2.0",
         "spatie/laravel-permission": "^6.9"
     },
     "require-dev": {

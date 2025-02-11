@@ -22,7 +22,7 @@ class CreateRole extends CreateRecord
 
         return Notification::make()
             ->success()
-            ->title('Papel criada')
-            ->body("Papel {$role->name} foi criada.");
+            ->title('Papel criado')
+            ->body("<strong>{$role->name}</strong> foi criado.");
     }
 }

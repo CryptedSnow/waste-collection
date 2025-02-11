@@ -23,6 +23,6 @@ class CreatePermission extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Permissão criada')
-            ->body("Permissão {$permission->name} foi criada.");
+            ->body("<strong>{$permission->name}</strong> foi criada.");
     }
 }

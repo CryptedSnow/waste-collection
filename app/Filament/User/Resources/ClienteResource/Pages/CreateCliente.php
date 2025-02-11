@@ -23,6 +23,6 @@ class CreateCliente extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Cliente criado(a)')
-            ->body("Cliente {$cliente->nome} foi criado(a).");
+            ->body("<strong>{$cliente->nome}</strong> foi criado(a).");
     }
 }

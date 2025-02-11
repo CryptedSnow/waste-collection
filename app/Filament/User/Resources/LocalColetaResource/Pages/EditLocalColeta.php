@@ -32,6 +32,6 @@ class EditLocalColeta extends EditRecord
         return Notification::make()
             ->info()
             ->title('Local de coleta alterado')
-            ->body("Local {$local_coleta->logradouro}, {$local_coleta->numero} foi alterado.");
+            ->body("<strong>{$local_coleta->logradouro}, {$local_coleta->numero}</strong> foi alterado.");
     }
 }

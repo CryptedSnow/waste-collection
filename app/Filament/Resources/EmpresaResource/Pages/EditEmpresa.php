@@ -32,6 +32,6 @@ class EditEmpresa extends EditRecord
         return Notification::make()
             ->info()
             ->title('Empresa alterada')
-            ->body("Empresa {$permissao->nome} foi alterada.");
+            ->body("<strong>{$permissao->nome}</strong> foi alterada.");
     }
 }

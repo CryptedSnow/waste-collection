@@ -23,6 +23,6 @@ class CreateEmpresa extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Empresa criada')
-            ->body("Empresa {$empresa->nome} foi criada.");
+            ->body("<strong>{$empresa->nome}</strong> foi criada.");
     }
 }

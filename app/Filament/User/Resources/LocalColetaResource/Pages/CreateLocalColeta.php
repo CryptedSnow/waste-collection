@@ -23,6 +23,6 @@ class CreateLocalColeta extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Local de coleta criado')
-            ->body("Local {$local_coleta->logradouro}, {$local_coleta->numero} foi criado.");
+            ->body("<strong>{$local_coleta->logradouro}, {$local_coleta->numero}</strong> foi criado.");
     }
 }

@@ -12,9 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{TextInput,Hidden};
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Support\Facades\Auth;
 use Filament\Notifications\Notification;
 
 class PermissionResource extends Resource
@@ -25,17 +24,20 @@ class PermissionResource extends Resource
 
     protected static ?string $navigationLabel = 'Permissões';
 
+    protected static ?string $label = 'Permissão';
+
+    protected static ?string $pluralLabel = 'Permissões';
+
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationGroup = 'Configurações';
+    protected static ?string $navigationGroup = 'Controle de acesso';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Hidden::make('uuid'),
                 TextInput::make('name')
                     ->required()
                     ->label('Permissão'),
@@ -61,15 +63,15 @@ class PermissionResource extends Resource
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
-                            ->title("{$record->name} excluído(a)")
-                            ->body("Permissão {$record->name} está na lixeira.");
+                            ->title("Permissão inativa")
+                            ->body("<strong>{$record->name}</strong> está na lixeira.");
                     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
-                            ->title("{$record->name} restaurada")
-                            ->body("Permissão {$record->name} está restaurada.");
+                            ->title("Permissão restaurada")
+                            ->body("<strong>{$record->name}</strong> está restaurada.");
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
@@ -106,33 +108,4 @@ class PermissionResource extends Resource
             ]);
     }
 
-    public static function canViewAny(): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canCreate(): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canEdit($record): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canDelete($record): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canRestore($record): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
-
-    public static function canRestoreBulk(): bool
-    {
-        return Auth::user()->hasRole('Admin');
-    }
 }

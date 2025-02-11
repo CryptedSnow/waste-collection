@@ -32,6 +32,6 @@ class EditRole extends EditRecord
         return Notification::make()
             ->info()
             ->title('Papel alterado')
-            ->body("Papel {$role->name} foi alterado.");
+            ->body("<strong>{$role->name}</strong> foi alterado.");
     }
 }

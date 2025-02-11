@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Observers\UserObserver;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,6 +63,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         static::creating(function ($model) {
             $model->uuid = (string) Str::uuid();
         });
+        static::observe(UserObserver::class);
     }
 
     public function getRouteKeyName()
