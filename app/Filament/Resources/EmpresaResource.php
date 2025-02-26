@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EmpresaResource\Pages;
 use App\Filament\Resources\EmpresaResource\RelationManagers;
-use App\Models\{Empresa,UF};
+use App\Models\{Empresa, UF};
 use App\Rules\UniqueValueTable;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -79,15 +79,34 @@ class EmpresaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nome')->label('Nome')->searchable()->sortable(),
-                TextColumn::make('cnpj')->label('CNPJ')->sortable(),
-                TextColumn::make('uf')->label('Estado')->sortable(),
-                TextColumn::make('cidade')->label('Cidade')->sortable(),
-                TextColumn::make('bairro')->label('Bairro')->sortable(),
-                TextColumn::make('logradouro')->label('Logradouro')->sortable(),
-                TextColumn::make('numero')->label('Número')->sortable(),
-                TextColumn::make('email')->label('Email')->sortable(),
-                TextColumn::make('telefone')->label('Telefone')->sortable(),
+                TextColumn::make('nome')
+                    ->label('Nome')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('cnpj')
+                    ->label('CNPJ')
+                    ->sortable(),
+                TextColumn::make('uf')
+                    ->label('Estado')
+                    ->sortable(),
+                TextColumn::make('cidade')
+                    ->label('Cidade')
+                    ->sortable(),
+                TextColumn::make('bairro')
+                    ->label('Bairro')
+                    ->sortable(),
+                TextColumn::make('logradouro')
+                    ->label('Logradouro')
+                    ->sortable(),
+                TextColumn::make('numero')
+                    ->label('Número')
+                    ->sortable(),
+                TextColumn::make('email')
+                    ->label('Email')
+                    ->sortable(),
+                TextColumn::make('telefone')
+                    ->label('Telefone')
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

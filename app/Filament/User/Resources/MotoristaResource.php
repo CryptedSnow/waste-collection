@@ -6,6 +6,7 @@ use App\Filament\User\Resources\MotoristaResource\Pages;
 use App\Filament\User\Resources\MotoristaResource\RelationManagers;
 use App\Models\Motorista;
 use App\Rules\UniqueValueTable;
+use App\Enum\CategoriaHabilitacaoEnum;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -52,18 +53,12 @@ class MotoristaResource extends Resource
                     ->label('CNH')
                     ->required()
                     ->mask('99999999999')
-                    ->unique(ignoreRecord: true)->rules(['cnh']),
+                    ->unique(ignoreRecord: true)
+                    ->rules(['cnh']),
                 Select::make('categoria')
-                    ->label('Categoria da habilitação')
                     ->required()
-                    ->options([
-                        'A' => 'A',
-                        'B' => 'B',
-                        'C' => 'C',
-                        'D' => 'D',
-                        'E' => 'E',
-                    ])
-                    ->rules([Rule::in(['A', 'B', 'C', 'D', 'E'])]),
+                    ->label('Categoria da habilitação')
+                    ->options(CategoriaHabilitacaoEnum::class),
                 TextInput::make('email')
                     ->required()
                     ->email()
@@ -94,15 +89,8 @@ class MotoristaResource extends Resource
                 SelectColumn::make('categoria')
                     ->label('Categoria')
                     ->sortable()
-                    ->options([
-                        'A' => 'A',
-                        'B' => 'B',
-                        'C' => 'C',
-                        'D' => 'D',
-                        'E' => 'E',
-                    ])
-                    ->selectablePlaceholder(false)
-                    ->rules(['required', Rule::in(['A', 'B', 'C', 'D', 'E'])]),
+                    ->options(CategoriaHabilitacaoEnum::class)
+                    ->selectablePlaceholder(false),
                 TextColumn::make('email')
                     ->label('Email')
                     ->sortable(),

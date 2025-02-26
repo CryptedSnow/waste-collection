@@ -5,6 +5,7 @@ namespace App\Filament\User\Resources;
 use App\Filament\User\Resources\VeiculoResource\Pages;
 use App\Filament\User\Resources\VeiculoResource\RelationManagers;
 use App\Models\Veiculo;
+use App\Enum\StatusVeiculoEnum;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -48,13 +49,9 @@ class VeiculoResource extends Resource
                 TextInput::make('modelo')
                     ->required(),
                 Select::make('status')
-                    ->label('Status')
                     ->required()
-                    ->options([
-                        'Disponível' => 'Disponível',
-                        'Em manutenção' => 'Em manutenção',
-                    ])
-                    ->rules([Rule::in(['Disponível', 'Em manutenção'])]),
+                    ->label('Status')
+                    ->options(StatusVeiculoEnum::class),
             ]);
     }
 

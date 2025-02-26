@@ -21,7 +21,7 @@ composer dump-autoload
 php artisan key:generate
 ```
 
-Step N°2 - In `.env` file set the following snippet to connect the application to your database (Verify your database, it is necessary create a database to create the migrations).
+Step N°2 - In `.env` file set the following snippet to connect the application to your database (Verify your database, it is necessary create a database first to create the migrations).
 ```
 # MySQL
 DB_CONNECTION=mysql
@@ -46,7 +46,7 @@ Step N°3 - Execute the migrations.
 php artisan migrate
 ```
 
-Step N°4 - Use the commands to create some populated tables to some selection fields at forms (and users table).
+Step N°4 - Use the commands to perfomate the Seeders.
 
 ```
 php artisan db:seed
@@ -76,7 +76,7 @@ Step N°8 - Run the following command to start Apache to run the application.
 php artisan serve
 ```
 
-With help of **Laravel Spatie** and **Multi-tenancy**, exist two roles user: **Admin**,**User** and many companies. Making certains roles user has more privileges than others, it is very important you run the seeds to those users be created.
+With help of **Laravel Spatie** and **Multi-tenancy**, exist two roles user: **Admin**, **User** and many companies. Making certains roles user has more privileges than others, it is very important you run the seeds to those users be created.
 
 * User: Jonathan Joestar
 ```
@@ -93,7 +93,7 @@ Email: dio.brando@email.com
 Password: 12345678
 Role: Admin, User
 Permission: Many permissions
-Companies: The World, Tusk Act IV, Ball Breaker
+Companies: Tusk, Ball Breaker and The World
 ```
 
 * User: Johnny Joestar
@@ -102,7 +102,7 @@ Email: johnny.joestar@email.com
 Password: 12345678
 Role: User
 Permission: Many permissions
-Companies: Tusk Act IV
+Companies: Tusk
 ```
 
 * User: Gyro Zeppeli

@@ -5,6 +5,7 @@ namespace App\Filament\User\Resources;
 use App\Filament\User\Resources\ColetaResource\Pages;
 use App\Filament\User\Resources\ColetaResource\RelationManagers;
 use App\Models\{Coleta, LocalColeta, TipoResiduo, Motorista, Veiculo, DepositoResiduo};
+use App\Enum\{FinalidadeColetaEnum, StatusColetaEnum};
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,7 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\{Select, TextInput, DatePicker, TimePicker, Hidden};
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\{TextColumn, SelectColumn};
 use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Blade;
@@ -138,23 +139,11 @@ class ColetaResource extends Resource
                 Select::make('finalidade')
                     ->label('Finalidade')
                     ->required()
-                    ->options([
-                        'Reciclagem' => 'Reciclagem',
-                        'Incineiração' => 'Incineiração',
-                        'Compostagem' => 'Compostagem',
-                        'Coprocessamento' => 'Coprocessamento',
-                        'Aterro controlado' => 'Aterro controlado',
-                    ])
-                    ->rules([Rule::in(['Reciclagem', 'Incineiração', 'Compostagem', 'Coprocessamento', 'Aterro controlado'])]),
+                    ->options(FinalidadeColetaEnum::class),
                 Select::make('status')
                     ->label('Status')
                     ->required()
-                    ->options([
-                        'Em andamento' => 'Em andamento',
-                        'Concluído' => 'Concluído',
-                        'Cancelado' => 'Cancelado',
-                    ])
-                    ->rules([Rule::in(['Em andamento', 'Concluído', 'Cancelado'])]),
+                    ->options(StatusColetaEnum::class),
             ]);
     }
 
@@ -238,9 +227,11 @@ class ColetaResource extends Resource
                             ->money('BRL')
                             ->query(fn ($query) => $query->where('status', '!=', 'Cancelado')),
                     ]),
-                TextColumn::make('finalidade')
+                SelectColumn::make('finalidade')
                     ->label('Finalidade')
-                    ->sortable(),
+                    ->sortable()
+                    ->options(FinalidadeColetaEnum::class)
+                    ->selectablePlaceholder(false),
                 TextColumn::make('status')
                     ->label('Status')
                     ->colors([

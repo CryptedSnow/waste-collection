@@ -41,14 +41,14 @@ class EmpresaSeeder extends Seeder
             ],
             [
                 'uuid' => Str::uuid()->toString(),
-                'nome' => 'Tusk Act IV',
+                'nome' => 'Tusk',
                 'cnpj' => '56.891.048/0001-91',
                 'uf' => 'BA',
                 'cidade' => 'Lucky Land',
                 'bairro' => "JoJo's Bizarre Adventure",
                 'logradouro' => 'Steel Ball Run',
                 'numero' => 159,
-                'email' => 'tusk.act@email.com',
+                'email' => 'tusk@email.com',
                 'telefone' => '(77) 9804-7001',
             ],
             [

@@ -32,6 +32,7 @@ class ListVeiculos extends ListRecords
         $empresa_id = [$tenant->id];
 
         return [
+
             "Todos" => Tab::make('Todos')
                 ->badge($this->statusCount(null, $empresa_id))
                 ->badgeColor('info'),
@@ -47,6 +48,7 @@ class ListVeiculos extends ListRecords
                 ->whereIn('empresa_id', $empresa_id))
                 ->badge($this->statusCount('Em manutenção', $empresa_id))
                 ->badgeColor('warning'),
+
         ];
     }
 
