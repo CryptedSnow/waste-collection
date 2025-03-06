@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Notifications\Notification;
+use Leandrocfe\FilamentPtbrFormFields\Cep;
 
 class EmpresaResource extends Resource
 {
@@ -45,6 +46,20 @@ class EmpresaResource extends Resource
                     ->mask('99.999.999/9999-99')
                     ->rules(['cnpj', new UniqueValueTable('cnpj', ['depositos_residuos'])])
                     ->unique(ignoreRecord: true),
+                Cep::make('cep')
+                    ->label('CEP')
+                    ->mask('99999-999')
+                    ->required()
+                    ->live(onBlur: true)
+                    ->helperText('Digite um CEP válido e depois clique sobre a lupa')
+                    ->viaCep(
+                        mode: 'suffix',
+                        errorMessage: 'CEP inválido.',
+                        setFields: [
+                            'uf' => 'uf',
+                            'cidade' => 'localidade',
+                            ]
+                        ),
                 Select::make('uf')
                     ->label('Estado')
                     ->options(UF::all()->pluck('estado', 'sigla'))
@@ -85,6 +100,9 @@ class EmpresaResource extends Resource
                     ->sortable(),
                 TextColumn::make('cnpj')
                     ->label('CNPJ')
+                    ->sortable(),
+                TextColumn::make('cep')
+                    ->label('CEP')
                     ->sortable(),
                 TextColumn::make('uf')
                     ->label('Estado')

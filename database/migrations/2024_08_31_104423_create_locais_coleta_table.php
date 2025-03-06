@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->foreignId("empresa_id")->constrained("empresas");
             $table->foreignId("cliente_id")->constrained("clientes");
+            $table->string("cep", 9);
             $table->string("uf", 2);
             $table->string("cidade");
             $table->string("bairro");

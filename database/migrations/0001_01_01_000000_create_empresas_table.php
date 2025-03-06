@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string("nome", 50);
             $table->string("cnpj", 18);
+            $table->string("cep", 9);
             $table->string("uf", 2);
             $table->string("cidade");
             $table->string("bairro");

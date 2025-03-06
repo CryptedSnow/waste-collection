@@ -18,6 +18,7 @@ class Empresa extends Model implements HasName
         'uuid',
         'nome',
         'cnpj',
+        'cep',
         'uf',
         'cidade',
         'bairro',

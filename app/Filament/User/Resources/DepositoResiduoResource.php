@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\{Select, TextInput};
 use Filament\Tables\Columns\TextColumn;
 use Filament\Notifications\Notification;
+use Leandrocfe\FilamentPtbrFormFields\Cep;
 
 class DepositoResiduoResource extends Resource
 {
@@ -47,6 +48,20 @@ class DepositoResiduoResource extends Resource
                     ->mask('99.999.999/9999-99')
                     ->rules(['cnpj'])
                     ->unique(ignoreRecord: true),
+                Cep::make('cep')
+                    ->label('CEP')
+                    ->mask('99999-999')
+                    ->required()
+                    ->live(onBlur: true)
+                    ->helperText('Digite um CEP válido e depois clique sobre a lupa')
+                    ->viaCep(
+                        mode: 'suffix',
+                        errorMessage: 'CEP inválido.',
+                        setFields: [
+                            'uf' => 'uf',
+                            'cidade' => 'localidade',
+                            ]
+                        ),
                 Select::make('uf')
                     ->label('Estado')
                     ->options(UF::all()->pluck('estado', 'sigla'))
@@ -87,6 +102,9 @@ class DepositoResiduoResource extends Resource
                     ->sortable(),
                 TextColumn::make('cnpj')
                     ->label('CNPJ')
+                    ->sortable(),
+                TextColumn::make('cep')
+                    ->label('CEP')
                     ->sortable(),
                 TextColumn::make('uf')
                     ->label('Estado')

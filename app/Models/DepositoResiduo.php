@@ -18,6 +18,7 @@ class DepositoResiduo extends Model
         'empresa_id',
         'nome',
         'cnpj',
+        'cep',
         'uf',
         'cidade',
         'bairro',

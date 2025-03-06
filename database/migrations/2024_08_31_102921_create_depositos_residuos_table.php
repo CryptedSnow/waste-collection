@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId("empresa_id")->constrained("empresas");
             $table->string("nome", 50);
             $table->string("cnpj", 18);
+            $table->string("cep", 9);
             $table->string("uf", 2);
             $table->string("cidade");
             $table->string("bairro");

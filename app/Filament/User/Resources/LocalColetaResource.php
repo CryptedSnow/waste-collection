@@ -16,6 +16,7 @@ use Filament\Forms\Components\{Select, TextInput};
 use Filament\Tables\Columns\TextColumn;
 use Filament\Notifications\Notification;
 use Filament\Facades\Filament;
+use Leandrocfe\FilamentPtbrFormFields\Cep;
 
 class LocalColetaResource extends Resource
 {
@@ -52,6 +53,20 @@ class LocalColetaResource extends Resource
                     ->searchable()
                     ->required()
                     ->rules('exists:clientes,id'),
+                Cep::make('cep')
+                    ->label('CEP')
+                    ->mask('99999-999')
+                    ->required()
+                    ->live(onBlur: true)
+                    ->helperText('Digite um CEP válido e depois clique sobre a lupa')
+                    ->viaCep(
+                        mode: 'suffix',
+                        errorMessage: 'CEP inválido.',
+                        setFields: [
+                            'uf' => 'uf',
+                            'cidade' => 'localidade',
+                            ]
+                        ),
                 Select::make('uf')->label('Estado')
                     ->options(UF::all()->pluck('estado', 'sigla'))
                     ->required()
@@ -77,6 +92,9 @@ class LocalColetaResource extends Resource
                 TextColumn::make('clientes.nome')
                     ->label('Cliente')
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('cep')
+                    ->label('CEP')
                     ->sortable(),
                 TextColumn::make('uf')
                     ->label('Estado')

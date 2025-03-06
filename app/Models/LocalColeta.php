@@ -17,6 +17,7 @@ class LocalColeta extends Model
         'uuid',
         'empresa_id',
         'cliente_id',
+        'cep',
         'uf',
         'cidade',
         'bairro',
