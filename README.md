@@ -52,7 +52,12 @@ Step N°4 - Use the commands to perfomate the Seeders.
 php artisan db:seed
 ```
 
-Step N°5 - View the migrations been dones e verify status them.
+If you want perfomate migrations and seeders at same time.
+```
+php artisan migrate --seed
+```
+
+Step N°5 - View the migrations status.
 ```
 php artisan migrate:status
 ```
@@ -93,7 +98,7 @@ Email: dio.brando@email.com
 Password: 12345678
 Role: Admin, User
 Permission: Many permissions
-Companies: Tusk, Ball Breaker and The World
+Companies: Tusk, Ball Breaker, The World
 ```
 
 * User: Johnny Joestar

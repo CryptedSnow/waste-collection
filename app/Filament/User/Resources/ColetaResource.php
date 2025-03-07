@@ -98,7 +98,8 @@ class ColetaResource extends Resource
                             ->where('status', 'Disponível')
                             ->get()
                             ->mapWithKeys(function ($veiculo) {
-                                return [$veiculo->id => "{$veiculo->modelo} (Placa {$veiculo->placa_veiculo})"];
+                                $placa = $veiculo->placa_veiculo ? " (Placa {$veiculo->placa_veiculo})" : " (Sem placa)";
+                                return [$veiculo->id => "{$veiculo->modelo}{$placa}"];
                             });
                         }
                     })
@@ -204,7 +205,8 @@ class ColetaResource extends Resource
                     ->label('Placa')
                     ->searchable()
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->placeholder("Sem placa"),
                 TextColumn::make('depositoResiduo.nome')
                     ->label('Local de descarte')
                     ->searchable()
