@@ -165,12 +165,28 @@ class UserResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+            ->when(Auth::user()?->hasRole('Admin'), function ($query) {
+                $query->where(function ($query) {
+                    $query->where('id', Auth::id())
+                        ->orWhereDoesntHave('roles', function ($query) {
+                            $query->where('name', 'Admin');
+                        });
+                });
+            });
     }
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::withoutTrashed()->count();
+        return static::getModel()::withoutTrashed()
+            ->when(Auth::user()?->hasRole('Admin'), function ($query) {
+                $query->where(function ($query) {
+                    $query->where('id', Auth::id())
+                        ->orWhereDoesntHave('roles', function ($query) {
+                            $query->where('name', 'Admin');
+                        });
+                });
+            })->count();
     }
 
     public static function canEdit($record): bool
