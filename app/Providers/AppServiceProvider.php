@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         VerifyEmail::toMailUsing(function($notifiable, $url) {
             return (new MailMessage)
                 ->subject('Verifique seu e-mail')
-                ->line('Por favor, clique no link abaixo para verificar seu e-mail')
+                ->line('Por favor, clique no link abaixo para verificar seu e-mail.')
                 ->action('Verificar e-mail', $url)
                 ->line('Se você não criou uma conta, nenhuma ação é requerida.')
                 ->salutation("Atenciosamente,\n\nWaste collection");
