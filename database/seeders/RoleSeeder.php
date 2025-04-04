@@ -14,31 +14,15 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin_role = Role::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Admin'
-        ]);
+        $admin_role = Role::firstOrCreate(
+            ['name' => 'Admin'],
+            ['uuid' => Str::uuid()->toString()]
+        );
 
-        $user_role = Role::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'User'
-        ]);
-
-        $permissions = [
-            'Estudar Inglês',
-            'Estudar Italiano',
-            'Estudar Livewire',
-            'Estudar Cybersecurity',
-            'Estudar MongoDB',
-            'Estudar Filament v.3',
-        ];
-
-        foreach ($permissions as $permission_name) {
-            Permission::create([
-                'uuid' => Str::uuid()->toString(),
-                'name' => $permission_name
-            ]);
-        }
+        $user_role = Role::firstOrCreate(
+            ['name' => 'User'],
+            ['uuid' => Str::uuid()->toString()]
+        );
 
         $admin_permissions = Permission::whereIn('name', [
             'Estudar Inglês',
