@@ -11,7 +11,7 @@
 
 Follow the steps to set the application in your local machine.
 
-Step N°1 - Run the following commands below to install the dependencies (Verify the existence of `Composer`, `Node` and `NPM` in your machine).
+Step N°1 - Run the following commands below to install the dependencies (Check the existence of `Composer`, `Node` and `NPM` in your machine).
 
 ```
 composer install 
@@ -21,13 +21,13 @@ composer dump-autoload
 php artisan key:generate
 ```
 
-Step N°2 - In `.env` file set the following snippet to connect the application to your database (Verify your database, it is necessary create a database first to create the migrations).
+Step N°2 - In `.env` file set the following snippet to connect the application to your database (Check your database, it is necessary create a database first to create the migrations).
 ```
 # MySQL
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=waste-collect
+DB_DATABASE=waste-collection
 DB_USERNAME=root
 DB_PASSWORD=
 
@@ -35,7 +35,7 @@ DB_PASSWORD=
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
-DB_DATABASE=waste-collect
+DB_DATABASE=waste-collection
 DB_USERNAME=postgres
 DB_PASSWORD=
 ```
@@ -127,3 +127,7 @@ Role: User
 Permission: Many permissions
 Companies: The World
 ```
+
+Panels (Admin and User)
+- Admin: http://127.0.0.1:8000/admin/login
+- User: http://127.0.0.1:8000/user/login
