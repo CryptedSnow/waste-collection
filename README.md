@@ -143,6 +143,8 @@ Panels (Admin and User)
 
 ## Environment Docker
 
+In `.env` file set some following snippet to connect the application to your database.
+
 ```
 # MySQL (Docker)
 DB_CONNECTION=mysql
