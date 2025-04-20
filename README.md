@@ -11,17 +11,16 @@
 
 Follow the steps to set the application on your local machine.
 
-Step N°1 - Run the following commands below to install the dependencies (Check the existence of `Composer` on your machine).
+1 - Run the following commands below to install the dependencies (Check the existence of `Composer` on your machine).
 
 ```
 composer install 
-cp .env.example .env 
-php artisan cache:clear 
+cp .env.example .env  
 composer dump-autoload 
 php artisan key:generate
 ```
 
-Step N°2 - In `.env` file set the following snippet to connect the application to your database (Check your database, it is necessary create a database first to create the migrations).
+2 - In `.env` file set the following snippet to connect the application to your database.
 ```
 # MySQL
 DB_CONNECTION=mysql
@@ -49,13 +48,13 @@ $table->text('data');
 $table->json('data');
 ```
 
-Step N°3 - Run the migrations.
+3 - Run the migrations.
 
 ```
 php artisan migrate
 ```
 
-Step N°4 - Use the commands to perfomate the Seeders.
+4 - Use the commands to perfomate the Seeders.
 
 ```
 php artisan db:seed
@@ -66,17 +65,17 @@ If you want perfomate migrations and seeders at same time.
 php artisan migrate --seed
 ```
 
-Step N°5 - View the migrations status.
+5 - View the migrations status.
 ```
 php artisan migrate:status
 ```
 
-Step N°6 - Run the following command to install `Vite` (Check the existence of `Node` and `NPM` on your machine).
+6 - Run the following command to install `Vite` (Check the existence of `Node` and `NPM` on your machine).
 ```
 npm install
 ```
 
-Step N°7 - You need decide an option to start the `Vite`.
+7 - You need decide an option to start the `Vite`.
 ```
 # Run Vite to server development
 npm run dev
@@ -85,15 +84,19 @@ npm run dev
 npm run build
 ```
 
-Step N°8 - Run the following command to start Apache to run the application.
+8 - Run the following command to start Apache to run the application.
 ```
 php artisan serve
 ```
 
-With help of **Laravel Spatie** and **Multi-tenancy**, exist two roles user: **Admin**, **User** and many companies. Making certains roles user has more privileges than others, it is very important you run the seeds to those users be created.
+<a id="laravel-spatie-info"></a> With help of **Laravel Spatie** and **Multi-tenancy**, exist two roles user: **Admin**, **User** and many companies. Making certains roles user has more privileges than others, it is very important you run the seeds to those users be created.
 
-* User: Jonathan Joestar
+Panels (Admin and User)
+- Admin: http://127.0.0.1:8000/admin/login
+- User: http://127.0.0.1:8000/user/login
+
 ```
+Name: Jonathan Joestar
 Email: jonathan.joestar@email.com
 Password: 12345678
 Role: Admin
@@ -101,8 +104,8 @@ Permission: Many permissions
 Companies: Scarlet Overdrive
 ```
 
-* User: Dio Brando
 ```
+Name: Dio Brando
 Email: dio.brando@email.com
 Password: 12345678
 Role: Admin, User
@@ -110,8 +113,8 @@ Permission: Many permissions
 Companies: Tusk, Ball Breaker, The World
 ```
 
-* User: Johnny Joestar
 ```
+Name: Johnny Joestar
 Email: johnny.joestar@email.com
 Password: 12345678
 Role: User
@@ -119,8 +122,8 @@ Permission: Many permissions
 Companies: Tusk
 ```
 
-* User: Gyro Zeppeli
 ```
+Name: Gyro Zeppeli
 Email: gyro.zeppeli@email.com
 Password: 12345678
 Role: User
@@ -128,8 +131,8 @@ Permission: Many permissions
 Companies: Ball Breaker
 ```
 
-* User: Diego Brando
 ```
+Name: Diego Brando
 Email: diego.brando@email.com
 Password: 12345678
 Role: User
@@ -137,16 +140,60 @@ Permission: Many permissions
 Companies: The World
 ```
 
-Panels (Admin and User)
-- Admin: http://127.0.0.1:8000/admin/login
-- User: http://127.0.0.1:8000/user/login
+## Docker environment
 
-## Environment Docker
+1 - Power on the containers:
 
-In `.env` file set some following snippet to connect the application to your database.
+**sail command way**
 
 ```
-# MySQL (Docker)
+./vendor/bin/sail up -d
+```
+
+I prefere to shorten the command, you can use:
+```
+alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
+```
+
+Doing this, you don't need write ```./vendor/bin/sail```, you can use a minor command: 
+```
+sail up -d
+```
+
+If you want see the sail commands, use: 
+```
+sail --help
+```
+
+**docker-compose command way**
+```
+docker-compose up -d
+```
+
+2 - Run the following commands below to install the necessary dependencies.
+
+**sail command way**
+
+```
+sail composer install
+sail cp .env.example .env
+sail composer dump-autoload
+sail artisan key:generate
+```
+
+**docker-compose command way**
+
+```
+docker-compose exec laravel.test composer install
+docker-compose exec laravel.test cp .env.example .env
+docker-compose exec laravel.test composer dump-autoload
+docker-compose exec laravel.test artisan key:generate
+```
+
+3 - In ```.env``` file set the following snippet to connect the application to database container from Docker:
+
+```
+# MySQL
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
@@ -154,7 +201,7 @@ DB_DATABASE=waste-collection
 DB_USERNAME=sail
 DB_PASSWORD=password
 
-# PostgreSQL (Docker)
+# PostgreSQL
 DB_CONNECTION=pgsql
 DB_HOST=pgsql
 DB_PORT=5432
@@ -163,7 +210,74 @@ DB_USERNAME=postgres
 DB_PASSWORD=secret
 ```
 
-### Panels
+4 - To performate the migrations, you need use the command:
+
+**sail command way**
+
+```
+sail php artisan migrate --seed
+```
+
+**docker-compose command way**
+
+```
+docker-compose exec laravel.test php artisan migrate --seed
+```
+
+Or
+
+**sail command way**
+
+```
+sail php artisan migrate
+sail php db:seed
+```
+
+**docker-compose command way**
+
+```
+docker-compose exec laravel.test php artisan migrate
+docker-compose exec laravel.test php artisan db:seed
+```
+
+5 - Run the following command to install `Vite`.
+
+**sail command way**
+
+```
+sail npm install
+```
+
+**docker-compose command way**
+```
+docker-compose exec laravel.test npm install
+```
+
+6 - You need decide an option to start the `Vite`.
+
+**sail command way**
+
+```
+# Run Vite to server development
+sail npm run dev
+ 
+# Create and version assets for production... (I usually choose it)
+sail npm run build
+```
+
+**docker-compose command way**
+
+```
+# Run Vite to server development
+docker-compose exec laravel.test npm run dev
+ 
+# Create and version assets for production... (I usually choose it)
+docker-compose exec laravel.test npm run build
+```
+
+The user credentials are the same, panels to Admin and User also, click <a href="#laravel-spatie-info">here</a> to see.
+
+### Panels to Docker environment
 - phpMyAdmin: http://localhost:8081
 - pgAdmin 4: http://localhost:5050
     - User: `admin@admin.com`
