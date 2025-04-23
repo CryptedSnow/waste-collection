@@ -11,7 +11,7 @@
 
 Follow the steps to set the application on your local machine.
 
-1 - Run the following commands below to install the dependencies (Check the existence of `Composer` on your machine).
+<a id="composer-intall-command"></a> 1 - Run the following commands below to install the dependencies (Check the existence of `Composer` on your machine).
 
 ```
 composer install 
@@ -142,7 +142,9 @@ Companies: The World
 
 ## Docker environment
 
-1 - Power on the containers:
+My recomendation that you have done ```composer install``` before that you power on the containers, see the command <a href="#composer-intall-command">here</a>.
+
+1 - Case you have done ```composer install```, power on the containers:
 
 **sail command way**
 
@@ -170,27 +172,7 @@ sail --help
 docker-compose up -d
 ```
 
-2 - Run the following commands below to install the necessary dependencies.
-
-**sail command way**
-
-```
-sail composer install
-sail cp .env.example .env
-sail composer dump-autoload
-sail artisan key:generate
-```
-
-**docker-compose command way**
-
-```
-docker-compose exec laravel.test composer install
-docker-compose exec laravel.test cp .env.example .env
-docker-compose exec laravel.test composer dump-autoload
-docker-compose exec laravel.test artisan key:generate
-```
-
-3 - In ```.env``` file set the following snippet to connect the application to database container from Docker:
+2 - In ```.env``` file set the following snippet to connect the application to database container from Docker:
 
 ```
 # MySQL
@@ -210,7 +192,7 @@ DB_USERNAME=postgres
 DB_PASSWORD=secret
 ```
 
-4 - To performate the migrations, you need use the command:
+3 - To performate the migrations, you need use the command:
 
 **sail command way**
 
@@ -240,7 +222,9 @@ docker-compose exec laravel.test php artisan migrate
 docker-compose exec laravel.test php artisan db:seed
 ```
 
-5 - Run the following command to install `Vite`.
+Case you have executed ```npm install``` and ```npm run build``` locally, skip step 4 and 5.
+
+4 - Run the following command to install `Vite`.
 
 **sail command way**
 
@@ -253,25 +237,17 @@ sail npm install
 docker-compose exec laravel.test npm install
 ```
 
-6 - You need decide an option to start the `Vite`.
+5 - You need decide an option to start the `Vite`.
 
 **sail command way**
 
 ```
-# Run Vite to server development
-sail npm run dev
- 
-# Create and version assets for production... (I usually choose it)
 sail npm run build
 ```
 
 **docker-compose command way**
 
 ```
-# Run Vite to server development
-docker-compose exec laravel.test npm run dev
- 
-# Create and version assets for production... (I usually choose it)
 docker-compose exec laravel.test npm run build
 ```
 
