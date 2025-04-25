@@ -11,16 +11,27 @@
 
 Follow the steps to set the application on your local machine.
 
-<a id="composer-intall-command"></a> 1 - Run the following commands below to install the dependencies (Check the existence of `Composer` on your machine).
-
+1 - Run the following commands below to install the dependencies (Check the existence of `Composer` on your machine).
 ```
 composer install 
+```
+
+2 - Create ```.env``` file:
+```
 cp .env.example .env  
+```
+
+3 - Update Composer autoload file:
+```
 composer dump-autoload 
+```
+
+4 - Generate to ```.env``` file:
+```
 php artisan key:generate
 ```
 
-2 - In `.env` file set the following snippet to connect the application to your database.
+5 - In `.env` file set the following snippet to connect the application to your database.
 ```
 # MySQL
 DB_CONNECTION=mysql
@@ -40,6 +51,7 @@ DB_PASSWORD=
 ```
 
 Before you perfomate the migrations, go to [notifications](https://github.com/CryptedSnow/waste-collection/blob/main/database/migrations/2024_11_30_113525_create_notifications_table.php) table to make a change in a specific line, it will avoid errors involving notifications and database.
+
 ```
 # MySQL
 $table->text('data');
@@ -48,14 +60,12 @@ $table->text('data');
 $table->json('data');
 ```
 
-3 - Run the migrations.
-
+6 - Run the migrations.
 ```
 php artisan migrate
 ```
 
-4 - Use the commands to perfomate the Seeders.
-
+7 - Use the commands to perfomate the Seeders.
 ```
 php artisan db:seed
 ```
@@ -65,26 +75,22 @@ If you want perfomate migrations and seeders at same time.
 php artisan migrate --seed
 ```
 
-5 - View the migrations status.
+8 - View the migrations status.
 ```
 php artisan migrate:status
 ```
 
-6 - Run the following command to install `Vite` (Check the existence of `Node` and `NPM` on your machine).
+9 - Run the following command to install `Vite` (Check the existence of `Node` and `NPM` on your machine).
 ```
 npm install
 ```
 
-7 - You need decide an option to start the `Vite`.
+10 - Run the following command to compile and optimize application assets for production..
 ```
-# Run Vite to server development
-npm run dev
- 
-# Create and version assets for production... (I usually choose this in my local machine)
 npm run build
 ```
 
-8 - Run the following command to start Apache to run the application.
+11 - Run the following command to start Apache to run the application.
 ```
 php artisan serve
 ```
@@ -142,38 +148,32 @@ Companies: The World
 
 ## Docker environment
 
-My recomendation that you have done ```composer install``` before that you power on the containers, see the command <a href="#composer-intall-command">here</a>.
-
-1 - Case you have done ```composer install```, power on the containers:
-
-**sail command way**
-
-```
-./vendor/bin/sail up -d
-```
-
-I prefere to shorten the command, you can use:
-```
-alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
-```
-
-Doing this, you don't need write ```./vendor/bin/sail```, you can use a minor command: 
-```
-sail up -d
-```
-
-If you want see the sail commands, use: 
-```
-sail --help
-```
-
-**docker-compose command way**
+1 - Power on the containers:
 ```
 docker-compose up -d
 ```
 
-2 - In ```.env``` file set the following snippet to connect the application to database container from Docker:
+2 - Run the ```composer install``` command:
+```
+docker-compose exec laravel.test composer install
+```
 
+3 - Create ```.env``` file:
+```
+docker-compose exec laravel.test cp .env.example .env  
+```
+
+4 - Update Composer autoload file:
+```
+docker-compose exec laravel.test composer dump-autoload 
+```
+
+5 - Generate to ```.env``` file:
+```
+docker-compose exec laravel.test php artisan key:generate
+```
+
+6 - In ```.env``` file set the following snippet to connect the application to database container from **Docker**:
 ```
 # MySQL
 DB_CONNECTION=mysql
@@ -192,61 +192,34 @@ DB_USERNAME=postgres
 DB_PASSWORD=secret
 ```
 
-3 - To performate the migrations, you need use the command:
-
-**sail command way**
+Before you perfomate the migrations, go to [notifications](https://github.com/CryptedSnow/waste-collection/blob/main/database/migrations/2024_11_30_113525_create_notifications_table.php) table to make a change in a specific line, it will avoid errors involving notifications and database.
 
 ```
-sail php artisan migrate --seed
+# MySQL
+$table->text('data');
+
+# PostgreSQL
+$table->json('data');
 ```
 
-**docker-compose command way**
-
+7 - To performate the migrations, you need use the command:
 ```
 docker-compose exec laravel.test php artisan migrate --seed
 ```
 
 Or
 
-**sail command way**
-
-```
-sail php artisan migrate
-sail php db:seed
-```
-
-**docker-compose command way**
-
 ```
 docker-compose exec laravel.test php artisan migrate
 docker-compose exec laravel.test php artisan db:seed
 ```
 
-Case you have executed ```npm install``` and ```npm run build``` locally, skip step 4 and 5.
-
-4 - Run the following command to install `Vite`.
-
-**sail command way**
-
-```
-sail npm install
-```
-
-**docker-compose command way**
+8 - Run the following command to install `Vite`.
 ```
 docker-compose exec laravel.test npm install
 ```
 
-5 - You need decide an option to start the `Vite`.
-
-**sail command way**
-
-```
-sail npm run build
-```
-
-**docker-compose command way**
-
+9 - Run the following command to compile and optimize application assets for production.
 ```
 docker-compose exec laravel.test npm run build
 ```
