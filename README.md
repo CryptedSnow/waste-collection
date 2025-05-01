@@ -163,7 +163,7 @@ docker-compose exec laravel.test composer install
 docker-compose exec laravel.test cp .env.example .env  
 ```
 
-4 - Update Composer autoload file:
+4 - Update composer dump-autoload:
 ```
 docker-compose exec laravel.test composer dump-autoload 
 ```
@@ -173,7 +173,16 @@ docker-compose exec laravel.test composer dump-autoload
 docker-compose exec laravel.test php artisan key:generate
 ```
 
-6 - In ```.env``` file set the following snippet to connect the application to database container from **Docker**:
+<a id="ste-6-info"></a> 6 - You can't maintain two databases working at same time, it's necessary choose.
+```
+# Avoid conflict to mysql phpmyadmin
+docker-compose stop pgsql pgadmin
+
+# Avoid conflict to pgsql pgadmin
+docker-compose stop mysql phpmyadmin
+```
+
+7 - In ```.env``` file set the following snippet to connect the application to database container from **Docker**:
 ```
 # MySQL
 DB_CONNECTION=mysql
@@ -192,6 +201,8 @@ DB_USERNAME=postgres
 DB_PASSWORD=secret
 ```
 
+Remember, before you change of database, run ```docker-compose down```, modify the ```.env``` file snippet to connect the application to database container and run ```docker-compose up -d``` again and see <a href="#ste-6-info">step 6</a> to stop determinated services.
+
 Before you perfomate the migrations, go to [notifications](https://github.com/CryptedSnow/waste-collection/blob/main/database/migrations/2024_11_30_113525_create_notifications_table.php) table to make a change in a specific line, it will avoid errors involving notifications and database.
 
 ```
@@ -202,7 +213,7 @@ $table->text('data');
 $table->json('data');
 ```
 
-7 - To performate the migrations, you need use the command:
+8 - To performate the migrations, you need use the command:
 ```
 docker-compose exec laravel.test php artisan migrate --seed
 ```
@@ -214,17 +225,12 @@ docker-compose exec laravel.test php artisan migrate
 docker-compose exec laravel.test php artisan db:seed
 ```
 
-Case you decide to change of database to perfomate the step 7 to other database
-```
-docker-compose exec laravel.test php artisan optimize:clear
-```
-
-8 - Run the following command to install `Vite`.
+9 - Run the following command to install `Vite`.
 ```
 docker-compose exec laravel.test npm install
 ```
 
-9 - Run the following command to compile and optimize application assets for production.
+10 - Run the following command to compile and optimize application assets for production.
 ```
 docker-compose exec laravel.test npm run build
 ```
