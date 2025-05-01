@@ -214,6 +214,11 @@ docker-compose exec laravel.test php artisan migrate
 docker-compose exec laravel.test php artisan db:seed
 ```
 
+Case you decide to change of database to perfomate the step 7 to other database
+```
+docker-compose exec laravel.test php artisan optimize:clear
+```
+
 8 - Run the following command to install `Vite`.
 ```
 docker-compose exec laravel.test npm install
@@ -228,6 +233,6 @@ The user credentials are the same, panels to Admin and User also, click <a href=
 
 ### Panels to Docker environment
 - phpMyAdmin: http://localhost:8081
-- pgAdmin 4: http://localhost:5050
+- pgAdmin: http://localhost:5050
     - User: `admin@admin.com`
     - Password: `admin`
