@@ -21,7 +21,7 @@ composer install
 cp .env.example .env  
 ```
 
-3 - Update Composer autoload file:
+3 - Update composer dump-autoload:
 ```
 composer dump-autoload 
 ```
