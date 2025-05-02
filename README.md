@@ -65,14 +65,9 @@ $table->json('data');
 php artisan migrate
 ```
 
-7 - Use the commands to perfomate the Seeders.
+7 - Use the commands to perfomate the Seeders:
 ```
 php artisan db:seed
-```
-
-If you want perfomate migrations and seeders at same time.
-```
-php artisan migrate --seed
 ```
 
 8 - View the migrations status.
@@ -215,22 +210,20 @@ $table->json('data');
 
 8 - To performate the migrations, you need use the command:
 ```
-docker-compose exec laravel.test php artisan migrate --seed
-```
-
-Or
-
-```
 docker-compose exec laravel.test php artisan migrate
+```
+
+9 - Use the commands to perfomate the Seeders:
+```
 docker-compose exec laravel.test php artisan db:seed
 ```
 
-9 - Run the following command to install `Vite`.
+10 - Run the following command to install `Vite`.
 ```
 docker-compose exec laravel.test npm install
 ```
 
-10 - Run the following command to compile and optimize application assets for production.
+11 - Run the following command to compile and optimize application assets for production.
 ```
 docker-compose exec laravel.test npm run build
 ```
