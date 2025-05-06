@@ -21,17 +21,12 @@ composer install
 cp .env.example .env  
 ```
 
-3 - Update composer dump-autoload:
-```
-composer dump-autoload 
-```
-
-4 - Generate to ```.env``` file:
+3 - Generate to ```.env``` file:
 ```
 php artisan key:generate
 ```
 
-5 - In `.env` file set the following snippet to connect the application to your database.
+4 - In `.env` file set the following snippet to connect the application to your database.
 ```
 # MySQL
 DB_CONNECTION=mysql
@@ -60,32 +55,32 @@ $table->text('data');
 $table->json('data');
 ```
 
-6 - Run the migrations.
+5 - Run the migrations.
 ```
 php artisan migrate
 ```
 
-7 - Use the commands to perfomate the Seeders:
+6 - Use the commands to perfomate the Seeders:
 ```
 php artisan db:seed
 ```
 
-8 - View the migrations status.
+7 - View the migrations status.
 ```
 php artisan migrate:status
 ```
 
-9 - Run the following command to install `Vite` (Check the existence of `Node` and `NPM` on your machine).
+8 - Run the following command to install `Vite` (Check the existence of `Node` and `NPM` on your machine).
 ```
 npm install
 ```
 
-10 - Run the following command to compile and optimize application assets for production..
+9 - Run the following command to compile and optimize application assets for production..
 ```
 npm run build
 ```
 
-11 - Run the following command to start Apache to run the application.
+10 - Run the following command to start Apache to run the application.
 ```
 php artisan serve
 ```
@@ -150,25 +145,20 @@ docker-compose up -d
 
 2 - Run the ```composer install``` command:
 ```
-docker-compose exec laravel.test composer install
+docker-compose exec app composer install
 ```
 
 3 - Create ```.env``` file:
 ```
-docker-compose exec laravel.test cp .env.example .env  
+docker-compose exec app cp .env.example .env  
 ```
 
-4 - Update composer dump-autoload:
+4 - Generate to ```.env``` file:
 ```
-docker-compose exec laravel.test composer dump-autoload 
-```
-
-5 - Generate to ```.env``` file:
-```
-docker-compose exec laravel.test php artisan key:generate
+docker-compose exec app php artisan key:generate
 ```
 
-<a id="ste-6-info"></a> 6 - You can't maintain two databases working at same time, it's necessary choose.
+You can't maintain two databases working at same time, it's necessary choose.
 ```
 # Avoid conflict to mysql phpmyadmin
 docker-compose stop pgsql pgadmin
@@ -177,14 +167,16 @@ docker-compose stop pgsql pgadmin
 docker-compose stop mysql phpmyadmin
 ```
 
-7 - In ```.env``` file set the following snippet to connect the application to database container from **Docker**:
+Remember, before you change of database, run ```docker-compose down```, modify the ```.env``` file snippet to connect the application to database container and run ```docker-compose up -d``` again.
+
+5 - In ```.env``` file set the following snippet to connect the application to database container from **Docker**:
 ```
 # MySQL
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
 DB_DATABASE=waste-collection
-DB_USERNAME=sail
+DB_USERNAME=user
 DB_PASSWORD=password
 
 # PostgreSQL
@@ -196,8 +188,6 @@ DB_USERNAME=postgres
 DB_PASSWORD=secret
 ```
 
-Remember, before you change of database, run ```docker-compose down```, modify the ```.env``` file snippet to connect the application to database container and run ```docker-compose up -d``` again and see <a href="#ste-6-info">step 6</a> to stop determinated services.
-
 Before you perfomate the migrations, go to [notifications](https://github.com/CryptedSnow/waste-collection/blob/main/database/migrations/2024_11_30_113525_create_notifications_table.php) table to make a change in a specific line, it will avoid errors involving notifications and database.
 
 ```
@@ -208,24 +198,30 @@ $table->text('data');
 $table->json('data');
 ```
 
-8 - To performate the migrations, you need use the command:
+6 - To performate the migrations, you need use the command:
 ```
-docker-compose exec laravel.test php artisan migrate
-```
-
-9 - Use the commands to perfomate the Seeders:
-```
-docker-compose exec laravel.test php artisan db:seed
+docker-compose exec app php artisan migrate
 ```
 
-10 - Run the following command to install `Vite`.
+7 - Use the commands to perfomate the Seeders:
 ```
-docker-compose exec laravel.test npm install
+docker-compose exec app php artisan db:seed
 ```
 
-11 - Run the following command to compile and optimize application assets for production.
+8 - Run the following command to install Javascript dependencies.
 ```
-docker-compose exec laravel.test npm run build
+docker-compose exec app npm install
+```
+
+9 - Run the following command to compile and optimize application assets for production.
+```
+docker-compose exec app npm run build
+```
+
+10 - To power off the containers before exit from application, use the command:
+
+```
+docker-compose down
 ```
 
 The user credentials are the same, panels to Admin and User also, click <a href="#laravel-spatie-info">here</a> to see.
