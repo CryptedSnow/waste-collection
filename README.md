@@ -11,7 +11,7 @@
 
 Follow the steps to set the application on your local machine.
 
-1 - Run the following commands below to install the dependencies (Check the existence of `Composer` on your machine).
+1 - Run the ```composer install``` command to create ```vendor``` folder (Check the existence of `Composer` on your machine).
 ```
 composer install 
 ```
@@ -21,7 +21,7 @@ composer install
 cp .env.example .env  
 ```
 
-3 - Generate to ```.env``` file:
+3 - Generate crypted key (Fill ```APP_KEY=``` to ```.env``` file):
 ```
 php artisan key:generate
 ```
@@ -65,22 +65,17 @@ php artisan migrate
 php artisan db:seed
 ```
 
-7 - View the migrations status.
-```
-php artisan migrate:status
-```
-
-8 - Run the following command to install `Vite` (Check the existence of `Node` and `NPM` on your machine).
+7 - Run the following command to install JavaScript dependencies (Check the existence of `Node` and `NPM` on your machine).
 ```
 npm install
 ```
 
-9 - Run the following command to compile and optimize application assets for production..
+8 - Run the following command to compile and optimize JavaScript files for production.
 ```
 npm run build
 ```
 
-10 - Run the following command to start Apache to run the application.
+9 - Run the following command to start Apache to run the application.
 ```
 php artisan serve
 ```
@@ -143,7 +138,7 @@ Companies: The World
 docker-compose up -d
 ```
 
-2 - Run the ```composer install``` command:
+2 - Run the ```composer install``` command to create ```vendor``` folder:
 ```
 docker-compose exec app composer install
 ```
@@ -153,7 +148,7 @@ docker-compose exec app composer install
 docker-compose exec app cp .env.example .env  
 ```
 
-4 - Generate to ```.env``` file:
+4 - Generate crypted key (Fill ```APP_KEY=``` to ```.env``` file):
 ```
 docker-compose exec app php artisan key:generate
 ```
@@ -213,7 +208,7 @@ docker-compose exec app php artisan db:seed
 docker-compose exec app npm install
 ```
 
-9 - Run the following command to compile and optimize application assets for production.
+9 - Run the following command to compile and optimize JavaScript files for production.
 ```
 docker-compose exec app npm run build
 ```
@@ -226,7 +221,7 @@ docker-compose down
 
 The user credentials are the same, panels to Admin and User also, click <a href="#laravel-spatie-info">here</a> to see.
 
-### Panels to Docker environment
+### Docker environment addresses
 - phpMyAdmin: http://localhost:8081
 - pgAdmin: http://localhost:5050
     - User: `admin@admin.com`
