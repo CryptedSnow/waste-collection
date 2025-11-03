@@ -1,7 +1,7 @@
 services:
     app:
         build:
-            context: .
+            context: ./docker/8.4
             dockerfile: Dockerfile
             args:
                 NODE_VERSION: '22'
