@@ -13,7 +13,6 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Filament\Panel;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
 use Filament\Models\Contracts\HasTenants;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -88,15 +87,18 @@ class User extends Authenticatable implements FilamentUser, HasTenants
 
     public function canAccessPanel(Panel $panel): bool
     {
-        $user = Auth::user();
-        $role = $user->getRoleNames();
-
-        $panel_role = [
+        $panel_roles = [
             'admin' => 'Admin',
             'user'  => 'User',
         ];
 
-        return isset($panel_role[$panel->getId()]) && $role->contains($panel_role[$panel->getId()]);
+        $required_role = $panel_roles[$panel->getId()] ?? null;
+
+        if ($required_role === null) {
+            return false;
+        }
+
+        return $this->hasRole($required_role);
     }
 
 }
