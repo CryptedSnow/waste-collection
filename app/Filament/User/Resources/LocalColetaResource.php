@@ -116,6 +116,9 @@ class LocalColetaResource extends Resource
                     ->label('Número')
                     ->sortable(),
             ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with(['empresa','clientes']);
+            })
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])

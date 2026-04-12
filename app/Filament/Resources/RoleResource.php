@@ -65,6 +65,9 @@ class RoleResource extends Resource
                         ->searchable()
                         ->placeholder('Sem permissões'),
             ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with('permissions');
+            })
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])

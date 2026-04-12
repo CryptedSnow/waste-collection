@@ -113,6 +113,9 @@ class UserResource extends Resource
                     })
                     ->placeholder('Sem empresas'),
             ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with(['roles', 'empresas']);
+            })
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])

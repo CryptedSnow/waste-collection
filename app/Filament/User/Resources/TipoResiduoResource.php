@@ -53,6 +53,9 @@ class TipoResiduoResource extends Resource
                     ->searchable()
                     ->sortable(),
             ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with('empresa');
+            })
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])

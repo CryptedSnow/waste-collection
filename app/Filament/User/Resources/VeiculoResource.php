@@ -79,6 +79,9 @@ class VeiculoResource extends Resource
                     ])
                     ->badge(),
             ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with('empresa');
+            })
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])

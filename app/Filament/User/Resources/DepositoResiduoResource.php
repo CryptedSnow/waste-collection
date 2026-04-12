@@ -128,6 +128,9 @@ class DepositoResiduoResource extends Resource
                     ->label('Telefone')
                     ->sortable(),
             ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with('empresa');
+            })
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])

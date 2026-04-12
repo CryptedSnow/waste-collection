@@ -251,6 +251,9 @@ class ColetaResource extends Resource
                     ->label('Criado em')
                     ->dateTime('d/m/Y H:i:s'),
             ])
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with(['empresa','localColeta','tipoResiduo','motorista','veiculo','depositoResiduo']);
+            })
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
