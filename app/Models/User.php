@@ -6,6 +6,8 @@ namespace App\Models;
 
 use App\Observers\UserObserver;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,10 +18,11 @@ use Illuminate\Support\Str;
 use Filament\Models\Contracts\HasTenants;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements FilamentUser, HasTenants
+class User extends Authenticatable implements FilamentUser, HasTenants, HasAvatar
 {
-    use HasFactory, Notifiable, SoftDeletes, HasRoles;
+    use HasFactory, Notifiable, SoftDeletes, HasRoles, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +34,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         'name',
         'email',
         'password',
+        'avatar_url',
     ];
 
     /**
@@ -99,6 +103,12 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         }
 
         return $this->hasRole($required_role);
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
+        return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
     }
 
 }

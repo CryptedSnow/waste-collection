@@ -18,6 +18,9 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Filament\Navigation\MenuItem;
 use App\Models\Empresa;
 
 class UserPanelProvider extends PanelProvider
@@ -28,7 +31,6 @@ class UserPanelProvider extends PanelProvider
             ->id('user')
             ->path('user')
             ->login()
-            ->profile()
             ->passwordReset()
             ->sidebarCollapsibleOnDesktop()
             ->databaseNotifications()
@@ -60,6 +62,24 @@ class UserPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                FilamentEditProfilePlugin::make()
+                    ->slug('edit-profile')
+                    ->setTitle('Meu Perfil')
+                    ->setNavigationLabel('Meu Perfil')
+                    ->setIcon('heroicon-o-user')
+                    ->shouldRegisterNavigation(false)
+                    ->shouldShowAvatarForm(true, 'avatars', 'mimes:jpeg,png,jpg|max:2048')
+                    ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowSanctumTokens(false)
+                    ->shouldShowBrowserSessionsForm(true)
+            ])
+            ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->label(fn () => auth()->user()->name ?? 'Perfil')
+                    ->url(fn () => EditProfilePage::getUrl())
+                    ->icon('heroicon-m-user-circle'),
             ]);
     }
 }
