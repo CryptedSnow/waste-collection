@@ -107,8 +107,17 @@ class User extends Authenticatable implements FilamentUser, HasTenants, HasAvata
 
     public function getFilamentAvatarUrl(): ?string
     {
-        $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
-        return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
+        if (empty($this->avatar_url)) {
+            return null;
+        }
+
+        $path = $this->avatar_url;
+
+        if (!str_starts_with($path, 'avatars/')) {
+            $path = 'avatars/' . ltrim($path, '/');
+        }
+
+        return asset('storage/' . $path);
     }
 
 }
