@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: mysql9.serv00.com
--- Generation Time: Mar 06, 2025 at 08:34 PM
--- Server version: 8.0.39
--- PHP Version: 8.1.31
+-- Host: mysql
+-- Generation Time: Apr 13, 2026 at 08:18 PM
+-- Server version: 8.0.45
+-- PHP Version: 8.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `m9749_waste-collect`
+-- Database: `waste-collection`
 --
 
 -- --------------------------------------------------------
@@ -28,10 +28,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('livewire-rate-limiter:287b58015ec6ed41cc45119562d7402bb1069aed', 'i:1;', 1776111369),
+('livewire-rate-limiter:287b58015ec6ed41cc45119562d7402bb1069aed:timer', 'i:1776111369;', 1776111369),
+('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:5:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"uuid\";s:1:\"c\";s:4:\"name\";s:1:\"d\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:6:{i:0;a:5:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"0acc22a1-4647-4727-85b3-d9b2fb71f0d3\";s:1:\"c\";s:15:\"Estudar Inglês\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:5:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"241abc94-4f0b-4c9c-8082-cdf7ce586c71\";s:1:\"c\";s:16:\"Estudar Italiano\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:5:{s:1:\"a\";i:3;s:1:\"b\";s:36:\"4aa066b6-b179-4ecb-ab76-808ffc304f51\";s:1:\"c\";s:16:\"Estudar Livewire\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:5:{s:1:\"a\";i:4;s:1:\"b\";s:36:\"b5d59a64-85cc-45f4-b863-4b17aed5f5d9\";s:1:\"c\";s:21:\"Estudar Cybersecurity\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:4;a:5:{s:1:\"a\";i:5;s:1:\"b\";s:36:\"8779c7c3-ace4-4bf6-8602-3b3577595085\";s:1:\"c\";s:15:\"Estudar MongoDB\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:5;a:5:{s:1:\"a\";i:6;s:1:\"b\";s:36:\"bc1414e1-fdd7-448f-a3a2-0c705c930aba\";s:1:\"c\";s:20:\"Estudar Filament v.3\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}}s:5:\"roles\";a:2:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"0bd05d39-d94c-4813-b62a-9d21736a9a78\";s:1:\"c\";s:5:\"Admin\";s:1:\"d\";s:3:\"web\";}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"676354f9-4fe7-438a-beb8-7bd11417cb6a\";s:1:\"c\";s:4:\"User\";s:1:\"d\";s:3:\"web\";}}}', 1776197710);
 
 -- --------------------------------------------------------
 
@@ -40,8 +49,8 @@ CREATE TABLE `cache` (
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -53,12 +62,12 @@ CREATE TABLE `cache_locks` (
 
 CREATE TABLE `clientes` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cpf` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cpf` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -115,8 +124,8 @@ INSERT INTO `clientes` (`id`, `uuid`, `empresa_id`, `nome`, `cpf`, `email`, `tel
 
 CREATE TABLE `coletas` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `codigo_coleta` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_coleta` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
   `local_coleta_id` bigint UNSIGNED NOT NULL,
   `tipo_residuo_id` bigint UNSIGNED NOT NULL,
@@ -127,8 +136,8 @@ CREATE TABLE `coletas` (
   `data_coleta` date NOT NULL,
   `hora_coleta` time NOT NULL,
   `valor_coleta` double NOT NULL,
-  `finalidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `finalidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -185,40 +194,40 @@ INSERT INTO `coletas` (`id`, `uuid`, `codigo_coleta`, `empresa_id`, `local_colet
 
 CREATE TABLE `depositos_residuos` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cnpj` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uf` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cnpj` varchar(18) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cep` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `numero` int NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `cep` char(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `depositos_residuos`
 --
 
-INSERT INTO `depositos_residuos` (`id`, `uuid`, `empresa_id`, `nome`, `cnpj`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `email`, `telefone`, `created_at`, `updated_at`, `deleted_at`, `cep`) VALUES
-(1, 'e7c4e335-ba8d-4e99-8d3e-cf1199f9580f', 2, 'Stone Arrow', '80.758.002/0001-83', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 15, 'stone.arrow@email.com', '(77) 9849-6087', '2024-11-14 07:08:01', '2024-11-18 14:13:09', NULL, '46430-000'),
-(2, '8306ae41-a0bc-411c-ada0-7f4052f4b311', 3, 'Oingo Boingo Brothers', '45.142.027/0001-57', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stardust Crusaders', 188, 'oingo.boingo@email.com', '(77) 9089-0728', '2024-11-14 07:17:17', '2024-11-14 07:17:17', NULL, '46430-000'),
-(3, '36e50248-b753-4727-b663-c85fd744f69c', 2, 'Coco Jumbo', '41.779.174/0001-81', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 46, 'coco.jumbo@email.com', '(77) 9091-7891', '2024-11-14 07:34:02', '2025-03-01 15:11:06', NULL, '46430-000'),
-(4, '45f2c555-b723-4f4f-9e2a-2787135580dd', 3, 'Cheap Trick', '93.381.133/0001-36', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Diamond is Unbreakable', 150, 'cheap.trick@email.com', '(77) 8890-6478', '2024-11-17 13:51:47', '2024-12-06 17:22:58', NULL, '46430-000'),
-(5, '21fa4cdc-2587-493f-93a0-71430ee714cf', 3, 'Atom Heart Father', '25.772.385/0001-36', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Diamond is Unbreakable', 131, 'atom.heart@email.com', '(77) 8990-8790', '2024-11-17 13:53:18', '2024-12-06 17:23:10', NULL, '46430-000'),
-(6, '16fafad9-24a7-4532-a943-567c5a2f6cf6', 2, 'Rolling Stones', '18.588.828/0001-78', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 58, 'rolling.stones@email.com', '(77) 8890-7890', '2025-01-04 06:53:09', '2025-01-04 06:53:09', NULL, '46430-000'),
-(7, '7bd5fcc8-2b6e-4d34-beb7-a2de20f1399b', 2, 'Chariot Requiem', '17.122.636/0001-09', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 47, 'chariot.requiem@email.com', '(77) 9971-9860', '2025-01-04 07:19:46', '2025-01-04 07:19:46', NULL, '46430-000'),
-(8, '5f82aec5-e8fc-4f9a-accc-e8ff66b28517', 2, 'Notorious B.I.G', '80.180.096/0001-56', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 174, 'notorious.big@email.com', '(77) 8909-9989', '2025-01-04 07:22:15', '2025-01-04 07:22:15', NULL, '46430-000'),
-(9, '9c9da044-ff53-49c0-916d-95333e118d8d', 4, 'Anubis', '85.528.786/0001-77', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stardust Crusaders', 36, 'anubis@email.com', '(77) 8998-7999', '2025-01-12 09:52:38', '2025-01-12 09:52:38', NULL, '46430-000'),
-(10, '1eccaff1-4a5b-466e-b1ae-90213e9e8544', 4, 'Saint\'s Corpse', '11.518.843/0001-09', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 33, 'saint.corpse@email.com', '(77) 9980-0879', '2025-01-12 09:55:12', '2025-01-12 09:55:12', NULL, '46430-000'),
-(11, 'f2d1a3d0-a527-41a4-b5a8-bdb1a131c79d', 3, 'Foo Fighters', '30.728.180/0001-93', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stone Ocean', 116, 'foo.fighters@email.com', '(77) 9898-0990', '2025-01-13 13:00:09', '2025-01-13 13:00:09', NULL, '46430-000'),
-(12, 'd2e31f59-434a-43a3-8c7d-cd9df96fbc35', 3, 'Super Aja', '78.312.166/0001-30', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Battle Tendency', 97, 'super.aja@email.com', '(77) 9979-6064', '2025-02-11 08:08:44', '2025-02-11 08:08:44', NULL, '46430-000');
+INSERT INTO `depositos_residuos` (`id`, `uuid`, `empresa_id`, `nome`, `cnpj`, `cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `email`, `telefone`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'e7c4e335-ba8d-4e99-8d3e-cf1199f9580f', 2, 'Stone Arrow', '80.758.002/0001-83', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 15, 'stone.arrow@email.com', '(77) 9849-6087', '2024-11-14 07:08:01', '2024-11-18 14:13:09', NULL),
+(2, '8306ae41-a0bc-411c-ada0-7f4052f4b311', 3, 'Oingo Boingo Brothers', '45.142.027/0001-57', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stardust Crusaders', 188, 'oingo.boingo@email.com', '(77) 9089-0728', '2024-11-14 07:17:17', '2024-11-14 07:17:17', NULL),
+(3, '36e50248-b753-4727-b663-c85fd744f69c', 2, 'Coco Jumbo', '41.779.174/0001-81', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 46, 'coco.jumbo@email.com', '(77) 9091-7891', '2024-11-14 07:34:02', '2025-03-01 15:11:06', NULL),
+(4, '45f2c555-b723-4f4f-9e2a-2787135580dd', 3, 'Cheap Trick', '93.381.133/0001-36', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Diamond is Unbreakable', 150, 'cheap.trick@email.com', '(77) 8890-6478', '2024-11-17 13:51:47', '2024-12-06 17:22:58', NULL),
+(5, '21fa4cdc-2587-493f-93a0-71430ee714cf', 3, 'Atom Heart Father', '25.772.385/0001-36', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Diamond is Unbreakable', 131, 'atom.heart@email.com', '(77) 8990-8790', '2024-11-17 13:53:18', '2024-12-06 17:23:10', NULL),
+(6, '16fafad9-24a7-4532-a943-567c5a2f6cf6', 2, 'Rolling Stones', '18.588.828/0001-78', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 58, 'rolling.stones@email.com', '(77) 8890-7890', '2025-01-04 06:53:09', '2025-01-04 06:53:09', NULL),
+(7, '7bd5fcc8-2b6e-4d34-beb7-a2de20f1399b', 2, 'Chariot Requiem', '17.122.636/0001-09', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 47, 'chariot.requiem@email.com', '(77) 9971-9860', '2025-01-04 07:19:46', '2025-01-04 07:19:46', NULL),
+(8, '5f82aec5-e8fc-4f9a-accc-e8ff66b28517', 2, 'Notorious B.I.G', '80.180.096/0001-56', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Golden Wind', 174, 'notorious.big@email.com', '(77) 8909-9989', '2025-01-04 07:22:15', '2025-01-04 07:22:15', NULL),
+(9, '9c9da044-ff53-49c0-916d-95333e118d8d', 4, 'Anubis', '85.528.786/0001-77', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stardust Crusaders', 36, 'anubis@email.com', '(77) 8998-7999', '2025-01-12 09:52:38', '2025-01-12 09:52:38', NULL),
+(10, '1eccaff1-4a5b-466e-b1ae-90213e9e8544', 4, 'Saint\'s Corpse', '11.518.843/0001-09', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 33, 'saint.corpse@email.com', '(77) 9980-0879', '2025-01-12 09:55:12', '2025-01-12 09:55:12', NULL),
+(11, 'f2d1a3d0-a527-41a4-b5a8-bdb1a131c79d', 3, 'Foo Fighters', '30.728.180/0001-93', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stone Ocean', 116, 'foo.fighters@email.com', '(77) 9898-0990', '2025-01-13 13:00:09', '2025-01-13 13:00:09', NULL),
+(12, 'd2e31f59-434a-43a3-8c7d-cd9df96fbc35', 3, 'Super Aja', '78.312.166/0001-30', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Battle Tendency', 97, 'super.aja@email.com', '(77) 9979-6064', '2025-02-11 08:08:44', '2025-02-11 08:08:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -228,31 +237,31 @@ INSERT INTO `depositos_residuos` (`id`, `uuid`, `empresa_id`, `nome`, `cnpj`, `u
 
 CREATE TABLE `empresas` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cnpj` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uf` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cnpj` varchar(18) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cep` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `numero` int NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `cep` char(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `empresas`
 --
 
-INSERT INTO `empresas` (`id`, `uuid`, `nome`, `cnpj`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `email`, `telefone`, `created_at`, `updated_at`, `deleted_at`, `cep`) VALUES
-(1, '1d65f8e5-f881-4963-b9c5-5f6a7683b3cd', 'Scarlet Overdrive', '92.772.051/0001-50', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Phantom Blood', 140, 'scarlet.overdrive@email.com', '(77) 9090-5021', NULL, NULL, NULL, '46430-000'),
-(2, 'e79af3f9-663c-4ed0-8568-8e363f66de52', 'Tusk', '56.891.048/0001-91', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 159, 'tusk@email.com', '(77) 9804-7001', NULL, '2025-02-21 20:18:05', NULL, '46430-000'),
-(3, '2631ea46-41b5-4f11-bf76-7cb9dbf8e546', 'Ball Breaker', '21.972.182/0001-32', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 128, 'ball.breaker@email.com', '(77) 9940-6801', NULL, NULL, NULL, '46430-000'),
-(4, '3ed44081-882f-438c-b7e0-50e501e1ad05', 'The World', '17.528.637/0001-58', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stardust Crusaders', 30, 'the.world@email.com', '(77) 9989-8007', '2024-11-19 13:14:53', '2024-11-27 10:26:22', NULL, '46430-000');
+INSERT INTO `empresas` (`id`, `uuid`, `nome`, `cnpj`, `cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `email`, `telefone`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '014dcb91-0a7e-4631-a3f2-60fb66afd724', 'Scarlet Overdrive', '92.772.051/0001-50', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Phantom Blood', 140, 'scarlet.overdrive@email.com', '(77) 9090-5021', NULL, NULL, NULL),
+(2, '518a3e20-7c45-4cb6-a6f0-32bf70eef934', 'The World', '68.611.034/0001-56', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stardust Crusaders', 138, 'the.world@email.com', '(77) 9980-9747', NULL, NULL, NULL),
+(3, 'f9271147-7699-4a1c-9533-5ffda9942673', 'Tusk', '56.891.048/0001-91', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 159, 'tusk@email.com', '(77) 9804-7001', NULL, NULL, NULL),
+(4, 'a1cbd495-e3b4-4f97-a399-e0c582a651dd', 'Ball Breaker', '21.972.182/0001-32', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 128, 'ball.breaker@email.com', '(77) 9940-6801', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -262,11 +271,11 @@ INSERT INTO `empresas` (`id`, `uuid`, `nome`, `cnpj`, `uf`, `cidade`, `bairro`, 
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -278,8 +287,8 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint UNSIGNED NOT NULL,
   `reserved_at` int UNSIGNED DEFAULT NULL,
   `available_at` int UNSIGNED NOT NULL,
@@ -293,13 +302,13 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int NOT NULL,
   `pending_jobs` int NOT NULL,
   `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
   `finished_at` int DEFAULT NULL
@@ -313,62 +322,62 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `locais_coleta` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
   `cliente_id` bigint UNSIGNED NOT NULL,
-  `uf` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cep` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `numero` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `cep` char(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `locais_coleta`
 --
 
-INSERT INTO `locais_coleta` (`id`, `uuid`, `empresa_id`, `cliente_id`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `created_at`, `updated_at`, `deleted_at`, `cep`) VALUES
-(1, '3e3ec932-54a0-4e1e-b901-a30323e8c757', 3, 1, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Star Platinum', 57, '2024-11-14 07:26:16', '2024-11-14 07:26:16', NULL, '46430-000'),
-(2, '113f7444-6dd9-482b-b106-9a4ea7894f8d', 3, 2, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Hermit Purple', 81, '2024-11-14 07:26:37', '2024-11-14 07:26:37', NULL, '46430-000'),
-(3, '359c8c3e-3f4a-42c0-8a07-da006ba3ac86', 3, 3, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Magician\'s Red', 118, '2024-11-14 07:27:14', '2024-11-14 07:27:14', NULL, '46430-000'),
-(4, '1304cd58-0ae2-4513-9435-7fe380315797', 3, 4, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Hierophant Green', 39, '2024-11-14 07:28:02', '2024-11-14 07:30:15', NULL, '46430-000'),
-(5, 'ed619da9-13a6-4142-827c-ad20ea07c70f', 3, 5, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Silver Chariot', 78, '2024-11-14 07:28:50', '2024-11-14 07:28:50', NULL, '46430-000'),
-(6, 'c836d9f1-7e7c-40e4-82ca-4d59101437c1', 3, 6, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'The Fool', 46, '2024-11-14 07:29:50', '2024-11-14 07:29:50', NULL, '46430-000'),
-(7, '2c8b8c2c-3b43-47f5-9970-a96cef452edb', 2, 7, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Sticky Fingers', 31, '2024-11-14 07:41:18', '2024-11-14 07:41:28', NULL, '46430-000'),
-(8, 'bf8087d1-1105-4cf1-a87e-c2ea9fd9ddaa', 2, 8, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Gold Experience', 75, '2024-11-14 07:42:04', '2024-11-14 07:42:04', NULL, '46430-000'),
-(9, 'd7b38cb6-275e-41bd-961f-5858716fe273', 2, 9, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Moody Blues', 90, '2024-11-14 07:42:39', '2024-11-14 07:42:39', NULL, '46430-000'),
-(10, '339ff282-dfe2-49b1-9426-786b803bb72f', 2, 10, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Aerosmith', 54, '2024-11-14 07:43:27', '2024-11-14 07:43:27', NULL, '46430-000'),
-(11, 'a9ee3bce-94d3-4ed7-a486-ddf4b5b0e547', 2, 11, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Purple Haze', 58, '2024-11-14 07:44:32', '2024-11-14 07:44:32', NULL, '46430-000'),
-(12, 'ed1537cb-ef92-435c-bdab-d6902d71b86f', 2, 12, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Sex Pistols', 70, '2024-11-14 07:45:24', '2024-11-14 07:45:38', NULL, '46430-000'),
-(13, '95cfd467-1f6e-4da5-9258-bf58920f1a50', 2, 13, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Spice Girl', 120, '2024-11-14 07:46:26', '2024-11-14 07:46:26', NULL, '46430-000'),
-(14, 'ef279435-d19e-4284-830f-1d6a2dfed590', 3, 14, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'The House of Earth', 108, '2024-11-14 14:30:38', '2025-02-11 08:06:15', NULL, '46430-000'),
-(15, 'b6c1ecd8-d2a1-4644-b62b-be6e3174084a', 3, 15, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Crazy Diamond', 77, '2024-11-14 19:11:10', '2024-11-14 19:11:10', NULL, '46430-000'),
-(16, 'cc69bbea-4e94-419e-bba2-ed427495ee0d', 3, 16, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stone Free', 376, '2024-11-15 10:10:26', '2024-11-15 10:10:26', NULL, '46430-000'),
-(17, '71d18aae-deb3-4eee-b77c-b8b1ca7e49c1', 3, 17, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Kiss', 311, '2024-11-15 10:10:57', '2024-11-15 10:15:46', NULL, '46430-000'),
-(18, 'c4f28966-7f53-4896-ab5e-51b51c52573d', 3, 18, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Heavy Weather', 10, '2024-11-15 10:20:06', '2024-11-15 10:20:06', NULL, '46430-000'),
-(19, '52e2a88c-b26d-4f75-b5a7-4752694287eb', 3, 19, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Earth Wind and Fire', 276, '2024-11-18 11:57:10', '2024-11-18 11:57:10', NULL, '46430-000'),
-(20, '06ba1ae3-ae38-4711-9e56-b1176ea854cc', 3, 20, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Pearl Jam', 311, '2024-11-24 15:31:46', '2024-11-24 15:31:46', NULL, '46430-000'),
-(21, 'd67a3276-66bf-42b4-b03e-f209d01734ef', 3, 21, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Cinderella', 107, '2024-11-24 15:31:56', '2024-11-24 15:31:56', NULL, '46430-000'),
-(22, 'f89d209c-07c9-4972-ab04-eea59a401a2e', 3, 22, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Diver Down', 19, '2024-11-26 08:35:38', '2024-11-26 08:35:38', NULL, '46430-000'),
-(23, '3cbe17e6-c3bf-4d76-8e00-886e433e839e', 3, 23, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Burning Down the House', 119, '2024-11-26 08:36:21', '2024-11-26 08:36:21', NULL, '46430-000'),
-(24, '73b2e74f-c344-44c5-97b2-cd33a7a0430e', 3, 24, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Heaven\'s Door', 178, '2024-12-02 08:44:56', '2024-12-02 08:44:56', NULL, '46430-000'),
-(25, '81b862f0-44d7-474e-9535-d283828e59ac', 3, 25, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'The Hand', 257, '2024-12-02 08:47:21', '2024-12-02 08:47:21', NULL, '46430-000'),
-(26, '398e5b7a-e6eb-4a75-8696-8cc8a710a5e3', 3, 26, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Echoes', 49, '2024-12-02 09:02:56', '2024-12-02 09:02:56', NULL, '46430-000'),
-(27, '150ab308-1810-407d-8dc8-4d26d034961b', 3, 27, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Harvest', 114, '2024-12-12 19:41:56', '2024-12-12 19:41:56', NULL, '46430-000'),
-(28, '96e1e04e-a954-4659-863e-1aa0acbe5e0c', 3, 28, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Highway Star', 135, '2024-12-27 19:14:16', '2024-12-27 19:14:16', NULL, '46430-000'),
-(29, '74df4b7b-ed77-4131-89cb-bdff8eaf708d', 3, 29, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Love Deluxe', 80, '2024-12-30 19:12:32', '2024-12-30 19:12:32', NULL, '46430-000'),
-(30, 'a95d3482-f8fa-4506-9a47-9ee672695a5e', 4, 30, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Cream Starter', 14, '2025-01-12 09:23:17', '2025-01-12 09:23:39', NULL, '46430-000'),
-(31, 'b3cc377d-6628-4d04-88d2-ce07a3810406', 4, 31, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'High Priestess', 58, '2025-01-12 09:24:33', '2025-01-12 09:24:33', NULL, '46430-000'),
-(32, '7a4c5107-5ebe-40a5-9d03-712610caca94', 4, 32, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Ticket to Ride', 140, '2025-01-12 15:00:24', '2025-01-12 15:00:24', NULL, '46430-000'),
-(33, 'ef983fee-caba-4c76-856b-0b9f7b8b69fa', 3, 33, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'The Lock', 46, '2025-02-08 19:50:16', '2025-02-08 19:50:16', NULL, '46430-000'),
-(34, 'b01dae2a-0e98-4664-87d8-fa3934c7ad39', 3, 34, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Surface', 196, '2025-02-08 19:51:00', '2025-02-08 19:51:00', NULL, '46430-000'),
-(35, '78a250f7-0f67-4b41-ac61-5782e0195a16', 3, 35, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Achtung Baby', 94, '2025-02-08 19:51:50', '2025-02-08 19:51:50', NULL, '46430-000'),
-(36, 'e83eb971-edf9-4a2e-9408-98fd29e75b82', 3, 36, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Bubble Launcher\'s', 20, '2025-02-11 08:13:19', '2025-02-11 08:13:19', NULL, '46430-000'),
-(37, '8100432c-6231-44b1-9d7b-926469d42600', 3, 37, 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Bad Company', 145, '2025-02-25 10:49:19', '2025-02-25 10:49:19', NULL, '46430-000');
+INSERT INTO `locais_coleta` (`id`, `uuid`, `empresa_id`, `cliente_id`, `cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '3e3ec932-54a0-4e1e-b901-a30323e8c757', 3, 1, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Star Platinum', 57, '2024-11-14 07:26:16', '2024-11-14 07:26:16', NULL),
+(2, '113f7444-6dd9-482b-b106-9a4ea7894f8d', 3, 2, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Hermit Purple', 81, '2024-11-14 07:26:37', '2024-11-14 07:26:37', NULL),
+(3, '359c8c3e-3f4a-42c0-8a07-da006ba3ac86', 3, 3, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Magician\'s Red', 118, '2024-11-14 07:27:14', '2024-11-14 07:27:14', NULL),
+(4, '1304cd58-0ae2-4513-9435-7fe380315797', 3, 4, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Hierophant Green', 39, '2024-11-14 07:28:02', '2024-11-14 07:30:15', NULL),
+(5, 'ed619da9-13a6-4142-827c-ad20ea07c70f', 3, 5, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Silver Chariot', 78, '2024-11-14 07:28:50', '2024-11-14 07:28:50', NULL),
+(6, 'c836d9f1-7e7c-40e4-82ca-4d59101437c1', 3, 6, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'The Fool', 46, '2024-11-14 07:29:50', '2024-11-14 07:29:50', NULL),
+(7, '2c8b8c2c-3b43-47f5-9970-a96cef452edb', 2, 7, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Sticky Fingers', 31, '2024-11-14 07:41:18', '2024-11-14 07:41:28', NULL),
+(8, 'bf8087d1-1105-4cf1-a87e-c2ea9fd9ddaa', 2, 8, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Gold Experience', 75, '2024-11-14 07:42:04', '2024-11-14 07:42:04', NULL),
+(9, 'd7b38cb6-275e-41bd-961f-5858716fe273', 2, 9, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Moody Blues', 90, '2024-11-14 07:42:39', '2024-11-14 07:42:39', NULL),
+(10, '339ff282-dfe2-49b1-9426-786b803bb72f', 2, 10, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Aerosmith', 54, '2024-11-14 07:43:27', '2024-11-14 07:43:27', NULL),
+(11, 'a9ee3bce-94d3-4ed7-a486-ddf4b5b0e547', 2, 11, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Purple Haze', 58, '2024-11-14 07:44:32', '2024-11-14 07:44:32', NULL),
+(12, 'ed1537cb-ef92-435c-bdab-d6902d71b86f', 2, 12, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Sex Pistols', 70, '2024-11-14 07:45:24', '2024-11-14 07:45:38', NULL),
+(13, '95cfd467-1f6e-4da5-9258-bf58920f1a50', 2, 13, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Spice Girl', 120, '2024-11-14 07:46:26', '2024-11-14 07:46:26', NULL),
+(14, 'ef279435-d19e-4284-830f-1d6a2dfed590', 3, 14, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'The House of Earth', 108, '2024-11-14 14:30:38', '2025-02-11 08:06:15', NULL),
+(15, 'b6c1ecd8-d2a1-4644-b62b-be6e3174084a', 3, 15, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Crazy Diamond', 77, '2024-11-14 19:11:10', '2024-11-14 19:11:10', NULL),
+(16, 'cc69bbea-4e94-419e-bba2-ed427495ee0d', 3, 16, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stone Free', 376, '2024-11-15 10:10:26', '2024-11-15 10:10:26', NULL),
+(17, '71d18aae-deb3-4eee-b77c-b8b1ca7e49c1', 3, 17, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Kiss', 311, '2024-11-15 10:10:57', '2024-11-15 10:15:46', NULL),
+(18, 'c4f28966-7f53-4896-ab5e-51b51c52573d', 3, 18, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Heavy Weather', 10, '2024-11-15 10:20:06', '2024-11-15 10:20:06', NULL),
+(19, '52e2a88c-b26d-4f75-b5a7-4752694287eb', 3, 19, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Earth Wind and Fire', 276, '2024-11-18 11:57:10', '2024-11-18 11:57:10', NULL),
+(20, '06ba1ae3-ae38-4711-9e56-b1176ea854cc', 3, 20, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Pearl Jam', 311, '2024-11-24 15:31:46', '2024-11-24 15:31:46', NULL),
+(21, 'd67a3276-66bf-42b4-b03e-f209d01734ef', 3, 21, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Cinderella', 107, '2024-11-24 15:31:56', '2024-11-24 15:31:56', NULL),
+(22, 'f89d209c-07c9-4972-ab04-eea59a401a2e', 3, 22, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Diver Down', 19, '2024-11-26 08:35:38', '2024-11-26 08:35:38', NULL),
+(23, '3cbe17e6-c3bf-4d76-8e00-886e433e839e', 3, 23, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Burning Down the House', 119, '2024-11-26 08:36:21', '2024-11-26 08:36:21', NULL),
+(24, '73b2e74f-c344-44c5-97b2-cd33a7a0430e', 3, 24, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Heaven\'s Door', 178, '2024-12-02 08:44:56', '2024-12-02 08:44:56', NULL),
+(25, '81b862f0-44d7-474e-9535-d283828e59ac', 3, 25, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'The Hand', 257, '2024-12-02 08:47:21', '2024-12-02 08:47:21', NULL),
+(26, '398e5b7a-e6eb-4a75-8696-8cc8a710a5e3', 3, 26, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Echoes', 49, '2024-12-02 09:02:56', '2024-12-02 09:02:56', NULL),
+(27, '150ab308-1810-407d-8dc8-4d26d034961b', 3, 27, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Harvest', 114, '2024-12-12 19:41:56', '2024-12-12 19:41:56', NULL),
+(28, '96e1e04e-a954-4659-863e-1aa0acbe5e0c', 3, 28, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Highway Star', 135, '2024-12-27 19:14:16', '2024-12-27 19:14:16', NULL),
+(29, '74df4b7b-ed77-4131-89cb-bdff8eaf708d', 3, 29, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Love Deluxe', 80, '2024-12-30 19:12:32', '2024-12-30 19:12:32', NULL),
+(30, 'a95d3482-f8fa-4506-9a47-9ee672695a5e', 4, 30, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Cream Starter', 14, '2025-01-12 09:23:17', '2025-01-12 09:23:39', NULL),
+(31, 'b3cc377d-6628-4d04-88d2-ce07a3810406', 4, 31, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'High Priestess', 58, '2025-01-12 09:24:33', '2025-01-12 09:24:33', NULL),
+(32, '7a4c5107-5ebe-40a5-9d03-712610caca94', 4, 32, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Ticket to Ride', 140, '2025-01-12 15:00:24', '2025-01-12 15:00:24', NULL),
+(33, 'ef983fee-caba-4c76-856b-0b9f7b8b69fa', 3, 33, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'The Lock', 46, '2025-02-08 19:50:16', '2025-02-08 19:50:16', NULL),
+(34, 'b01dae2a-0e98-4664-87d8-fa3934c7ad39', 3, 34, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Surface', 196, '2025-02-08 19:51:00', '2025-02-08 19:51:00', NULL),
+(35, '78a250f7-0f67-4b41-ac61-5782e0195a16', 3, 35, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Achtung Baby', 94, '2025-02-08 19:51:50', '2025-02-08 19:51:50', NULL),
+(36, 'e83eb971-edf9-4a2e-9408-98fd29e75b82', 3, 36, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Bubble Launcher\'s', 20, '2025-02-11 08:13:19', '2025-02-11 08:13:19', NULL),
+(37, '8100432c-6231-44b1-9d7b-926469d42600', 3, 37, '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Bad Company', 145, '2025-02-25 10:49:19', '2025-02-25 10:49:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -378,7 +387,7 @@ INSERT INTO `locais_coleta` (`id`, `uuid`, `empresa_id`, `cliente_id`, `uf`, `ci
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -387,20 +396,24 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(15, '0001_01_01_000000_create_empresas_table', 1),
-(16, '0001_01_01_000000_create_users_table', 1),
-(17, '0001_01_01_000001_create_cache_table', 1),
-(18, '0001_01_01_000002_create_jobs_table', 1),
-(19, '2024_08_31_102921_create_clientes_table', 1),
-(20, '2024_08_31_102921_create_depositos_residuos_table', 1),
-(21, '2024_08_31_102921_create_tipos_residuos_table', 1),
-(22, '2024_08_31_104423_create_locais_coleta_table', 1),
-(23, '2024_08_31_114932_create_motoristas_table', 1),
-(24, '2024_08_31_115535_create_veiculos_table', 1),
-(25, '2024_09_02_082901_create_coletas_table', 1),
-(26, '2024_09_06_144200_create_ufs_table', 1),
-(27, '2024_09_27_150651_create_permission_tables', 1),
-(28, '2024_09_29_180549_create_users_empresas_table', 1);
+(1, '0001_01_01_000000_create_empresas_table', 1),
+(2, '0001_01_01_000000_create_users_table', 1),
+(3, '0001_01_01_000001_create_cache_table', 1),
+(4, '0001_01_01_000002_create_jobs_table', 1),
+(5, '2024_08_31_102921_create_clientes_table', 1),
+(6, '2024_08_31_102921_create_depositos_residuos_table', 1),
+(7, '2024_08_31_102921_create_tipos_residuos_table', 1),
+(8, '2024_08_31_104423_create_locais_coleta_table', 1),
+(9, '2024_08_31_114932_create_motoristas_table', 1),
+(10, '2024_08_31_115535_create_veiculos_table', 1),
+(11, '2024_09_02_082901_create_coletas_table', 1),
+(12, '2024_09_06_144200_create_ufs_table', 1),
+(13, '2024_09_27_150651_create_permission_tables', 1),
+(14, '2024_09_29_180549_create_users_empresas_table', 1),
+(15, '2024_11_30_113525_create_notifications_table', 1),
+(16, '2026_04_13_091001_add_custom_fields_to_users_table', 1),
+(17, '2026_04_13_091002_add_avatar_url_to_users_table', 1),
+(18, '2026_04_13_093402_create_personal_access_tokens_table', 1);
 
 -- --------------------------------------------------------
 
@@ -410,7 +423,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -422,7 +435,7 @@ CREATE TABLE `model_has_permissions` (
 
 CREATE TABLE `model_has_roles` (
   `role_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -432,9 +445,9 @@ CREATE TABLE `model_has_roles` (
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\User', 1),
+(1, 'App\\Models\\User', 2),
 (2, 'App\\Models\\User', 2),
 (2, 'App\\Models\\User', 3),
-(1, 'App\\Models\\User', 4),
 (2, 'App\\Models\\User', 4),
 (2, 'App\\Models\\User', 5);
 
@@ -446,14 +459,14 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 
 CREATE TABLE `motoristas` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cpf` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cnh` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categoria` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cpf` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cnh` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categoria` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -505,20 +518,10 @@ CREATE TABLE `notifications` (
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `password_reset_tokens`
---
-
-INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
-('crypted.snow@protonmail.com', '$2y$12$AfkRe7WXn5MCxg/eOHC0seQWuJvMGfTCqUPE.syPLBRHbMJsuBFB.', '2024-12-13 19:22:31'),
-('dio.brando@email.com', '$2y$12$u00H6Pdsf1fDeBAmsz7joef9ukGh2915j4vURNVuN8QmomWGxBTe2', '2025-03-01 09:00:15'),
-('johnny.joestar@email.com', '$2y$12$W5grMyzA2bV9B4cW5hpv0e02MjDUYuQ1i5qs8OMstXlOVRy7Lb22C', '2024-11-14 10:06:45'),
-('jonathan.joestar@email.com', '$2y$12$T0QE/E92oD087kP3/neKq.jjQrXlgGkhug4ZJuFM7udtG2kZFZGYy', '2024-11-14 10:04:47');
 
 -- --------------------------------------------------------
 
@@ -528,9 +531,9 @@ INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
 
 CREATE TABLE `permissions` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -541,12 +544,31 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `uuid`, `name`, `guard_name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '2ffd25c1-94ee-4270-b73c-c751a13ee488', 'Estudar Inglês', 'web', '2024-11-05 16:36:25', '2024-11-05 16:36:25', NULL),
-(2, '27b75bcc-289a-4f6e-8253-3e02863fe3cb', 'Estudar Italiano', 'web', '2024-11-05 16:36:25', '2024-11-14 07:06:10', NULL),
-(3, '77362014-85b1-49f0-b011-2bbcbdbbaeb5', 'Estudar Livewire', 'web', '2024-11-05 16:36:25', '2024-12-27 10:15:44', NULL),
-(4, 'e821687a-3b4e-48f1-b6a8-193af54c9705', 'Estudar Cybersecurity', 'web', '2024-11-05 16:36:25', '2024-11-05 16:36:25', NULL),
-(5, '3629d7de-2760-40a8-bc2d-efa33e94cd45', 'Estudar MongoDB', 'web', '2024-11-05 16:36:25', '2024-11-05 16:36:25', NULL),
-(6, '6b6654a6-a311-4384-806d-06f0b75529f9', 'Estudar Filament v.3', 'web', '2024-11-05 16:36:25', '2025-01-16 08:02:18', NULL);
+(1, '0acc22a1-4647-4727-85b3-d9b2fb71f0d3', 'Estudar Inglês', 'web', '2026-04-13 17:10:37', '2026-04-13 17:10:37', NULL),
+(2, '241abc94-4f0b-4c9c-8082-cdf7ce586c71', 'Estudar Italiano', 'web', '2026-04-13 17:10:37', '2026-04-13 17:10:37', NULL),
+(3, '4aa066b6-b179-4ecb-ab76-808ffc304f51', 'Estudar Livewire', 'web', '2026-04-13 17:10:37', '2026-04-13 17:10:37', NULL),
+(4, 'b5d59a64-85cc-45f4-b863-4b17aed5f5d9', 'Estudar Cybersecurity', 'web', '2026-04-13 17:10:37', '2026-04-13 17:10:37', NULL),
+(5, '8779c7c3-ace4-4bf6-8602-3b3577595085', 'Estudar MongoDB', 'web', '2026-04-13 17:10:37', '2026-04-13 17:10:37', NULL),
+(6, 'bc1414e1-fdd7-448f-a3a2-0c705c930aba', 'Estudar Filament v.3', 'web', '2026-04-13 17:10:37', '2026-04-13 17:10:37', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -556,9 +578,9 @@ INSERT INTO `permissions` (`id`, `uuid`, `name`, `guard_name`, `created_at`, `up
 
 CREATE TABLE `roles` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -569,8 +591,8 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `uuid`, `name`, `guard_name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '70e9ba81-2bd2-42e5-a099-dfa7ecb98ad9', 'Admin', 'web', '2024-11-05 16:36:25', '2024-11-05 16:36:25', NULL),
-(2, '50ff6b34-3387-4805-92ba-f6fae874674d', 'User', 'web', '2024-11-05 16:36:25', '2024-11-05 16:36:25', NULL);
+(1, '0bd05d39-d94c-4813-b62a-9d21736a9a78', 'Admin', 'web', '2026-04-13 17:10:37', '2026-04-13 17:10:37', NULL),
+(2, '676354f9-4fe7-438a-beb8-7bd11417cb6a', 'User', 'web', '2026-04-13 17:10:37', '2026-04-13 17:10:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -590,10 +612,10 @@ CREATE TABLE `role_has_permissions` (
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 1),
 (2, 1),
-(6, 1),
-(3, 2),
+(3, 1),
 (4, 2),
-(5, 2);
+(5, 2),
+(6, 2);
 
 -- --------------------------------------------------------
 
@@ -602,13 +624,20 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sessions`
+--
+
+INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+('eaWP1XsucNHQDEtVWnIpR89stACT6t6Jfvnx74G8', 2, '172.18.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'ZXlKcGRpSTZJa1k1ZDFkM1dscDBlRGNyUWs5MmVuRjRXazEwZVhjOVBTSXNJblpoYkhWbElqb2lXVkpVZUU5M2VrdExUbVJTWjBSRUwyYzVUMHRMTW5kV2NVTlZjVzV1Y0dkNlpHaGlObGhMYXpsSE9IYzFXVzlXV1U5TVRHWm9lVFpUTVVoUE5uSmhZMEZZV1hJMFVpOXdRbXAxTjBWV1RGaHNTVVZTSzFaRE5tUlJObVIzYlVsS2JHbG5VVzVTVkhSa1VHZHpPRVJUY2xVMFozcHZVRUp5Wm5oQ1R6QXdUSFp6ZUZGcFozbEVSM1oxZFhac1NUSXhTa3BUVkZWUWRFOXFkSFp6WlhSUmRsVkdUR1YyUkdwT2FERnpSbWR4T0cxUllWUklSMlZPT0VwSWVGQjRlRXR1U0ZkYVdtNVVNVlptVFZoSlFXZGlNWFp0TlZOSVJXRlFWbVFyYVdWcFdUWktXRzltVkM5WmRHTmxjMjFCU0dsWVlXdG1hekJtUlZweWNVNXpabkJIUzNWU2VWaDBibEZETW5aWWNIVnJUalpzY25ZMWVsRm1NRlZ1UVN0b1RVUlphRzFuVldSRlFuUlBMME5CVUU5emN5OWFlbU5uVEZkSGJHWXJOR1ZwUW1GWGRpdHpOelZ6UTJod1ZIcFNlamhLZFhnMlZIUldTVE56ZGxBeE1UUkRUV2xLTUZadFJETTNSRWxDYmk5SFkzWnNTbTlEVDFoWFFqSXhOV3BEV0RCcVdsQnVibWxsTUhnclpuTnlXRmRVVEhRME5UWkdablpWV0dwbWIybFVZVTFwU0VKcFRtTjJVbVJYWnpKRGQwTXlWMFJhWlRCaVpHTTNTbTlOVkc5cmJEbDZTV1J1VUU1TEwzbFRWV2hQWTJGcGJEUmphVFJ4UTA1TVNWUm5RVU42Y25NMmQxazNaM2RFTTFaVFJuaE5PRVp3TDBGNVNGbDRiVzR6VGxKRU1UbFdNR3B2UkVOdFpIUlpkRkF4ZGsxMGFYZGlaRnBuUmpkc0wxVnFSV2tyVFdrclRtVk5PWFJDVmpVNFBTSXNJbTFoWXlJNkltUXhNR0kxTnpCa1ptSXpNR0kyTXpZek5USTFOR015T0RRd01XVmhOVEkyWkRabE5XSXpZV1kwTWprek16ZzFaR1JrWXprMFl6QTJOREF3TlRnM01EQWlMQ0owWVdjaU9pSWlmUT09', 1776111492);
 
 -- --------------------------------------------------------
 
@@ -618,9 +647,9 @@ CREATE TABLE `sessions` (
 
 CREATE TABLE `tipos_residuos` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `descricao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -649,8 +678,8 @@ INSERT INTO `tipos_residuos` (`id`, `uuid`, `empresa_id`, `descricao`, `created_
 
 CREATE TABLE `ufs` (
   `id` bigint UNSIGNED NOT NULL,
-  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sigla` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sigla` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -697,27 +726,29 @@ INSERT INTO `ufs` (`id`, `estado`, `sigla`, `created_at`, `updated_at`, `deleted
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `custom_fields` json DEFAULT NULL,
+  `avatar_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `uuid`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '689ac001-9c62-42b2-bc96-3687c9a49710', 'Jonathan Joestar', 'jonathan.joestar@email.com', '2024-11-05 16:36:25', '$2y$12$xckMtCwp/97IrWYZ3uFDaelPCpKcz/MzNyOyr6cPP7Fuexq3WwvF.', NULL, '2024-11-05 16:36:26', '2024-11-05 16:36:26', NULL),
-(2, '19624e87-0cac-4a0b-875d-3c26f78ed2dc', 'Johnny Joestar', 'johnny.joestar@email.com', '2024-11-05 16:36:26', '$2y$12$LP0IVs/ND6/CLQgovEpTM.ygulPLXFcTFYL9rsak1z94QILcIOOrG', NULL, '2024-11-05 16:36:27', '2024-11-05 16:36:27', NULL),
-(3, '8384b5ff-2420-48fb-a3db-131411ddf55f', 'Gyro Zeppeli', 'gyro.zeppeli@email.com', '2024-11-05 16:36:27', '$2y$12$3CBujUxmTbuBdLjeo0knf.H/gNi2k7KLZK8OOApKcCv/OgHnmXgoa', NULL, '2024-11-05 16:36:28', '2024-11-05 16:36:28', NULL),
-(4, '79b3b777-7a37-44af-b11b-cf460f1a5805', 'Dio Brando', 'dio.brando@email.com', NULL, '$2y$12$ZxHXSU91mIvlAk5Y4rYqaeiEQBpFaXuaz.DOFjn1c/iaQUdrjLWt.', NULL, '2024-11-19 07:22:27', '2024-11-19 07:22:27', NULL),
-(5, '21c2aeef-e000-4f2b-b179-734087c37588', 'Diego Brando', 'diego.brando@email.com', NULL, '$2y$12$ssZCLCY6QnzoPoYnYpmhoe7eCceNoaEYqBOB.KGsIDO75B7oFrfBm', NULL, '2024-12-11 18:13:38', '2024-12-24 07:14:15', NULL);
+INSERT INTO `users` (`id`, `uuid`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`, `custom_fields`, `avatar_url`) VALUES
+(1, '76994d77-f6f6-4d18-8c74-74505ba7d406', 'Jonathan Joestar', 'jonathan.joestar@email.com', '2026-04-13 17:10:37', '$2y$12$cKlQe0Q5mPRX97B2pPBfTOJMbxEKt/FNEsWGqHXJ91hvV7I0Nq9Xu', NULL, '2026-04-13 17:10:38', '2026-04-13 17:10:38', NULL, NULL, NULL),
+(2, '71132f54-1ec5-4cd3-8c0f-535212962c77', 'Dio Brando', 'dio.brando@email.com', '2026-04-13 17:10:38', '$2y$12$In89ffwiFom1ddM7.OMSp.OUyNT2C4Vdq05E8.AbLVHHRtwTzheTK', NULL, '2026-04-13 17:10:38', '2026-04-13 17:10:38', NULL, NULL, NULL),
+(3, '6d941ce1-f38f-4912-a86b-0062598ef2fe', 'Johnny Joestar', 'johnny.joestar@email.com', '2026-04-13 17:10:38', '$2y$12$5JLfIxDqwywnTdtVVP4EbepXFY9jEWdZxq8MfKSg0mbi2xk/nJVJK', NULL, '2026-04-13 17:10:39', '2026-04-13 17:10:39', NULL, NULL, NULL),
+(4, '515f8949-3b4a-4cd2-98aa-92ddfab239e7', 'Gyro Zeppeli', 'gyro.zeppeli@email.com', '2026-04-13 17:10:39', '$2y$12$HOAg/xiDfSH0fG8wOIUHx.IeH0zcw9x/k1zBW20J0UKmYJCEMw6Ha', NULL, '2026-04-13 17:10:40', '2026-04-13 17:10:40', NULL, NULL, NULL),
+(5, '880c52dd-23d9-4d64-8c1f-0ee439dd0efa', 'Diego Brando', 'diego.brando@email.com', '2026-04-13 17:10:40', '$2y$12$7njRryqEKv/AIukcTUNJoukJRa94CVIMVbwquWCOL5UlgT8fHq75O', NULL, '2026-04-13 17:10:40', '2026-04-13 17:10:40', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -741,11 +772,11 @@ CREATE TABLE `users_empresas` (
 INSERT INTO `users_empresas` (`id`, `user_id`, `empresa_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, NULL, NULL, NULL),
 (2, 2, 2, NULL, NULL, NULL),
-(3, 3, 3, NULL, NULL, NULL),
-(4, 4, 2, NULL, NULL, NULL),
-(5, 4, 3, NULL, NULL, NULL),
+(3, 2, 3, NULL, NULL, NULL),
+(4, 2, 4, NULL, NULL, NULL),
+(5, 3, 3, NULL, NULL, NULL),
 (6, 4, 4, NULL, NULL, NULL),
-(7, 5, 4, NULL, NULL, NULL);
+(7, 5, 2, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -755,11 +786,11 @@ INSERT INTO `users_empresas` (`id`, `user_id`, `empresa_id`, `created_at`, `upda
 
 CREATE TABLE `veiculos` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `placa_veiculo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `modelo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `placa_veiculo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modelo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -915,6 +946,15 @@ ALTER TABLE `permissions`
   ADD UNIQUE KEY `permissions_uuid_unique` (`uuid`);
 
 --
+-- Indexes for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`),
+  ADD KEY `personal_access_tokens_expires_at_index` (`expires_at`);
+
+--
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -1025,7 +1065,7 @@ ALTER TABLE `locais_coleta`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `motoristas`
@@ -1038,6 +1078,12 @@ ALTER TABLE `motoristas`
 --
 ALTER TABLE `permissions`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
