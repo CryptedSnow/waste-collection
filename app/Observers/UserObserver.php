@@ -4,13 +4,10 @@ namespace App\Observers;
 
 use App\Models\User;
 use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth, Storage};
 
 class UserObserver
 {
-    /**
-     * Handle the User "created" event.
-     */
     public function created(User $user): void
     {
         $recipient = Auth::user();
@@ -24,9 +21,6 @@ class UserObserver
         }
     }
 
-    /**
-     * Handle the User "updated" event.
-     */
     public function updated(User $user): void
     {
         $recipient = Auth::user();
@@ -40,9 +34,6 @@ class UserObserver
         }
     }
 
-    /**
-     * Handle the User "deleted" event.
-     */
     public function deleted(User $user): void
     {
         $recipient = Auth::user();
@@ -56,9 +47,6 @@ class UserObserver
         }
     }
 
-    /**
-     * Handle the User "restored" event.
-     */
     public function restored(User $user): void
     {
         $recipient = Auth::user();
@@ -72,11 +60,27 @@ class UserObserver
         }
     }
 
-    /**
-     * Handle the User "force deleted" event.
-     */
     public function forceDeleted(User $user): void
     {
         //
+    }
+
+    public function updating(User $user): void
+    {
+        $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
+
+        if ($user->isDirty($avatarColumn) && $user->getOriginal($avatarColumn)) {
+
+            $oldAvatarPath = $user->getOriginal($avatarColumn);
+
+            if (!str_starts_with($oldAvatarPath, 'avatars/')) {
+                $oldAvatarPath = 'avatars/' . ltrim($oldAvatarPath, '/');
+            }
+
+            if (Storage::disk('public')->exists($oldAvatarPath)) {
+                Storage::disk('public')->delete($oldAvatarPath);
+            }
+
+        }
     }
 }

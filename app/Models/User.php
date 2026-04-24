@@ -117,7 +117,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants, HasAvata
             $path = 'avatars/' . ltrim($path, '/');
         }
 
-        return asset('storage/' . $path);
+        return Storage::disk('public')->url($path);
     }
 
 }

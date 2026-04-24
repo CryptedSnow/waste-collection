@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ColetaObserver
 {
-    /**
-     * Handle the Coleta "created" event.
-     */
     public function created(Coleta $coleta): void
     {
         $recipient = Auth::user();
@@ -24,9 +21,6 @@ class ColetaObserver
         }
     }
 
-    /**
-     * Handle the Coleta "updated" event.
-     */
     public function updated(Coleta $coleta): void
     {
         $recipient = Auth::user();
@@ -40,9 +34,6 @@ class ColetaObserver
         }
     }
 
-    /**
-     * Handle the Coleta "deleted" event.
-     */
     public function deleted(Coleta $coleta): void
     {
         $recipient = Auth::user();
@@ -56,9 +47,6 @@ class ColetaObserver
         }
     }
 
-    /**
-     * Handle the Coleta "restored" event.
-     */
     public function restored(Coleta $coleta): void
     {
         $recipient = Auth::user();
@@ -72,11 +60,9 @@ class ColetaObserver
         }
     }
 
-    /**
-     * Handle the Coleta "force deleted" event.
-     */
     public function forceDeleted(Coleta $coleta): void
     {
         //
     }
+
 }
