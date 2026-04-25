@@ -67,7 +67,7 @@ class AdminPanelProvider extends PanelProvider
                     ->setNavigationLabel('Meu Perfil')
                     ->setIcon('heroicon-o-user')
                     ->shouldRegisterNavigation(false)
-                    ->shouldShowAvatarForm(true, 'avatars', 'mimes:jpeg,png,jpg|max:2048')
+                    ->shouldShowAvatarForm(true, 'avatars', 'mimes:jpeg,png,jpg|max:1024')
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowSanctumTokens(false)
                     ->shouldShowBrowserSessionsForm(true)

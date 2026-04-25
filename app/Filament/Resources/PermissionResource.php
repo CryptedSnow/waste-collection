@@ -59,13 +59,13 @@ class PermissionResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make()
-                    ->successNotification(function ($record) {
-                        return Notification::make()
-                            ->warning()
-                            ->title("Permissão inativa")
-                            ->body("<strong>{$record->name}</strong> está na lixeira.");
-                    }),
+                // Tables\Actions\DeleteAction::make()
+                //     ->successNotification(function ($record) {
+                //         return Notification::make()
+                //             ->warning()
+                //             ->title("Permissão inativa")
+                //             ->body("<strong>{$record->name}</strong> está na lixeira.");
+                //     }),
                 Tables\Actions\RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
