@@ -25,15 +25,23 @@ class RoleSeeder extends Seeder
         );
 
         $admin_permissions = Permission::whereIn('name', [
-            'Estudar Inglês',
-            'Estudar Italiano',
-            'Estudar Livewire',
+            'admins:index',
+            'admins:create',
+            'admins:store',
+            'admins:show',
+            'admins:edit',
+            'admins:update',
+            'admins:destroy',
         ])->get();
 
         $user_permissions = Permission::whereIn('name', [
-            'Estudar Cybersecurity',
-            'Estudar MongoDB',
-            'Estudar Filament v.3',
+            'users:index',
+            'users:create',
+            'users:store',
+            'users:show',
+            'users:edit',
+            'users:update',
+            'users:destroy',
         ])->get();
 
         $admin_role->syncPermissions($admin_permissions);

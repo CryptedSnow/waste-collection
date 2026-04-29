@@ -18,11 +18,11 @@ class CreateLocalColeta extends CreateRecord
 
     public function getCreatedNotification(): ?Notification
     {
-        $local_coleta = $this->record;
+        $localColeta = $this->record;
 
         return Notification::make()
             ->success()
             ->title('Local de coleta criado')
-            ->body("<strong>{$local_coleta->logradouro}, {$local_coleta->numero}</strong> foi criado.");
+            ->body("<strong>{$localColeta->logradouro}, {$localColeta->numero}</strong> foi criado.");
     }
 }

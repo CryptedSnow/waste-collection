@@ -18,11 +18,11 @@ class CreateDepositoResiduo extends CreateRecord
 
     public function getCreatedNotification(): ?Notification
     {
-        $deposito_residuo = $this->record;
+        $depositoResiduo = $this->record;
 
         return Notification::make()
             ->success()
-            ->title('Depósito criado')
-            ->body("<strong>{$deposito_residuo->nome}</strong> foi criado.");
+            ->title('Depósito de resíduos criado')
+            ->body("<strong>{$depositoResiduo->nome}</strong> foi criado.");
     }
 }

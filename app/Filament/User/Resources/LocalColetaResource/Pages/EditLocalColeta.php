@@ -27,11 +27,11 @@ class EditLocalColeta extends EditRecord
 
     public function getSavedNotification(): ?Notification
     {
-        $local_coleta = $this->record;
+        $localColeta = $this->record;
 
         return Notification::make()
             ->info()
             ->title('Local de coleta alterado')
-            ->body("<strong>{$local_coleta->logradouro}, {$local_coleta->numero}</strong> foi alterado.");
+            ->body("<strong>{$localColeta->logradouro}, {$localColeta->numero}</strong> foi alterado.");
     }
 }

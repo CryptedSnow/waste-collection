@@ -264,12 +264,12 @@ class ColetaResource extends Resource
                     ->color('success')
                     ->icon('heroicon-o-document-arrow-down')
                     ->action(function (Coleta $record) {
-                        $cliente_nome = $record->cliente->nome ?? 'Cliente';
+                        $clienteNome = $record->cliente->nome ?? 'Cliente';
                         return response()->streamDownload(function () use ($record) {
                             echo Pdf::loadHtml(
                                 Blade::render('invoice-coleta', ['record' => $record])
                             )->stream();
-                        }, "Comprovante de coleta para $cliente_nome" . '.pdf');
+                        }, "Comprovante de coleta para $clienteNome" . '.pdf');
                     }),
                 Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
                 Tables\Actions\DeleteAction::make()

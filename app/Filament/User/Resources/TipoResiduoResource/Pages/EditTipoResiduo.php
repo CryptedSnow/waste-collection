@@ -27,11 +27,11 @@ class EditTipoResiduo extends EditRecord
 
     public function getSavedNotification(): ?Notification
     {
-        $tipo_residuo = $this->record;
+        $tipoResiduo = $this->record;
 
         return Notification::make()
             ->info()
             ->title('Resíduo alterado')
-            ->body("<strong>{$tipo_residuo->descricao}</strong> foi alterado.");
+            ->body("<strong>{$tipoResiduo->descricao}</strong> foi alterado.");
     }
 }

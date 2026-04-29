@@ -27,11 +27,11 @@ class EditDepositoResiduo extends EditRecord
 
     public function getSavedNotification(): ?Notification
     {
-        $deposito_residuo = $this->record;
+        $depositoResiduo = $this->record;
 
         return Notification::make()
             ->info()
             ->title('Depósito de resíduos alterado')
-            ->body("<strong>{$deposito_residuo->nome}</strong> foi alterado.");
+            ->body("<strong>{$depositoResiduo->nome}</strong> foi alterado.");
     }
 }

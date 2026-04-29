@@ -57,8 +57,8 @@ class PermissionResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                //Tables\Actions\ViewAction::make(),
+                //Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
                 // Tables\Actions\DeleteAction::make()
                 //     ->successNotification(function ($record) {
                 //         return Notification::make()
@@ -81,7 +81,8 @@ class PermissionResource extends Resource
                     //Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(null);
     }
 
     public static function getRelations(): array

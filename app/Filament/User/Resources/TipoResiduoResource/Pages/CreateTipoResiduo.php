@@ -18,11 +18,11 @@ class CreateTipoResiduo extends CreateRecord
 
     public function getCreatedNotification(): ?Notification
     {
-        $tipo_residuo = $this->record;
+        $tipoResiduo = $this->record;
 
         return Notification::make()
             ->success()
             ->title('Resíduo criado')
-            ->body("<strong>{$tipo_residuo->descricao}</strong> foi criado.");
+            ->body("<strong>{$tipoResiduo->descricao}</strong> foi criado.");
     }
 }
