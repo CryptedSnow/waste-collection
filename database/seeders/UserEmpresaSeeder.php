@@ -13,7 +13,7 @@ class UserEmpresaSeeder extends Seeder
      */
     public function run(): void
     {
-        $user_empresas = [
+        $userEmpresas = [
             [
                 'user_id' => 1,
                 'empresa_id' => 1,
@@ -44,6 +44,6 @@ class UserEmpresaSeeder extends Seeder
             ]
         ];
 
-        DB::table('users_empresas')->insert($user_empresas);
+        DB::table('users_empresas')->insert($userEmpresas);
     }
 }

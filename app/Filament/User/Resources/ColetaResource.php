@@ -156,58 +156,58 @@ class ColetaResource extends Resource
                     ->label('Código de coleta')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('cliente.nome')
+                TextColumn::make('clientes.nome')
                     ->label('Cliente')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('localColeta.uf')
+                TextColumn::make('localColetas.uf')
                     ->label('UF')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('localColeta.cidade')
+                TextColumn::make('localColetas.cidade')
                     ->label('Cidade')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('localColeta.bairro')
+                TextColumn::make('localColetas.bairro')
                     ->label('Bairro')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('localColeta.logradouro')
+                TextColumn::make('localColetas.logradouro')
                     ->label('Logradouro')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('localColeta.numero')
+                TextColumn::make('localColetas.numero')
                     ->label('Número')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('tipoResiduo.descricao')
+                TextColumn::make('tipoResiduos.descricao')
                     ->label('Tipo de resíduo')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('motorista.nome')
+                TextColumn::make('motoristas.nome')
                     ->label('Motorista')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('veiculo.modelo')
+                TextColumn::make('veiculos.modelo')
                     ->label('Veículo')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('veiculo.placa_veiculo')
+                TextColumn::make('veiculos.placa_veiculo')
                     ->label('Placa')
                     ->searchable()
                     ->sortable()
                     ->toggleable()
                     ->placeholder("Sem placa"),
-                TextColumn::make('depositoResiduo.nome')
+                TextColumn::make('depositoResiduos.nome')
                     ->label('Local de descarte')
                     ->searchable()
                     ->sortable()
@@ -252,7 +252,7 @@ class ColetaResource extends Resource
                     ->dateTime('d/m/Y H:i:s'),
             ])
             ->modifyQueryUsing(function (Builder $query) {
-                $query->with(['empresa','localColeta','tipoResiduo','motorista','veiculo','depositoResiduo']);
+                $query->with(['empresa','localColetas','tipoResiduos','motoristas','veiculos','depositoResiduos']);
             })
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -326,16 +326,16 @@ class ColetaResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ])
-            ->with(['localColeta','tipoResiduo','motorista','veiculo','depositoResiduo']);
+            ->with(['localColetas','tipoResiduos','motoristas','veiculos','depositoResiduos']);
     }
 
     public static function generateCodigoColeta(): string
     {
-        $data_atual = date('ymd');
+        $dataAtual = date('ymd');
         $numero = random_int(10000, 99999);
         $letra = chr(random_int(65, 90));
-        $numero_final = random_int(100, 999);
-        return sprintf('%s%05d%s%03d', $data_atual, $numero, $letra, $numero_final);
+        $numeroFinal = random_int(100, 999);
+        return sprintf('%s%05d%s%03d', $dataAtual, $numero, $letra, $numeroFinal);
     }
 
 }

@@ -14,17 +14,17 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin_role = Role::firstOrCreate(
+        $adminRole = Role::firstOrCreate(
             ['name' => 'Admin'],
             ['uuid' => Str::uuid()->toString()]
         );
 
-        $user_role = Role::firstOrCreate(
+        $userRole = Role::firstOrCreate(
             ['name' => 'User'],
             ['uuid' => Str::uuid()->toString()]
         );
 
-        $admin_permissions = Permission::whereIn('name', [
+        $adminPermissions = Permission::whereIn('name', [
             'admins:index',
             'admins:create',
             'admins:store',
@@ -34,7 +34,7 @@ class RoleSeeder extends Seeder
             'admins:destroy',
         ])->get();
 
-        $user_permissions = Permission::whereIn('name', [
+        $userPermissions = Permission::whereIn('name', [
             'users:index',
             'users:create',
             'users:store',
@@ -44,7 +44,7 @@ class RoleSeeder extends Seeder
             'users:destroy',
         ])->get();
 
-        $admin_role->syncPermissions($admin_permissions);
-        $user_role->syncPermissions($user_permissions);
+        $adminRole->syncPermissions($adminPermissions);
+        $userRole->syncPermissions($userPermissions);
     }
 }

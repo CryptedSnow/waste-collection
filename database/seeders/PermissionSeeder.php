@@ -31,9 +31,9 @@ class PermissionSeeder extends Seeder
             'users:destroy',
         ];
 
-        foreach ($permissions as $permission_name) {
+        foreach ($permissions as $permissionName) {
             Permission::firstOrCreate(
-                ['name' => $permission_name],
+                ['name' => $permissionName],
                 ['uuid' => Str::uuid()->toString()]
             );
         }

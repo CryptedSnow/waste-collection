@@ -5,8 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Observers\UserObserver;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Models\Contracts\HasAvatar;
+use Filament\Models\Contracts\{FilamentUser, HasAvatar};
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -91,18 +90,18 @@ class User extends Authenticatable implements FilamentUser, HasTenants, HasAvata
 
     public function canAccessPanel(Panel $panel): bool
     {
-        $panel_roles = [
+        $panelRoles = [
             'admin' => 'Admin',
             'user'  => 'User',
         ];
 
-        $required_role = $panel_roles[$panel->getId()] ?? null;
+        $requiredRole = $panelRoles[$panel->getId()] ?? null;
 
-        if ($required_role === null) {
+        if ($requiredRole === null) {
             return false;
         }
 
-        return $this->hasRole($required_role);
+        return $this->hasRole($requiredRole);
     }
 
     public function getFilamentAvatarUrl(): ?string

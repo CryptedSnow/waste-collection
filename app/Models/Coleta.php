@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Observers\ColetaObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasOneThrough};
 use Illuminate\Support\Str;
 
 class Coleta extends Model
@@ -49,32 +49,32 @@ class Coleta extends Model
         return $this->belongsTo(Empresa::class);
     }
 
-    public function localColeta(): BelongsTo
+    public function localColetas(): BelongsTo
     {
         return $this->belongsTo(LocalColeta::class, 'local_coleta_id');
     }
 
-    public function tipoResiduo(): BelongsTo
+    public function tipoResiduos(): BelongsTo
     {
         return $this->belongsTo(TipoResiduo::class, 'tipo_residuo_id');
     }
 
-    public function motorista(): BelongsTo
+    public function motoristas(): BelongsTo
     {
         return $this->belongsTo(Motorista::class, 'motorista_id');
     }
 
-    public function veiculo(): BelongsTo
+    public function veiculos(): BelongsTo
     {
         return $this->belongsTo(Veiculo::class, 'veiculo_id');
     }
 
-    public function depositoResiduo(): BelongsTo
+    public function depositoResiduos(): BelongsTo
     {
         return $this->belongsTo(DepositoResiduo::class, 'deposito_residuo_id');
     }
 
-    public function cliente()
+    public function clientes(): HasOneThrough
     {
         return $this->hasOneThrough(Cliente::class, LocalColeta::class, 'id', 'id', 'local_coleta_id', 'cliente_id');
     }
