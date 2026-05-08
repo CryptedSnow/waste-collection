@@ -1,83 +1,8 @@
-## Local machine
-
-Follow the steps to set the application on your local machine.
-
-1 - Run the ```composer install``` command to create ```vendor``` folder (Check the existence of `Composer` on your machine).
-```
-composer install 
-```
-
-2 - Create ```.env``` file:
-```
-cp .env.example .env  
-```
-
-3 - Generate crypted key (Fill ```APP_KEY=``` to ```.env``` file):
-```
-php artisan key:generate
-```
-
-4 - In `.env` file set the following snippet to connect the application to your database.
-```
-# MySQL
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=waste-collection
-DB_USERNAME=root
-DB_PASSWORD=
-
-# PostgreSQL
-DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
-DB_PORT=5432
-DB_DATABASE=waste-collection
-DB_USERNAME=postgres
-DB_PASSWORD=
-```
-
-Before you perfomate the migrations, go to [notifications](https://github.com/CryptedSnow/waste-collection/blob/main/database/migrations/2024_11_30_113525_create_notifications_table.php) table to make a change in a specific line, it will avoid errors involving notifications and database.
-
-```
-# MySQL
-$table->text('data');
-
-# PostgreSQL
-$table->json('data');
-```
-
-5 - Run the migrations.
-```
-php artisan migrate
-```
-
-Case you want to use ```MySQL``` database, you can import this [file](https://github.com/CryptedSnow/waste-collection/tree/main/database/imports) (It's not necessary to use ```migrations``` and ```seeders```, don't do step 6 and 7, go ahead to step 8):
-
-6 - Use the commands to perfomate the Seeders:
-```
-php artisan db:seed
-```
-
-7 - Run the following command to install JavaScript dependencies (Check the existence of `Node` and `NPM` on your machine).
-```
-npm install
-```
-
-8 - Run the following command to compile and optimize JavaScript files for production.
-```
-npm run build
-```
-
-9 - Run the following command to start Apache to run the application.
-```
-php artisan serve
-```
-
-<a id="laravel-spatie-info"></a> With help of **Laravel Spatie** and **Multi-tenancy**, exist two roles user: **Admin**, **User** and many companies. Making certains roles user has more privileges than others, it is very important you run the seeds to those users be created.
+<a id="laravel-spatie-info"></a> With **Laravel Spatie** and **Multi-Tenancy**, exist two roles: **Admin** and **User**, and companies: **Scarlet Overdrive**, **Tusk**, **Ball Breaker** and **The World**. Making certains roles has more privileges than others, it's very important you run the seeds to those users be created.
 
 Panels (Admin and User)
-- Admin: http://127.0.0.1:8000/admin/login
-- User: http://127.0.0.1:8000/user/login
+- Admin: http://localhost:8000/admin/login
+- User: http://localhost:8000/user/login
 
 ```
 Name: Jonathan Joestar
@@ -129,7 +54,7 @@ Companies: The World
 Before run containers, you can choose PHP version of your preference (```8.0```,```8.1```,```8.2```,```8.3```,```8.4```). In ```docker-compose.yml``` to ```context```  change the version:
 
 ```
-// Example: Change version to 8.0 
+// Example: Change version to 8.4 
 context: ./docker/version
 ```
 
@@ -193,7 +118,7 @@ $table->text('data');
 $table->json('data');
 ```
 
-Case you want to use ```MySQL``` database, you can import this [file](https://github.com/CryptedSnow/waste-collection/tree/main/database/imports) (It is not necessary use ```migrations``` and ```seeders```, don't do step 6 and 7, go ahead to step 8):
+Case you want to use ```MySQL``` database, you can import this [file](https://github.com/CryptedSnow/waste-collection/tree/main/database/imports) (It's not necessary use ```migrations``` and ```seeders```, don't do step 6 and 7, go ahead to step 8):
 
 6 - To performate the migrations, you need use the command:
 ```
