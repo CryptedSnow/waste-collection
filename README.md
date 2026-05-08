@@ -1,4 +1,4 @@
-<a id="laravel-spatie-info"></a> With **Laravel Spatie** and **Multi-Tenancy**, exist two roles: **Admin** and **User**, and companies: **Scarlet Overdrive**, **Tusk**, **Ball Breaker** and **The World**. Making certains roles has more privileges than others, it's very important you run the seeds to those users be created.
+With **Laravel Spatie** and **Multi-Tenancy**, exist two roles: **Admin** and **User**, and companies: **Scarlet Overdrive**, **Tusk**, **Ball Breaker** and **The World**. Making certains roles has more privileges than others, it's very important you run the seeds to those users be created.
 
 Panels (Admin and User)
 - Admin: http://localhost:8000/admin/login
@@ -50,13 +50,6 @@ Companies: The World
 ```
 
 ## Docker environment
-
-Before run containers, you can choose PHP version of your preference (```8.0```,```8.1```,```8.2```,```8.3```,```8.4```). In ```docker-compose.yml``` to ```context```  change the version:
-
-```
-// Example: Change version to 8.4 
-context: ./docker/version
-```
 
 1 - Power on the containers:
 ```
@@ -145,8 +138,6 @@ docker-compose exec app npm run build
 ```
 docker-compose down
 ```
-
-The user credentials are the same, panels to Admin and User also, click <a href="#laravel-spatie-info">here</a> to see.
 
 ### Docker environment addresses
 - phpMyAdmin: http://localhost:8081
