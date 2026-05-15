@@ -6,16 +6,16 @@ use Filament\Support\Contracts\HasLabel;
 
 enum StatusColetaEnum: string implements HasLabel
 {
-    case Em_andamento = "Em andamento";
-    case Concluido = "Concluído";
-    case Cancelado = "Cancelado";
+    case EM_ANDAMENTO = 'Em andamento';
+    case CONCLUIDO = 'Concluído';
+    case CANCELADO = 'CANCELADO';
 
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::Em_andamento => 'Em andamento',
-            self::Concluido => 'Concluído',
-            self::Cancelado => 'Cancelado',
+            self::EM_ANDAMENTO => 'Em andamento',
+            self::CONCLUIDO => 'Concluído',
+            self::CANCELADO => 'Cancelado',
             default => 'Status não encontrado',
         };
     }

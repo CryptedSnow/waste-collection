@@ -6,11 +6,11 @@ use Filament\Support\Contracts\HasLabel;
 
 enum CategoriaHabilitacaoEnum: string implements HasLabel
 {
-    case A = "A";
-    case B = "B";
-    case C = "C";
-    case D = "D";
-    case E = "E";
+    case A = 'A';
+    case B = 'B';
+    case C = 'C';
+    case D = 'D';
+    case E = 'E';
 
     public function getLabel(): ?string
     {
