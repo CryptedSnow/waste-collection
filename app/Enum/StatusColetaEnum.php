@@ -8,7 +8,7 @@ enum StatusColetaEnum: string implements HasLabel
 {
     case EM_ANDAMENTO = 'Em andamento';
     case CONCLUIDO = 'Concluído';
-    case CANCELADO = 'CANCELADO';
+    case CANCELADO = 'Cancelado';
 
     public function getLabel(): ?string
     {
