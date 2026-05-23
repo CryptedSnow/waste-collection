@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\{Select, TextInput};
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\{TextColumn, ImageColumn};
 use App\Rules\UniqueValueTable;
 use Illuminate\Support\Facades\{Hash, Auth};
 use Filament\Notifications\Notification;
@@ -78,6 +78,10 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('avatar_url')
+                    ->circular()
+                    ->label('Foto')
+                    ->placeholder('Sem foto'),
                 TextColumn::make('name')
                     ->label('Nome')
                     ->searchable()

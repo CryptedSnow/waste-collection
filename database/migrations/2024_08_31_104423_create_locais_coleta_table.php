@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('locais_coleta', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId("empresa_id")->constrained("empresas");
-            $table->foreignId("cliente_id")->constrained("clientes");
-            $table->string("cep", 9);
-            $table->string("uf", 2);
-            $table->string("cidade");
-            $table->string("bairro");
-            $table->string("logradouro");
-            $table->integer("numero");
+            $table->foreignId('empresa_id')->constrained('empresas');
+            $table->foreignId('cliente_id')->constrained('clientes');
+            $table->string('cep', 9);
+            $table->string('uf', 2);
+            $table->string('cidade');
+            $table->string('bairro');
+            $table->string('logradouro');
+            $table->integer('numero');
             $table->timestamps();
             $table->softDeletes();
         });

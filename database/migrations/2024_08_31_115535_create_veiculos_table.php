@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('veiculos', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId("empresa_id")->constrained("empresas");
-            $table->string("placa_veiculo");
-            $table->string("modelo");
-            $table->string("status");
+            $table->foreignId('empresa_id')->constrained('empresas');
+            $table->string('placa_veiculo');
+            $table->string('modelo');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });
