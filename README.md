@@ -113,32 +113,32 @@ $table->json('data');
 
 Case you want to use ```MySQL``` database, you can import this [file](https://github.com/CryptedSnow/waste-collection/tree/main/database/imports) (It's not necessary use ```migrations``` and ```seeders```, don't do step 6 and 7, go ahead to step 8):
 
-6 - To performate the migrations, you need use the command:
+6 - To performate the ```migrations```, you need use the command:
 ```
 docker-compose exec app php artisan migrate
 ```
 
-7 - Use the commands to perfomate the Seeders:
+7 - Use the commands to perfomate the ```seeders```:
 ```
 docker-compose exec app php artisan db:seed
 ```
 
-8 - Use the command to add files to storage folder:
+8 - Use the command to add files to ```storage``` folder:
 ```
 docker-compose exec app php artisan storage:link
 ```
 
-9 - Run the following command to install Javascript dependencies.
+9 - Run the following command to install ```JavaScript``` dependencies.
 ```
 docker-compose exec app npm install
 ```
 
-10 - Run the following command to compile and optimize JavaScript files for production.
+10 - Run the following command to ```compile``` and ```optimize``` JavaScript files for ```production```.
 ```
 docker-compose exec app npm run build
 ```
 
-11 - To power off the containers before exit from application, use the command:
+11 - To ```switch off``` the containers before exit from application, use the command:
 
 ```
 docker-compose down
