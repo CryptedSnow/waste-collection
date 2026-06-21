@@ -123,17 +123,22 @@ docker-compose exec app php artisan migrate
 docker-compose exec app php artisan db:seed
 ```
 
-8 - Run the following command to install Javascript dependencies.
+8 - Use the command to add files to storage folder:
+```
+docker-compose exec app php artisan storage:link
+```
+
+9 - Run the following command to install Javascript dependencies.
 ```
 docker-compose exec app npm install
 ```
 
-9 - Run the following command to compile and optimize JavaScript files for production.
+10 - Run the following command to compile and optimize JavaScript files for production.
 ```
 docker-compose exec app npm run build
 ```
 
-10 - To power off the containers before exit from application, use the command:
+11 - To power off the containers before exit from application, use the command:
 
 ```
 docker-compose down

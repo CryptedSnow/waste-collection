@@ -77,12 +77,17 @@ class PermissionResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                     //Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ])
             ->recordUrl(null);
+    }
+
+    public static function canGloballySearch(): bool
+    {
+        return false;
     }
 
     public static function getRelations(): array
