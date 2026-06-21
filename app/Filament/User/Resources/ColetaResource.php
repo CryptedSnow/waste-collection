@@ -264,7 +264,7 @@ class ColetaResource extends Resource
                     ->color('success')
                     ->icon('heroicon-o-document-arrow-down')
                     ->action(function (Coleta $record) {
-                        $clienteNome = $record->cliente->nome ?? 'Cliente';
+                        $clienteNome = $record->clientes->nome ?? 'Cliente';
                         return response()->streamDownload(function () use ($record) {
                             echo Pdf::loadHtml(
                                 Blade::render('invoice-coleta', ['record' => $record])

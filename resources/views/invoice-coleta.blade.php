@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Comprovante de coleta para {{$record->cliente->nome}} </title>
+    <title>Comprovante de coleta para {{ $record->clientes->nome }} </title>
 </head>
 <body>
     <div>Código de coleta: {{ $record->codigo_coleta }}</div>
-    <div>Cliente: {{ $record->cliente->nome }}</div>
-    <div>UF: {{ $record->localColeta->uf }}</div>
-    <div>Cidade: {{ $record->localColeta->cidade }}</div>
-    <div>Bairro: {{ $record->localColeta->bairro }}</div>
-    <div>Logradouro: {{ $record->localColeta->logradouro }}</div>
-    <div>Número: {{ $record->localColeta->numero }}</div>
-    <div>Tipo de resíduo: {{ $record->tipoResiduo->descricao }}</div>
-    <div>Motorista: {{ $record->motorista->nome }}</div>
-    <div>Veículo: {{ $record->veiculo->modelo }}</div>
-    <div>Placa: {{ $record->veiculo->placa_veiculo }}</div>
-    <div>Depósito de resíduos: {{ $record->depositoResiduo->nome }}</div>
+    <div>Cliente: {{ $record->clientes->nome }}</div>
+    <div>UF: {{ $record->localColetas->uf }}</div>
+    <div>Cidade: {{ $record->localColetas->cidade }}</div>
+    <div>Bairro: {{ $record->localColetas->bairro }}</div>
+    <div>Logradouro: {{ $record->localColetas->logradouro }}</div>
+    <div>Número: {{ $record->localColetas->numero }}</div>
+    <div>Tipo de resíduo: {{ $record->tipoResiduos->descricao }}</div>
+    <div>Motorista: {{ $record->motoristas->nome }}</div>
+    <div>Veículo: {{ $record->veiculos->modelo }}</div>
+    <div>Placa: {{ $record->veiculos->placa_veiculo }}</div>
+    <div>Depósito de resíduos: {{ $record->depositoResiduos->nome }}</div>
     <div>Quantidade de resíduos: {{ $record->quantidade_residuos }} kg</div>
     <div>Data da coleta: {{ \Carbon\Carbon::parse($record->data_coleta)->format('d/m/Y') }}</div>
     <div>Hora da coleta: {{ \Carbon\Carbon::parse($record->hora_coleta)->format('H:i A') }}</div>
