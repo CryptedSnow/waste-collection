@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('coletas', function (Blueprint $table) {
             $table->decimal('valor_quilo', 4, 2)->after('deposito_residuo_id');
-            $table->decimal('quantidade_residuos', 12, 3);
-            $table->decimal('valor_coleta', 9, 2);
+            $table->decimal('quantidade_residuos', 12, 3)->change();
+            $table->decimal('valor_coleta', 9, 2)->change();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
     {
         Schema::table('coletas', function (Blueprint $table) {
             $table->dropColumn('valor_quilo');
-            $table->dropColumn('quantidade_residuos');
-            $table->dropColumn('valor_coleta');
+            $table->float('quantidade_residuos')->change();
+            $table->float('valor_coleta')->change();
         });
     }
 };
