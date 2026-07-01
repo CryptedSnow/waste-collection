@@ -19,7 +19,10 @@
     <div>Veículo: {{ $record->veiculos->modelo }}</div>
     <div>Placa: {{ $record->veiculos->placa_veiculo }}</div>
     <div>Depósito de resíduos: {{ $record->depositoResiduos->nome }}</div>
-    <div>Quantidade de resíduos: {{ $record->quantidade_residuos }} kg</div>
+    <div>Valor por quilo: R$ {{ number_format($record->valor_quilo, 2, ',', '.') }}</div>
+    <div>Quantidade de resíduos:
+        {{ rtrim(rtrim(number_format($record->quantidade_residuos, 3, ',', '.'), '0'), ',') }} kg
+    </div>
     <div>Data da coleta: {{ \Carbon\Carbon::parse($record->data_coleta)->format('d/m/Y') }}</div>
     <div>Hora da coleta: {{ \Carbon\Carbon::parse($record->hora_coleta)->format('H:i A') }}</div>
     <div>Valor da coleta: R$ {{ number_format($record->valor_coleta, 2, ',', '.') }}</div>

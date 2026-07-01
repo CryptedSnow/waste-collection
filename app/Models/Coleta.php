@@ -22,12 +22,19 @@ class Coleta extends Model
         'motorista_id',
         'veiculo_id',
         'deposito_residuo_id',
+        'valor_quilo',
         'quantidade_residuos',
         'data_coleta',
         'hora_coleta',
         'valor_coleta',
         'finalidade',
         'status',
+    ];
+
+    protected $casts = [
+        'quantidade_residuos' => 'decimal:3',
+        'valor_quilo' => 'decimal:2',
+        'valor_coleta' => 'decimal:2',
     ];
 
     protected static function boot()
