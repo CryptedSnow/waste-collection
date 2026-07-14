@@ -22,7 +22,6 @@ use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Forms\{Get, Set};
 use Filament\Notifications\Notification;
 use Filament\Facades\Filament;
-use Filament\Support\RawJs;
 
 class ColetaResource extends Resource
 {
@@ -47,7 +46,7 @@ class ColetaResource extends Resource
         return $form
             ->schema([
                 Hidden::make('codigo_coleta')
-                    ->default(fn () => self::generateCodigoColeta())
+                    ->default(fn () => self::gerarCodigoColeta())
                     ->required(),
                 Select::make('local_coleta_id')
                     ->label('Local da coleta')
@@ -120,33 +119,17 @@ class ColetaResource extends Resource
                     ->searchable()
                     ->required()
                     ->rules('exists:depositos_residuos,id'),
-                Money::make('valor_quilo')
-                    ->label('Valor por quilo (R$/Kg)')
+                Money::make('valor_diaria')
+                    ->label('Valor da diária (R$)')
                     ->required()
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (Set $set, Get $get) => self::calcularValorColeta($set, $get)),
-                TextInput::make('quantidade_residuos')
-                    ->label('Quantidade de resíduos (KG)')
+                TextInput::make('dias_diaria')
+                    ->label('Dias da diária')
                     ->required()
-                    ->numeric()
-                    ->inputMode('decimal')
-                    ->step('0.001')
-                    ->minValue(0.001)
-                    ->maxValue(999999.999)
-                    ->rules(['decimal:0,3'])
+                    ->integer()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (Set $set, Get $get) => self::calcularValorColeta($set, $get))
-                    ->formatStateUsing(function ($state) {
-                        if (blank($state)) return null;
-                        $number = (float) $state;
-                        $formatted = number_format($number, 3, ',', '.');
-                        return rtrim(rtrim($formatted, '0'), ',');
-                    })
-                    ->dehydrateStateUsing(function ($state) {
-                        if (blank($state)) return null;
-                        $number = (float) str_replace(['.', ','], ['', '.'], $state);
-                        return round($number, 3);
-                    }),
+                    ->afterStateUpdated(fn (Set $set, Get $get) => self::calcularValorColeta($set, $get)),
                 DatePicker::make('data_coleta')
                     ->label('Data da coleta')
                     ->rules('date_format:Y-m-d')
@@ -235,19 +218,11 @@ class ColetaResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('valor_quilo')
-                    ->label('Valor do quilo (R$/Kg)')
+                TextColumn::make('valor_diaria')
+                    ->label('Valor da diária (R$)')
                     ->money('BRL'),
-                TextColumn::make('quantidade_residuos')
-                    ->label('Quantidade de resíduos (Kg)')
-                    ->sortable()
-                    ->formatStateUsing(function ($state) {
-                        if (blank($state)) return null;
-                        $number = (float) $state;
-                        $formatted = number_format($number, 3, ',', '.');
-                        $clean = rtrim(rtrim($formatted, '0'), ',');
-                        return $clean . ' kg';
-                    }),
+                TextColumn::make('dias_diaria')
+                    ->label('Dias da diária'),
                 TextColumn::make('data_coleta')
                     ->label('Data da coleta')
                     ->dateTime('d/m/Y'),
@@ -362,7 +337,7 @@ class ColetaResource extends Resource
             ->with(['localColetas','tipoResiduos','motoristas','veiculos','depositoResiduos']);
     }
 
-    public static function generateCodigoColeta(): string
+    public static function gerarCodigoColeta(): string
     {
         $dataAtual = date('ymd');
         $numero = random_int(10000, 99999);
@@ -373,24 +348,10 @@ class ColetaResource extends Resource
 
     protected static function calcularValorColeta(Set $set, Get $get): void
     {
-        $valorQuilo = self::normalizarMoeda($get('valor_quilo'));
-        $quantidade = (float) $get('quantidade_residuos') ?: 0;
-
-        $total = round($valorQuilo * $quantidade, 2);
-
-        $set('valor_coleta', $total);
-    }
-
-    protected static function normalizarMoeda(?string $valor): float
-    {
-        if (blank($valor)) {
-            return 0.0;
-        }
-
-        $valor = str_replace(['.', ' '], '', $valor);
-        $valor = str_replace(',', '.', $valor);
-
-        return (float) $valor;
+        $valorDiaria = (float) str_replace(',', '.', (string) ($get('valor_diaria') ?? 0));
+        $diasDiaria  = (int) ($get('dias_diaria') ?? 0);
+        $valorColeta = $valorDiaria * $diasDiaria;
+        $set('valor_coleta', number_format($valorColeta, 2, ',', '.'));
     }
 
 }
