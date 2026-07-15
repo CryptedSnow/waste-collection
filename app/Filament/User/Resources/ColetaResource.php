@@ -129,6 +129,7 @@ class ColetaResource extends Resource
                     ->required()
                     ->integer()
                     ->live(onBlur: true)
+                    ->rules(['min:1', 'integer'])
                     ->afterStateUpdated(fn (Set $set, Get $get) => self::calcularValorColeta($set, $get)),
                 DatePicker::make('data_coleta')
                     ->label('Data da coleta')
