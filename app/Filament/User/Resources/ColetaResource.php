@@ -2,26 +2,27 @@
 
 namespace App\Filament\User\Resources;
 
+use App\Enum\{FinalidadeColetaEnum, StatusColetaEnum};
 use App\Filament\User\Resources\ColetaResource\Pages;
 use App\Filament\User\Resources\ColetaResource\RelationManagers;
 use App\Models\{Coleta, LocalColeta, TipoResiduo, Motorista, Veiculo, DepositoResiduo};
-use App\Enum\{FinalidadeColetaEnum, StatusColetaEnum};
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Forms\{Get, Set};
+use Filament\Forms\Components\{Select, TextInput, DatePicker, TimePicker, Hidden};
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\{TextColumn, SelectColumn};
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select, TextInput, DatePicker, TimePicker, Hidden};
-use Filament\Tables\Columns\{TextColumn, SelectColumn};
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Blade;
 use Leandrocfe\FilamentPtbrFormFields\Money;
-use Filament\Tables\Columns\Summarizers\Sum;
-use Filament\Forms\{Get, Set};
-use Filament\Notifications\Notification;
-use Filament\Facades\Filament;
 
 class ColetaResource extends Resource
 {
@@ -134,6 +135,7 @@ class ColetaResource extends Resource
                 DatePicker::make('data_coleta')
                     ->label('Data da coleta')
                     ->rules('date_format:Y-m-d')
+                    ->live()
                     ->required(),
                 TimePicker::make('hora_coleta')
                     ->label('Hora da coleta')
@@ -143,7 +145,19 @@ class ColetaResource extends Resource
                 Money::make('valor_coleta')
                     ->label('Valor da coleta')
                     ->required()
-                    ->readOnly(),
+                    ->readOnly()
+                    ->helperText(function (Get $get) {
+                        $dataColeta = $get('data_coleta');
+                        $dias = $get('dias_diaria');
+                        if (! $dataColeta || ! $dias) {
+                            return null;
+                        }
+                        $inicio = Carbon::parse($dataColeta);
+                        $fim = $inicio->copy()->addDays((int) $dias);
+                        return new \Illuminate\Support\HtmlString(
+                            "O contrato do serviço de coleta se encerra em <strong>{$fim->format('d/m')}</strong>."
+                        );
+                    }),
                 Select::make('finalidade')
                     ->label('Finalidade')
                     ->required()
@@ -230,6 +244,9 @@ class ColetaResource extends Resource
                 TextColumn::make('hora_coleta')
                     ->label('Hora da coleta')
                     ->dateTime('H:i A'),
+                TextColumn::make('data_fim_coleta')
+                    ->label('Término de coleta')
+                    ->html(),
                 TextColumn::make('valor_coleta')
                     ->label('Valor da coleta')
                     ->money('BRL')

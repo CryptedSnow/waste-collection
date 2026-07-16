@@ -23,6 +23,7 @@
     <div>Dias da diária: {{ $record->dias_diaria }} {{ $record->dias_diaria == 1 ? 'dia' : 'dias' }}</div>
     <div>Data da coleta: {{ \Carbon\Carbon::parse($record->data_coleta)->format('d/m/Y') }}</div>
     <div>Hora da coleta: {{ \Carbon\Carbon::parse($record->hora_coleta)->format('H:i A') }}</div>
+    <div>Término da coleta: {{ \Carbon\Carbon::parse($record->data_coleta)->addDays($record->dias_diaria)->format('d/m/Y') }}</div>
     <div>Valor da coleta: R$ {{ number_format($record->valor_coleta, 2, ',', '.') }}</div>
     <div>Finalidade: {{ $record->finalidade }}</div>
     <div>Status: {{ $record->status }}</div>
