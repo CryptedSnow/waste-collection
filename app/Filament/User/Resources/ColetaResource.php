@@ -17,7 +17,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\{TextColumn, SelectColumn};
-use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -155,7 +155,7 @@ class ColetaResource extends Resource
                         $inicio = Carbon::parse($dataColeta);
                         $fim = $inicio->copy()->addDays((int) $dias);
                         return new \Illuminate\Support\HtmlString(
-                            "O contrato do serviço de coleta se encerra em <strong>{$fim->format('d/m')}</strong>."
+                            "O contrato do serviço de coleta se encerra em <strong>{$fim->format('d/m/Y')}</strong>."
                         );
                     }),
                 Select::make('finalidade')
@@ -251,9 +251,14 @@ class ColetaResource extends Resource
                     ->label('Valor da coleta')
                     ->money('BRL')
                     ->summarize([
-                        Sum::make()
-                            ->money('BRL')
-                            ->query(fn ($query) => $query->where('status', '!=', 'Cancelado')),
+                        Summarizer::make()
+                            ->label('Total concluído')
+                            ->using(fn ($query) => $query->where('status', 'Concluído')->sum('valor_coleta'))
+                            ->money('BRL'),
+                        Summarizer::make()
+                            ->label('Total em andamento')
+                            ->using(fn ($query) => $query->where('status', 'Em andamento')->sum('valor_coleta'))
+                            ->money('BRL'),
                     ]),
                 SelectColumn::make('finalidade')
                     ->label('Finalidade')
