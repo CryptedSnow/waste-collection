@@ -4,9 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Auth\Notifications\{ResetPassword, VerifyEmail};
 use Illuminate\Support\ServiceProvider;
-use Filament\Support\Facades\FilamentView;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,11 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        FilamentView::registerRenderHook(
-            'panels::auth.login.form.after',
-            fn (): string => Blade::render('@vite(\'resources/css/custom-cover.css\')'),
-        );
-
         VerifyEmail::toMailUsing(function($notifiable, $url) {
             return (new MailMessage)
                 ->subject('Verifique seu e-mail')

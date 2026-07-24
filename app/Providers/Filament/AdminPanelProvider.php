@@ -18,6 +18,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Navigation\MenuItem;
+use Illuminate\Support\Facades\Blade;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
@@ -34,6 +35,10 @@ class AdminPanelProvider extends PanelProvider
             ->passwordReset()
             ->databaseNotifications()
             ->sidebarCollapsibleOnDesktop()
+            ->renderHook(
+                'panels::auth.login.form.after',
+                fn (): string => Blade::render('@vite(\'resources/css/custom-cover-admin.css\')')
+            )
             ->colors([
                 'primary' => "#F7931A",
             ])

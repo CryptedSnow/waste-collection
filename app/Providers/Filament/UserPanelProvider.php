@@ -22,6 +22,7 @@ use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Filament\Navigation\MenuItem;
 use App\Models\Empresa;
+use Illuminate\Support\Facades\Blade;
 
 class UserPanelProvider extends PanelProvider
 {
@@ -36,6 +37,10 @@ class UserPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->databaseNotifications()
             ->tenant(Empresa::class)
+            ->renderHook(
+                'panels::auth.login.form.after',
+                fn (): string => Blade::render('@vite(\'resources/css/custom-cover-user.css\')')
+            )
             ->colors([
                 'primary' => Color::Indigo,
             ])
