@@ -132,7 +132,7 @@ CREATE TABLE `coletas` (
   `motorista_id` bigint UNSIGNED NOT NULL,
   `veiculo_id` bigint UNSIGNED NOT NULL,
   `deposito_residuo_id` bigint UNSIGNED NOT NULL,
-  `valor_diaria` decimal(5,2) NOT NULL,
+  `valor_diaria` decimal(6,2) NOT NULL,
   `dias_diaria` int NOT NULL,
   `data_coleta` date NOT NULL,
   `hora_coleta` time NOT NULL,

@@ -121,9 +121,16 @@ class ColetaResource extends Resource
                     ->required()
                     ->rules('exists:depositos_residuos,id'),
                 Money::make('valor_diaria')
-                    ->label('Valor da diária (R$)')
+                    ->label('Valor da diária')
                     ->required()
                     ->live(onBlur: true)
+                    ->rules([
+                        fn (): \Closure => function (string $attribute, $value, \Closure $fail) {
+                            if (self::parseValorMonetario($value) > 9999.99) {
+                                $fail('O valor da diária não pode ultrapassar R$ 9.999,99.');
+                            }
+                        },
+                    ])
                     ->afterStateUpdated(fn (Set $set, Get $get) => self::calcularValorColeta($set, $get)),
                 TextInput::make('dias_diaria')
                     ->label('Dias da diária')
@@ -146,6 +153,13 @@ class ColetaResource extends Resource
                     ->label('Valor da coleta')
                     ->required()
                     ->readOnly()
+                    ->rules([
+                        fn (): \Closure => function (string $attribute, $value, \Closure $fail) {
+                            if (self::parseValorMonetario($value) > 9999999.99) {
+                                $fail('O valor da coleta não pode ultrapassar R$ 9.999.999,99.');
+                            }
+                        },
+                    ])
                     ->helperText(function (Get $get) {
                         $dataColeta = $get('data_coleta');
                         $dias = $get('dias_diaria');
@@ -234,7 +248,7 @@ class ColetaResource extends Resource
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('valor_diaria')
-                    ->label('Valor da diária (R$)')
+                    ->label('Valor da diária')
                     ->money('BRL'),
                 TextColumn::make('dias_diaria')
                     ->label('Dias da diária'),
@@ -369,9 +383,18 @@ class ColetaResource extends Resource
         return sprintf('%s%05d%s%03d', $dataAtual, $numero, $letra, $numeroFinal);
     }
 
+    protected static function parseValorMonetario(mixed $valor): float
+    {
+        $valorRaw = (string) ($valor ?? 0);
+        return (float) str_replace(
+            ',', '.',
+            str_replace('.', '', $valorRaw)
+        );
+    }
+
     protected static function calcularValorColeta(Set $set, Get $get): void
     {
-        $valorDiaria = (float) str_replace(',', '.', (string) ($get('valor_diaria') ?? 0));
+        $valorDiaria = self::parseValorMonetario($get('valor_diaria'));
         $diasDiaria  = (int) ($get('dias_diaria') ?? 0);
         $valorColeta = $valorDiaria * $diasDiaria;
         $set('valor_coleta', number_format($valorColeta, 2, ',', '.'));
