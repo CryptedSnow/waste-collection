@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasOneThrough};
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class Coleta extends Model
 {
@@ -86,15 +85,4 @@ class Coleta extends Model
     {
         return $this->hasOneThrough(Cliente::class, LocalColeta::class, 'id', 'id', 'local_coleta_id', 'cliente_id');
     }
-
-    public function getDataFimColetaAttribute(): ?string
-    {
-        if (! $this->data_coleta || ! $this->dias_diaria) {
-            return null;
-        }
-        $inicio = Carbon::parse($this->data_coleta);
-        $fim = $inicio->copy()->addDays((int) $this->dias_diaria);
-        return $fim->format('d/m/Y');
-    }
-
 }

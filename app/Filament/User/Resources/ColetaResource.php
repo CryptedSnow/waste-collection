@@ -127,7 +127,7 @@ class ColetaResource extends Resource
                     ->rules([
                         fn (): \Closure => function (string $attribute, $value, \Closure $fail) {
                             if (self::parseValorMonetario($value) > 9999.99) {
-                                $fail('O valor da diária não pode ultrapassar R$ 9.999,99.');
+                                $fail('O valor da diária não pode ultrapassar R$ 9.999,99');
                             }
                         },
                     ])
@@ -141,7 +141,8 @@ class ColetaResource extends Resource
                     ->afterStateUpdated(fn (Set $set, Get $get) => self::calcularValorColeta($set, $get)),
                 DatePicker::make('data_coleta')
                     ->label('Data da coleta')
-                    ->rules('date_format:Y-m-d')
+                    ->displayFormat('d/m/Y')
+                    ->native(false)
                     ->live()
                     ->required(),
                 TimePicker::make('hora_coleta')
@@ -156,7 +157,7 @@ class ColetaResource extends Resource
                     ->rules([
                         fn (): \Closure => function (string $attribute, $value, \Closure $fail) {
                             if (self::parseValorMonetario($value) > 9999999.99) {
-                                $fail('O valor da coleta não pode ultrapassar R$ 9.999.999,99.');
+                                $fail('O valor da coleta não pode ultrapassar R$ 9.999.999,99');
                             }
                         },
                     ])
