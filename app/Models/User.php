@@ -18,6 +18,9 @@ use Filament\Models\Contracts\HasTenants;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Facades\Filament;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class User extends Authenticatable implements FilamentUser, HasTenants, HasAvatar
 {
@@ -117,6 +120,24 @@ class User extends Authenticatable implements FilamentUser, HasTenants, HasAvata
         }
 
         return Storage::disk('public')->url($path);
+    }
+
+    public function notifications(): MorphMany
+    {
+        $relation = $this->morphMany(DatabaseNotification::class, 'notifiable')->latest();
+
+        $panel = Filament::getCurrentPanel();
+        $tenant = Filament::getTenant();
+
+        if ($panel?->getId() === 'admin') {
+            return $relation->whereRaw('1 = 0');
+        }
+
+        if ($tenant) {
+            $relation->where('data->tenant_id', $tenant->getKey());
+        }
+
+        return $relation;
     }
 
 }
