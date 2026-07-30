@@ -101,6 +101,18 @@ DB_USERNAME=postgres
 DB_PASSWORD=secret
 ```
 
+To use email tests, use this snippet from **Mailpit** container:
+```
+MAIL_MAILER=smtp
+MAIL_HOST=mailpit
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="teste@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
 Before you perfomate the migrations, go to [notifications](https://github.com/CryptedSnow/waste-collection/blob/main/database/migrations/2024_11_30_113525_create_notifications_table.php) table to make a change in a specific line, it will avoid errors involving notifications and database.
 
 ```
@@ -149,3 +161,4 @@ docker-compose down
 - pgAdmin: http://localhost:5050
     - User: `admin@admin.com`
     - Password: `admin`
+- mailpit: http://localhost:8025

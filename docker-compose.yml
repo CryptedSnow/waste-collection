@@ -85,9 +85,22 @@ services:
             - pgsql
         networks:
             - app-network
+    mailpit:
+        image: axllent/mailpit:latest
+        container_name: mailpit
+        ports:
+            - '8025:8025'
+            - '1025:1025'
+        volumes:
+            - 'mailpit-data:/data'
+        environment:
+            MP_DATABASE: '/data/mailpit.db'
+        networks:
+            - app-network
 networks:
     app-network:
         driver: bridge
 volumes:
     mysql-data:
     pgsql-data:
+    mailpit-data:
