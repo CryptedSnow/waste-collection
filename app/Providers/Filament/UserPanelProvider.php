@@ -32,7 +32,7 @@ class UserPanelProvider extends PanelProvider
         return $panel
             ->id('user')
             ->path('user')
-            ->favicon(asset('img/favicon.png'))
+            ->favicon(asset('images/favicon.png'))
             ->login()
             ->passwordReset()
             ->sidebarCollapsibleOnDesktop()
