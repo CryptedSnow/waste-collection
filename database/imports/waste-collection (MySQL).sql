@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Jul 14, 2026 at 05:37 PM
+-- Generation Time: Aug 07, 2026 at 11:36 AM
 -- Server version: 8.0.46
 -- PHP Version: 8.3.26
 
@@ -24,12 +24,43 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `activity_log`
+--
+
+CREATE TABLE `activity_log` (
+  `id` bigint UNSIGNED NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `log_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `event` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subject_id` bigint UNSIGNED DEFAULT NULL,
+  `causer_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `causer_id` bigint UNSIGNED DEFAULT NULL,
+  `properties` json DEFAULT NULL,
+  `batch_uuid` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `activity_log`
+--
+
+INSERT INTO `activity_log` (`id`, `uuid`, `log_name`, `description`, `subject_type`, `event`, `subject_id`, `causer_type`, `causer_id`, `properties`, `batch_uuid`, `created_at`, `updated_at`) VALUES
+(1, '85e68f9e-5f9b-49b6-8fa3-302b52545117', 'coletas', 'Coleta 25021125858M337 atualizada', 'App\\Models\\Coleta', 'updated', 36, 'App\\Models\\User', 3, '{\"old\": {\"veiculo_id\": 5, \"dias_diaria\": 3, \"valor_coleta\": \"240.00\", \"deposito_residuo_id\": 12}, \"attributes\": {\"veiculo_id\": 6, \"dias_diaria\": 5, \"valor_coleta\": \"400.00\", \"deposito_residuo_id\": 4}}', NULL, '2026-08-07 08:34:09', '2026-08-07 08:34:09'),
+(2, '4dbea8fb-b379-4c22-88cc-6ac95e3e6b1a', 'coletas', 'Coleta 24111466548Z508 atualizada', 'App\\Models\\Coleta', 'updated', 6, 'App\\Models\\User', 5, '{\"old\": {\"dias_diaria\": 2, \"motorista_id\": 8, \"valor_coleta\": \"170.00\", \"deposito_residuo_id\": 3}, \"attributes\": {\"dias_diaria\": 3, \"motorista_id\": 10, \"valor_coleta\": \"255.00\", \"deposito_residuo_id\": 6}}', NULL, '2026-08-07 08:34:41', '2026-08-07 08:34:41'),
+(3, '0ea33952-6178-438a-bed1-ea05c349f390', 'coletas', 'Coleta 25011291896Q684 atualizada', 'App\\Models\\Coleta', 'updated', 31, 'App\\Models\\User', 4, '{\"old\": {\"tipo_residuo_id\": 9, \"deposito_residuo_id\": 9}, \"attributes\": {\"tipo_residuo_id\": 8, \"deposito_residuo_id\": 10}}', NULL, '2026-08-07 08:35:13', '2026-08-07 08:35:13');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cache`
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -38,9 +69,9 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('livewire-rate-limiter:5b5e86c7b451e5528739380cdc97d0344b1eb460', 'i:1;', 1784048286),
-('livewire-rate-limiter:5b5e86c7b451e5528739380cdc97d0344b1eb460:timer', 'i:1784048286;', 1784048286),
-('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:5:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"uuid\";s:1:\"c\";s:4:\"name\";s:1:\"d\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:14:{i:0;a:5:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"df3d9d9f-b3f5-4d1e-9710-cfd3dcda96ce\";s:1:\"c\";s:12:\"admins:index\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:5:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"4560ba48-7008-4b3c-ac0b-c11d1c175e4a\";s:1:\"c\";s:13:\"admins:create\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:5:{s:1:\"a\";i:3;s:1:\"b\";s:36:\"78ee9df0-9aa5-42d5-841b-1dcad0f363d3\";s:1:\"c\";s:12:\"admins:store\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:5:{s:1:\"a\";i:4;s:1:\"b\";s:36:\"ecf580a9-92ee-4e8e-8671-11d66a521050\";s:1:\"c\";s:11:\"admins:show\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:5:{s:1:\"a\";i:5;s:1:\"b\";s:36:\"7290dad5-306d-4ad3-bb36-40a035d16bc5\";s:1:\"c\";s:11:\"admins:edit\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:5;a:5:{s:1:\"a\";i:6;s:1:\"b\";s:36:\"5658a526-469e-4299-b8bb-68a8d0537f13\";s:1:\"c\";s:13:\"admins:update\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:5:{s:1:\"a\";i:7;s:1:\"b\";s:36:\"5e8a01ef-dcf2-47fc-b5cc-6c169b4f5a95\";s:1:\"c\";s:14:\"admins:destroy\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:7;a:5:{s:1:\"a\";i:8;s:1:\"b\";s:36:\"3422ac82-701e-4d9f-827d-f7dab24414c7\";s:1:\"c\";s:11:\"users:index\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:8;a:5:{s:1:\"a\";i:9;s:1:\"b\";s:36:\"fa03f2a2-2295-413c-91f5-e9ede229b181\";s:1:\"c\";s:12:\"users:create\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:9;a:5:{s:1:\"a\";i:10;s:1:\"b\";s:36:\"358a2e60-4e98-4f4f-8203-035e3714ce65\";s:1:\"c\";s:11:\"users:store\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:10;a:5:{s:1:\"a\";i:11;s:1:\"b\";s:36:\"11ba1be0-65be-4a69-841d-39d1c1d0226a\";s:1:\"c\";s:10:\"users:show\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:11;a:5:{s:1:\"a\";i:12;s:1:\"b\";s:36:\"592c8683-169a-4bc7-9904-7de3477bc01f\";s:1:\"c\";s:10:\"users:edit\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:12;a:5:{s:1:\"a\";i:13;s:1:\"b\";s:36:\"261868ff-c41a-48e5-8934-69fd1fba75fb\";s:1:\"c\";s:12:\"users:update\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:13;a:5:{s:1:\"a\";i:14;s:1:\"b\";s:36:\"5b3fb285-5052-4085-9713-418e5ac2ab81\";s:1:\"c\";s:13:\"users:destroy\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}}s:5:\"roles\";a:2:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"0065ce32-15dc-4057-845c-4a43d3e4b67d\";s:1:\"c\";s:5:\"Admin\";s:1:\"d\";s:3:\"web\";}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"89116468-5288-4469-81eb-afb1c62ec71b\";s:1:\"c\";s:4:\"User\";s:1:\"d\";s:3:\"web\";}}}', 1784134627);
+('livewire-rate-limiter:5b5e86c7b451e5528739380cdc97d0344b1eb460', 'i:2;', 1786102554),
+('livewire-rate-limiter:5b5e86c7b451e5528739380cdc97d0344b1eb460:timer', 'i:1786102554;', 1786102554),
+('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:5:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"uuid\";s:1:\"c\";s:4:\"name\";s:1:\"d\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:14:{i:0;a:5:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"df3d9d9f-b3f5-4d1e-9710-cfd3dcda96ce\";s:1:\"c\";s:12:\"admins:index\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:5:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"4560ba48-7008-4b3c-ac0b-c11d1c175e4a\";s:1:\"c\";s:13:\"admins:create\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:5:{s:1:\"a\";i:3;s:1:\"b\";s:36:\"78ee9df0-9aa5-42d5-841b-1dcad0f363d3\";s:1:\"c\";s:12:\"admins:store\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:5:{s:1:\"a\";i:4;s:1:\"b\";s:36:\"ecf580a9-92ee-4e8e-8671-11d66a521050\";s:1:\"c\";s:11:\"admins:show\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:5:{s:1:\"a\";i:5;s:1:\"b\";s:36:\"7290dad5-306d-4ad3-bb36-40a035d16bc5\";s:1:\"c\";s:11:\"admins:edit\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:5;a:5:{s:1:\"a\";i:6;s:1:\"b\";s:36:\"5658a526-469e-4299-b8bb-68a8d0537f13\";s:1:\"c\";s:13:\"admins:update\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:5:{s:1:\"a\";i:7;s:1:\"b\";s:36:\"5e8a01ef-dcf2-47fc-b5cc-6c169b4f5a95\";s:1:\"c\";s:14:\"admins:destroy\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:7;a:5:{s:1:\"a\";i:8;s:1:\"b\";s:36:\"3422ac82-701e-4d9f-827d-f7dab24414c7\";s:1:\"c\";s:11:\"users:index\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:8;a:5:{s:1:\"a\";i:9;s:1:\"b\";s:36:\"fa03f2a2-2295-413c-91f5-e9ede229b181\";s:1:\"c\";s:12:\"users:create\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:9;a:5:{s:1:\"a\";i:10;s:1:\"b\";s:36:\"358a2e60-4e98-4f4f-8203-035e3714ce65\";s:1:\"c\";s:11:\"users:store\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:10;a:5:{s:1:\"a\";i:11;s:1:\"b\";s:36:\"11ba1be0-65be-4a69-841d-39d1c1d0226a\";s:1:\"c\";s:10:\"users:show\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:11;a:5:{s:1:\"a\";i:12;s:1:\"b\";s:36:\"592c8683-169a-4bc7-9904-7de3477bc01f\";s:1:\"c\";s:10:\"users:edit\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:12;a:5:{s:1:\"a\";i:13;s:1:\"b\";s:36:\"261868ff-c41a-48e5-8934-69fd1fba75fb\";s:1:\"c\";s:12:\"users:update\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:13;a:5:{s:1:\"a\";i:14;s:1:\"b\";s:36:\"5b3fb285-5052-4085-9713-418e5ac2ab81\";s:1:\"c\";s:13:\"users:destroy\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}}s:5:\"roles\";a:2:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"0065ce32-15dc-4057-845c-4a43d3e4b67d\";s:1:\"c\";s:5:\"Admin\";s:1:\"d\";s:3:\"web\";}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"89116468-5288-4469-81eb-afb1c62ec71b\";s:1:\"c\";s:4:\"User\";s:1:\"d\";s:3:\"web\";}}}', 1786124363);
 
 -- --------------------------------------------------------
 
@@ -49,8 +80,8 @@ INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -62,12 +93,12 @@ CREATE TABLE `cache_locks` (
 
 CREATE TABLE `clientes` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cpf` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cpf` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -124,8 +155,8 @@ INSERT INTO `clientes` (`id`, `uuid`, `empresa_id`, `nome`, `cpf`, `email`, `tel
 
 CREATE TABLE `coletas` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `codigo_coleta` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_coleta` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
   `local_coleta_id` bigint UNSIGNED NOT NULL,
   `tipo_residuo_id` bigint UNSIGNED NOT NULL,
@@ -137,8 +168,8 @@ CREATE TABLE `coletas` (
   `data_coleta` date NOT NULL,
   `hora_coleta` time NOT NULL,
   `valor_coleta` decimal(9,2) NOT NULL,
-  `finalidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `finalidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -154,7 +185,7 @@ INSERT INTO `coletas` (`id`, `uuid`, `codigo_coleta`, `empresa_id`, `local_colet
 (3, 'a63a9218-2682-4707-b097-ed5dedaa7e38', '24111479383Z583', 2, 9, 2, 2, 2, 3, 70.00, 4, '2024-11-16', '08:20:00', 280.00, 'Compostagem', 'Concluído', '2024-11-14 10:16:31', '2026-07-14 14:19:30', NULL),
 (4, '6e27f101-ff46-404e-9581-afa2165f7556', '24111420310J249', 2, 10, 2, 2, 2, 3, 80.00, 6, '2024-11-19', '11:20:00', 480.00, 'Incineiração', 'Concluído', '2024-11-14 10:17:28', '2026-07-14 14:19:14', NULL),
 (5, '1ca80c63-72f7-4576-9a59-ba0071d056a8', '24111458275N787', 2, 11, 3, 8, 2, 1, 80.00, 3, '2024-11-26', '14:20:00', 240.00, 'Compostagem', 'Em andamento', '2024-11-14 10:18:48', '2026-07-14 14:19:02', NULL),
-(6, 'd2c56fab-e85c-4274-ac15-c868c6137310', '24111466548Z508', 2, 12, 3, 8, 1, 3, 85.00, 2, '2024-11-27', '16:25:00', 170.00, 'Coprocessamento', 'Concluído', '2024-11-14 10:19:52', '2026-07-14 14:18:54', NULL),
+(6, 'd2c56fab-e85c-4274-ac15-c868c6137310', '24111466548Z508', 2, 12, 3, 10, 1, 6, 85.00, 3, '2024-11-27', '16:25:00', 255.00, 'Coprocessamento', 'Concluído', '2024-11-14 10:19:52', '2026-08-07 08:34:41', NULL),
 (7, 'da994f4a-8079-4595-96ae-bb8c15568ea7', '24111492220E541', 2, 13, 1, 1, 2, 1, 80.00, 5, '2024-12-02', '15:25:00', 400.00, 'Aterro controlado', 'Cancelado', '2024-11-14 10:21:29', '2026-07-14 14:18:37', NULL),
 (8, 'dfd7559b-6035-430b-a0c1-1421bdf00754', '24111484431L491', 3, 1, 4, 3, 4, 2, 90.00, 3, '2024-11-18', '15:45:00', 270.00, 'Reciclagem', 'Em andamento', '2024-11-14 10:43:35', '2026-07-14 14:36:39', NULL),
 (9, '188062d4-e000-4904-b76d-d043c799efb5', '24111443020I357', 3, 2, 4, 3, 4, 2, 80.00, 3, '2024-11-19', '08:50:00', 240.00, 'Reciclagem', 'Em andamento', '2024-11-14 10:44:30', '2026-07-14 14:36:20', NULL),
@@ -179,12 +210,12 @@ INSERT INTO `coletas` (`id`, `uuid`, `codigo_coleta`, `empresa_id`, `local_colet
 (28, 'eb311f96-ca5f-488f-aabd-c16f533d5649', '24122860539O165', 3, 28, 4, 4, 4, 5, 80.00, 8, '2024-12-31', '21:40:00', 640.00, 'Aterro controlado', 'Em andamento', '2024-12-28 14:31:56', '2026-07-14 14:25:30', NULL),
 (29, 'af1ca522-e4ea-42ab-acce-eb670d32eaab', '24123066965Q997', 3, 29, 6, 4, 5, 4, 80.00, 4, '2024-12-31', '20:40:00', 320.00, 'Reciclagem', 'Concluído', '2024-12-30 19:13:48', '2026-07-14 14:25:04', NULL),
 (30, '0f7e4a62-d692-4d19-aff2-9309f5fa80e6', '25011292601C786', 4, 30, 7, 15, 11, 10, 80.00, 3, '2025-01-15', '09:20:00', 240.00, 'Reciclagem', 'Em andamento', '2025-01-12 09:56:54', '2026-07-14 14:21:11', NULL),
-(31, 'e625a1c5-62ae-4c1c-9cbd-2a93d9d9db51', '25011291896Q684', 4, 31, 9, 16, 12, 9, 70.00, 5, '2025-01-15', '10:25:00', 350.00, 'Reciclagem', 'Em andamento', '2025-01-12 09:58:02', '2026-07-14 14:21:08', NULL),
+(31, 'e625a1c5-62ae-4c1c-9cbd-2a93d9d9db51', '25011291896Q684', 4, 31, 8, 16, 12, 10, 70.00, 5, '2025-01-15', '10:25:00', 350.00, 'Reciclagem', 'Em andamento', '2025-01-12 09:58:02', '2026-08-07 08:35:13', NULL),
 (32, '060cfb9b-5dfb-4735-b18f-bea2e5ec2e80', '25011259532N575', 4, 32, 8, 15, 11, 10, 75.00, 4, '2025-01-17', '09:10:00', 300.00, 'Compostagem', 'Concluído', '2025-01-12 15:03:47', '2026-07-14 14:20:56', NULL),
 (33, 'ff0e8efc-0d66-451b-915e-36d2255cb2b8', '25020840136U808', 3, 33, 4, 4, 6, 5, 90.00, 6, '2025-02-10', '08:10:00', 540.00, 'Reciclagem', 'Em andamento', '2025-02-08 19:55:42', '2026-07-14 14:23:37', NULL),
 (34, 'ad22f1ad-2884-4aef-8e4b-4d6b275db502', '25020872252X972', 3, 34, 4, 4, 5, 4, 80.00, 7, '2025-02-11', '10:00:00', 560.00, 'Reciclagem', 'Concluído', '2025-02-08 19:56:53', '2026-07-14 14:23:20', NULL),
 (35, '8ddef76e-1603-4346-b8ff-a036294339d8', '25020872813Z369', 3, 35, 4, 4, 6, 4, 80.00, 10, '2025-02-10', '16:40:00', 800.00, 'Reciclagem', 'Cancelado', '2025-02-08 19:58:11', '2026-07-14 14:23:05', NULL),
-(36, '0801d851-ed86-4097-8eb6-958b3d0e00df', '25021125858M337', 3, 36, 5, 7, 5, 12, 80.00, 3, '2025-02-14', '09:20:00', 240.00, 'Reciclagem', 'Em andamento', '2025-02-11 08:17:12', '2026-07-14 14:22:53', NULL),
+(36, '0801d851-ed86-4097-8eb6-958b3d0e00df', '25021125858M337', 3, 36, 5, 7, 6, 4, 80.00, 5, '2025-02-14', '09:20:00', 400.00, 'Reciclagem', 'Em andamento', '2025-02-11 08:17:12', '2026-08-07 08:34:09', NULL),
 (37, '75324d8e-0109-423d-80a1-c8f9aefe98e8', '25022588851H403', 3, 37, 5, 4, 4, 5, 60.00, 3, '2025-02-26', '11:00:00', 180.00, 'Reciclagem', 'Em andamento', '2025-02-25 10:50:42', '2026-07-14 14:22:47', NULL);
 
 -- --------------------------------------------------------
@@ -195,18 +226,18 @@ INSERT INTO `coletas` (`id`, `uuid`, `codigo_coleta`, `empresa_id`, `local_colet
 
 CREATE TABLE `depositos_residuos` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `nome` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cnpj` varchar(18) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cep` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uf` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cnpj` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cep` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `numero` int NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -238,17 +269,17 @@ INSERT INTO `depositos_residuos` (`id`, `uuid`, `empresa_id`, `nome`, `cnpj`, `c
 
 CREATE TABLE `empresas` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nome` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cnpj` varchar(18) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cep` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uf` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cnpj` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cep` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `numero` int NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -272,11 +303,11 @@ INSERT INTO `empresas` (`id`, `uuid`, `nome`, `cnpj`, `cep`, `uf`, `cidade`, `ba
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -288,8 +319,8 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint UNSIGNED NOT NULL,
   `reserved_at` int UNSIGNED DEFAULT NULL,
   `available_at` int UNSIGNED NOT NULL,
@@ -349,13 +380,13 @@ INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `availa
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int NOT NULL,
   `pending_jobs` int NOT NULL,
   `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `failed_job_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
   `finished_at` int DEFAULT NULL
@@ -369,14 +400,14 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `locais_coleta` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
   `cliente_id` bigint UNSIGNED NOT NULL,
-  `cep` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uf` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cep` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `numero` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -462,7 +493,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (36, '2026_04_13_091002_add_avatar_url_to_users_table', 1),
 (37, '2026_04_13_093402_create_personal_access_tokens_table', 1),
 (38, '2026_07_01_085425_add_valor_quilo_to_coletas_table', 1),
-(39, '2026_07_14_134652_change_columns_to_coletas_table', 1);
+(39, '2026_07_14_134652_change_columns_to_coletas_table', 1),
+(40, '2026_07_26_085919_alter_valor_diaria_precision_on_coletas_table', 2),
+(41, '2026_08_05_133247_create_activity_log_table', 2),
+(42, '2026_08_05_133248_add_event_column_to_activity_log_table', 2),
+(43, '2026_08_05_133249_add_batch_uuid_column_to_activity_log_table', 2),
+(44, '2026_08_06_095353_add_uuid_to_activity_log_table', 2);
 
 -- --------------------------------------------------------
 
@@ -472,7 +508,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -484,7 +520,7 @@ CREATE TABLE `model_has_permissions` (
 
 CREATE TABLE `model_has_roles` (
   `role_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -508,14 +544,14 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 
 CREATE TABLE `motoristas` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cpf` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cnh` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categoria` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cpf` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cnh` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categoria` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -550,15 +586,24 @@ INSERT INTO `motoristas` (`id`, `uuid`, `empresa_id`, `nome`, `cpf`, `cnh`, `cat
 --
 
 CREATE TABLE `notifications` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `notifiable_id` bigint UNSIGNED NOT NULL,
-  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('4895dc9b-7eca-46ed-ad6e-cc1f899536e4', 'Filament\\Notifications\\DatabaseNotification', 'App\\Models\\User', 5, '{\"actions\":[],\"body\":\"24111466548Z508 foi atualizada.\",\"color\":null,\"duration\":\"persistent\",\"icon\":\"heroicon-o-information-circle\",\"iconColor\":\"info\",\"status\":\"info\",\"title\":\"Coleta atualizada\",\"view\":\"filament-notifications::notification\",\"viewData\":[],\"format\":\"filament\",\"tenant_id\":2}', NULL, '2026-08-07 08:34:41', '2026-08-07 08:34:41'),
+('bc42f696-9106-4d28-a43b-0a3d8cb02f4b', 'Filament\\Notifications\\DatabaseNotification', 'App\\Models\\User', 3, '{\"actions\":[],\"body\":\"25021125858M337 foi atualizada.\",\"color\":null,\"duration\":\"persistent\",\"icon\":\"heroicon-o-information-circle\",\"iconColor\":\"info\",\"status\":\"info\",\"title\":\"Coleta atualizada\",\"view\":\"filament-notifications::notification\",\"viewData\":[],\"format\":\"filament\",\"tenant_id\":3}', NULL, '2026-08-07 08:34:09', '2026-08-07 08:34:09'),
+('bcf0abaa-813d-4680-bba3-b300d2103579', 'Filament\\Notifications\\DatabaseNotification', 'App\\Models\\User', 4, '{\"actions\":[],\"body\":\"25011291896Q684 foi atualizada.\",\"color\":null,\"duration\":\"persistent\",\"icon\":\"heroicon-o-information-circle\",\"iconColor\":\"info\",\"status\":\"info\",\"title\":\"Coleta atualizada\",\"view\":\"filament-notifications::notification\",\"viewData\":[],\"format\":\"filament\",\"tenant_id\":4}', NULL, '2026-08-07 08:35:13', '2026-08-07 08:35:13');
 
 -- --------------------------------------------------------
 
@@ -567,8 +612,8 @@ CREATE TABLE `notifications` (
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -580,9 +625,9 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `permissions` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -616,11 +661,11 @@ INSERT INTO `permissions` (`id`, `uuid`, `name`, `guard_name`, `created_at`, `up
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -635,9 +680,9 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `roles` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -689,11 +734,11 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -702,6 +747,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+('E3AY6b18pBD4hboIGYBNRrIVmBlO1XKkxNUjTWJZ', 2, '172.19.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'ZXlKcGRpSTZJbW8xYUhaUWF6ZzFVV0ZJS3pFeGFuaGlUVkF6ZEVFOVBTSXNJblpoYkhWbElqb2lOMkYwWnpoTE1rRjViRVJyUjNKV1RYcFNUMk4yZW5rMWRrVjNiMHN5Ym5kTVpUWkpZVFo2U1ZCQ09GRlpjalZaTWtSTmRVTlhXR1pVZGxoaWJIZEJjVlI1YlVwd1RETXlOVmQxT1ZSUVp6UjZTRlpxV2tsRlVHdHBOVzk0YW1acVdrNHZTRGRRTkZsbGEwdGtNbU15T0hWSmFERlNXVEV6ZDNaMVkwVmxSbEU0U1dKM1NsbENiREpJYVROS1NWWjVUMEY2ZVRORWNGUjZabXhIYUdWeWNuYzNSM2RWTVRsNFpVSnFkVzFKYm1wRmRYcGhTVnBKTlZoVGRsZE1OV2RyUkRkVEt6VnpiMDVwYlhKaVNGRktkVko0TDAxVVdVcGxiWEJQZDJaclVIVnJZWEZyWm1WMk5ERnRTbE5ZTDBSRUwwaFllbGROTTBWWVJGZHpZazVxYzFaT1dXVnRXWEY0TVVKMVJtVmlSRWhKWkhCTmRsYzJkMmc0Y1cxUmVHSmxUVlJqVG5SSlQzbHBielZVYkV3elpDc3JjRVEyVmpFelNXTllXRVpoTkRCSEsyUkJiRXBzYlRSellYQjFhbGQ1U205cU9HUTFWM050Ulc5VFdHVmlNVzFLT0V4V1VVcDRNbWxEV205U05rRkdURnAyY25GMFYzZGpaR2RKVDI1VlZtTldPRzExZWxORmRqZEJTVmMzVFhGWFVXcEtSWGw2TURkUFIxWndjbWt4V2sxeVpGWXpiRVJtWW5saVJtbEthMVJsY0RrMGVEUlhTamhoUm1ReGNFdExNWFZWVmpCa1UyZEtjVFpxWTBOcFNtOXRaR3RrUjNKdmQyUjNTVkZHTjBKSVltdDZiVFJZZW5WUFNHZ3JUVVl6WmtacVNIbG9hVFptWldaSWMza2lMQ0p0WVdNaU9pSmlZMlkxTkRBNU5XSXhZVGhoWW1WbE9XWmxaRE5tWVRFeU9ESmpOVEUxTWpCaU9HVm1Oek5rTkdVeE1ERTVPRGMzTURka1lXVmxaV0k1TmpVMlpqazNJaXdpZEdGbklqb2lJbjA9', 1786037984),
+('hV3ZX0QTlwsJgcBCLTuLPfyKWn6XFrW1BZMBa2Fb', 2, '172.19.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'ZXlKcGRpSTZJazUyYm14SU5tRm9WSHBsT1ZSMFlYcEtNWFZDV25jOVBTSXNJblpoYkhWbElqb2lSRkJVWVdGWGFsQnZMMkoxVDJOM2JuTlZVRmQ0VUU1UVUwbFhUekZxSzJGSlEwVXJjbXh6TjNwelQwcEhXSEZuZFdOQ2IzazVWRlpPTldoSmVqRlJVWHBKU1daM1pIQklaU3MzT0c5dVYzQnpOblJUY0M5ak5tYzRRV0pWWlRSUk1FSkRNbmdyWmxaSmR6QndTMUUxUlhsMUx6RkdWM0Y0U1VwQ1ZXUTBXbUpEUVhSb1lXeERZbTB3WTJGbU5rRTNRbnA0Wm5SQkwxUkRTbEpoTXpKWFUzRXdXWGMyS3pSRmRUWXJZVkkzUTFrMmNXSjBUa2RJV1RCTmNUWldSVUpCU0VjemRWWnVSMlZ3VFVabFRHVTROM2xQZVZkVVpuRXZSVTVMV0N0VFRuY3dUMWxrYURsMFlWZENlR3haZG5KaGRqVXdhbmxPVkdOYVNsSllkMUZSV2xZd1UxQndVV1JsYkd0eEwzRmthVWhDU0hsS2JITmhZelZsVUcxc2VuQkViazUzV25oa1oza3hiRTR6YjFab1dWZHJLMU14VkhWSVUwNTJlbVZ2YTFFNVNtOVlNRWwyZFRsUlVYZEVVWGw0Vms5QlVUZG9VRmQ0TlRkMVpISjNhblJLVFRkV1dHOTFRVVZqTjI1bFNVOWtSVVVyU1dGV1pEWnBSWFZPVjBsYVkxQkRjbmhFYjJoRU1HeDJVR3gyVlZNeVUyOHJTQ3N3T0hwbFlqSXhRbnBDUW01eWFsbzJXRWxpUjJkME5FZEZNbWMzV25SSGMzQXdMMXAxWjJsdlJtdDNVbVJ0TDNVeGEyeDNLMUl3ZHpZclEwRkVOREl4YVVWRU1WVkRNSFF3VVdkb1NEVjNSV1Z4ZUVWS1NIUm1abFYwU0VGR1dIVjBUMU56VjBWVVZYTWlMQ0p0WVdNaU9pSmxaVFEzTmpobE1HSmhZV1UzT1Roa04yVXdPVFU0WXpNMk9EVXdPREkxTnpoak9EaGtOamswT1dWbFltSm1aVEU1T1RFeVpqWTNOakZsTldWa016ZzJJaXdpZEdGbklqb2lJbjA9', 1786102568),
 ('xlZW5UYf6grZfs3i2iKVmaxr598uHUwPUtwdEets', 2, '172.19.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'ZXlKcGRpSTZJbGRrTUdOVlRGZDRaRzQxWW5CT05EWlNhRXM1U0VFOVBTSXNJblpoYkhWbElqb2lPWFZrT1ZCUE1YRTRjRzFrUVRka2JrNWpUSGxVYTI5WGJFUnhSRVpvVTNRNWVrUkViVGhoVTFVck5XNUdjbE52TVZKc1NEbG5NVXd6T1V4RGJWRXlUVUZJVUVSaWN6WjZSalJqYjNsUmFHdElibko0WkZOV01YaFJhR0ZoVFd0VFlXTlNSSFpvY1ZSSll5dHdUVUZwV2xwU1dHdFJZazkyTDFoUVoxVTNjbE5oTTAwMlQwRlpkVTE0V0V4eVFqUlpWVE5ZVFhoTGNFMXNiMmMwY0RCVVdsazFWV055VmpKSlVYUldaMkU0VG1WVVFsRlhTRlJUYjJ0UWRtZHBZalJJTnpJeVl6UkdialJRUTBKNllqWXdTRXRqY1hOT2NGbFJTalJIYUhaeVlqVXdRVTR6VHpBM2VFcFdUa1I1U25sRk1EWmlaVlZFVUdSdGFFOURXVzR2ZEVaUlFYSmpORTF6V25GWlVFSTBUMGhGTldaMVJ5dE1TM2N6UjJsM05rUkZXWE5rTUZCQmVrVnpjbGw1UTNadFMwVXdiR2h4UWxJNWRGcExSVVJPWldKWVVHRldSMWd2U2toblpsSktiVTF5Y0M5NWRDOVJOWFpMUjFCU1ZISnBVVXBEUWk5SWR5czBaVkF6Ym1oQlZUSXZSeTlPYUdWTmQzbGlTRTFhYmxOclpTdFBZMUJvVFVObGVEbHVUVGR2YTJKVWRVcDJZMU5JVmtwWmJtMXRPRkJMYTNvNE5GWlBSbmxUTTBWMmFEaHJXazlzYTFkMVpXNHlNRTVpYm1sMVdXaEZSSEJpWTFOQ2NsbFRWMGw2VHpONVJuaFNNblJOVUVwNWNYcFRUMlpsVGs5V1oyOVpNa05SWkVSbU4wMWhWVEZqYWl0QlExRjVMM1ZvVUdoWGEwbzFWME5tYUc1UUwwTjZialF4SzFsT2QxQkROMWRCU3pSVWFuSXpWMnd6TVVwaVpGQnRXVkUxVGtFMFRrNU5USEJzVVdJME0wWjRPVlZ2SzFWS1pGY3dXV3R4YWl0ek1YVlBObUpNUmxwM01IbEhWV2R2YUdKMVVIQjJiblZZUVdsSFZVUXphRVZJVjNKSFptcG9WV3MzWVRGeVFVOVNNeXRIUzAxSlJTdEhRbWQ1Y1ZobFMwOXpWa2h6TW0xRWQyaEdjQzh2TlhOWFZIbEpVV014TnpaUGJFNTZjU3QyT0VGRVlsazlJaXdpYldGaklqb2lPR00wWTJZMU1XWXhZVEJpWXpjME1qaGhNMk5tWXpRMU1EVmpNVE16WWpnNVpUYzVZekl5TlRneVptVXhZelUyWTJZd01HWTBZVFJrT1RWalpXUmtNaUlzSW5SaFp5STZJaUo5', 1784050609);
 
 -- --------------------------------------------------------
@@ -712,9 +759,9 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 
 CREATE TABLE `tipos_residuos` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `descricao` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -743,8 +790,8 @@ INSERT INTO `tipos_residuos` (`id`, `uuid`, `empresa_id`, `descricao`, `created_
 
 CREATE TABLE `ufs` (
   `id` bigint UNSIGNED NOT NULL,
-  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sigla` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sigla` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -791,17 +838,17 @@ INSERT INTO `ufs` (`id`, `estado`, `sigla`, `created_at`, `updated_at`, `deleted
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `custom_fields` json DEFAULT NULL,
-  `avatar_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -851,11 +898,11 @@ INSERT INTO `users_empresas` (`id`, `user_id`, `empresa_id`, `created_at`, `upda
 
 CREATE TABLE `veiculos` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `placa_veiculo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `modelo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `placa_veiculo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modelo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -882,6 +929,16 @@ INSERT INTO `veiculos` (`id`, `uuid`, `empresa_id`, `placa_veiculo`, `modelo`, `
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `activity_log`
+--
+ALTER TABLE `activity_log`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `activity_log_uuid_unique` (`uuid`),
+  ADD KEY `subject` (`subject_type`,`subject_id`),
+  ADD KEY `causer` (`causer_type`,`causer_id`),
+  ADD KEY `activity_log_log_name_index` (`log_name`);
 
 --
 -- Indexes for table `cache`
@@ -1085,6 +1142,12 @@ ALTER TABLE `veiculos`
 --
 
 --
+-- AUTO_INCREMENT for table `activity_log`
+--
+ALTER TABLE `activity_log`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
@@ -1130,7 +1193,7 @@ ALTER TABLE `locais_coleta`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `motoristas`

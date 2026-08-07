@@ -5,10 +5,12 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -16,12 +18,12 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Navigation\MenuItem;
 use Illuminate\Support\Facades\Blade;
-use Filament\View\PanelsRenderHook;
-use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Rmsramos\Activitylog\ActivitylogPlugin;
+use App\Filament\Resources\ActivitylogResource;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -85,13 +87,29 @@ class AdminPanelProvider extends PanelProvider
                     ->shouldShowAvatarForm(true, 'avatars', 'mimes:jpeg,png,jpg|max:1024')
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowSanctumTokens(false)
-                    ->shouldShowBrowserSessionsForm(true)
+                    ->shouldShowBrowserSessionsForm(true),
+                ActivitylogPlugin::make()
+                    ->resource(ActivitylogResource::class)
+                    ->navigationIcon('heroicon-o-shield-check')
+                    ->label('Log')
+                    ->pluralLabel('Logs')
+                    ->translateSubject(fn($label) => __("yourCustomLangFile.".$label))
+                    ->navigationItem(true)
+                    ->navigationSort(5)
+                    ->dateFormat('d/m/Y')
+                    ->datetimeFormat('d/m/Y H:i:s')
+                    ->customizeDatePicker(function ($field) {
+                        return $field
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
+                            ->format('Y-m-d');
+                    })
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()
                     ->label(fn () => auth()->user()->name ?? 'Perfil')
                     ->url(fn () => EditProfilePage::getUrl())
-                    ->icon('heroicon-m-user-circle'),
+                    ->icon('heroicon-m-user-circle')
             ]);
     }
 }
