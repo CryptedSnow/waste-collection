@@ -33,6 +33,8 @@ class UserPanelProvider extends PanelProvider
             ->id('user')
             ->path('user')
             ->favicon(asset('images/favicon.png'))
+            ->brandLogo(asset('images/logo.png'))
+            ->brandLogoHeight('3rem')
             ->login()
             ->passwordReset()
             ->sidebarCollapsibleOnDesktop()
