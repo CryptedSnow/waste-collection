@@ -2,11 +2,14 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\ActivitylogResource;
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
 use Filament\Pages;
+use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -23,7 +26,6 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Rmsramos\Activitylog\ActivitylogPlugin;
-use App\Filament\Resources\ActivitylogResource;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -39,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->passwordReset()
             ->databaseNotifications()
+            ->emailVerification()
             ->sidebarCollapsibleOnDesktop()
             ->renderHook(
                 PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
@@ -51,6 +54,11 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 PanelsRenderHook::AUTH_PASSWORD_RESET_RESET_FORM_AFTER,
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-admin.css\')')
+            )
+            ->renderHook(
+                PanelsRenderHook::SIMPLE_PAGE_START,
+                fn (): string => Blade::render('@vite(\'resources/css/custom-cover-admin.css\')'),
+                scopes: EmailVerificationPrompt::class,
             )
             ->colors([
                 'primary' => "#F7931A",

@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Observers\UserObserver;
 use Filament\Models\Contracts\{FilamentUser, HasAvatar};
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,7 +21,7 @@ use Filament\Facades\Filament;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class User extends Authenticatable implements FilamentUser, HasTenants, HasAvatar
+class User extends Authenticatable implements FilamentUser, HasTenants, HasAvatar, MustVerifyEmail
 {
     use HasFactory, Notifiable, SoftDeletes, HasRoles, HasApiTokens;
 
@@ -94,17 +93,17 @@ class User extends Authenticatable implements FilamentUser, HasTenants, HasAvata
     public function canAccessPanel(Panel $panel): bool
     {
         $panelRoles = [
-            'admin' => 'Admin',
-            'user'  => 'User',
+            'admin' => ['Admin', 'Super Admin'],
+            'user'  => ['User'],
         ];
 
-        $requiredRole = $panelRoles[$panel->getId()] ?? null;
+        $requiredRoles = $panelRoles[$panel->getId()] ?? null;
 
-        if ($requiredRole === null) {
+        if ($requiredRoles === null) {
             return false;
         }
 
-        return $this->hasRole($requiredRole);
+        return $this->hasAnyRole($requiredRoles);
     }
 
     public function getFilamentAvatarUrl(): ?string

@@ -6,15 +6,16 @@ use App\Filament\Resources\PermissionResource\Pages;
 use App\Filament\Resources\PermissionResource\RelationManagers;
 use App\Models\Permission;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class PermissionResource extends Resource
 {
@@ -111,7 +112,10 @@ class PermissionResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+            ->when(!Auth::user()?->hasRole('Super Admin'), function ($query) {
+                $query->where('name', 'not like', 'superadmins:%');
+            });
     }
 
 }

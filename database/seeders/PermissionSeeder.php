@@ -29,6 +29,13 @@ class PermissionSeeder extends Seeder
             'users:edit',
             'users:update',
             'users:destroy',
+            'superadmins:index',
+            'superadmins:create',
+            'superadmins:store',
+            'superadmins:show',
+            'superadmins:edit',
+            'superadmins:update',
+            'superadmins:destroy',
         ];
 
         foreach ($permissions as $permissionName) {

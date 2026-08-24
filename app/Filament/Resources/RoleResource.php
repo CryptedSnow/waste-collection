@@ -6,15 +6,16 @@ use App\Filament\Resources\RoleResource\Pages;
 use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Role;
 use Filament\Forms;
+use Filament\Forms\Components\{TextInput, Select};
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{TextInput, Select};
-use Filament\Tables\Columns\TextColumn;
-use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class RoleResource extends Resource
 {
@@ -126,7 +127,10 @@ class RoleResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+            ->when(!Auth::user()?->hasRole('Super Admin'), function ($query) {
+                $query->where('name', '!=', 'Super Admin');
+            });
     }
 
 }

@@ -15,45 +15,26 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Jonathan Joestar',
-            'email' => 'jonathan.joestar@email.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('12345678'),
-        ])->assignRole('Admin');
+        $this->createUser('Jonathan Joestar', 'jonathan.joestar@email.com', ['Admin']);
+        $this->createUser('Dio Brando', 'dio.brando@email.com', ['Admin', 'User']);
+        $this->createUser('Johnny Joestar', 'johnny.joestar@email.com', ['User']);
+        $this->createUser('Gyro Zeppeli', 'gyro.zeppeli@email.com', ['User']);
+        $this->createUser('Diego Brando', 'diego.brando@email.com', ['User']);
+        $this->createUser('Hirohiko Araki', 'hirohiko.araki@email.com', ['Super Admin']);
+    }
 
-        User::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Dio Brando',
-            'email' => 'dio.brando@email.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('12345678'),
-        ])->assignRole('Admin','User');
+    private function createUser(string $name, string $email, array $roles): void
+    {
+        $user = User::firstOrCreate(
+            ['email' => $email],
+            [
+                'uuid' => Str::uuid()->toString(),
+                'name' => $name,
+                'email_verified_at' => now(),
+                'password' => Hash::make('12345678'),
+            ]
+        );
 
-        User::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Johnny Joestar',
-            'email' => 'johnny.joestar@email.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('12345678'),
-        ])->assignRole('User');
-
-        User::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Gyro Zeppeli',
-            'email' => 'gyro.zeppeli@email.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('12345678'),
-        ])->assignRole('User');
-
-        User::create([
-            'uuid' => Str::uuid()->toString(),
-            'name' => 'Diego Brando',
-            'email' => 'diego.brando@email.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('12345678'),
-        ])->assignRole('User');
-
+        $user->syncRoles($roles);
     }
 }

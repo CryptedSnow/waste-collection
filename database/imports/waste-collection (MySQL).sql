@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Aug 07, 2026 at 11:36 AM
+-- Generation Time: Aug 24, 2026 at 12:24 PM
 -- Server version: 8.0.46
 -- PHP Version: 8.3.26
 
@@ -43,15 +43,6 @@ CREATE TABLE `activity_log` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `activity_log`
---
-
-INSERT INTO `activity_log` (`id`, `uuid`, `log_name`, `description`, `subject_type`, `event`, `subject_id`, `causer_type`, `causer_id`, `properties`, `batch_uuid`, `created_at`, `updated_at`) VALUES
-(1, '85e68f9e-5f9b-49b6-8fa3-302b52545117', 'coletas', 'Coleta 25021125858M337 atualizada', 'App\\Models\\Coleta', 'updated', 36, 'App\\Models\\User', 3, '{\"old\": {\"veiculo_id\": 5, \"dias_diaria\": 3, \"valor_coleta\": \"240.00\", \"deposito_residuo_id\": 12}, \"attributes\": {\"veiculo_id\": 6, \"dias_diaria\": 5, \"valor_coleta\": \"400.00\", \"deposito_residuo_id\": 4}}', NULL, '2026-08-07 08:34:09', '2026-08-07 08:34:09'),
-(2, '4dbea8fb-b379-4c22-88cc-6ac95e3e6b1a', 'coletas', 'Coleta 24111466548Z508 atualizada', 'App\\Models\\Coleta', 'updated', 6, 'App\\Models\\User', 5, '{\"old\": {\"dias_diaria\": 2, \"motorista_id\": 8, \"valor_coleta\": \"170.00\", \"deposito_residuo_id\": 3}, \"attributes\": {\"dias_diaria\": 3, \"motorista_id\": 10, \"valor_coleta\": \"255.00\", \"deposito_residuo_id\": 6}}', NULL, '2026-08-07 08:34:41', '2026-08-07 08:34:41'),
-(3, '0ea33952-6178-438a-bed1-ea05c349f390', 'coletas', 'Coleta 25011291896Q684 atualizada', 'App\\Models\\Coleta', 'updated', 31, 'App\\Models\\User', 4, '{\"old\": {\"tipo_residuo_id\": 9, \"deposito_residuo_id\": 9}, \"attributes\": {\"tipo_residuo_id\": 8, \"deposito_residuo_id\": 10}}', NULL, '2026-08-07 08:35:13', '2026-08-07 08:35:13');
-
 -- --------------------------------------------------------
 
 --
@@ -59,8 +50,8 @@ INSERT INTO `activity_log` (`id`, `uuid`, `log_name`, `description`, `subject_ty
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -69,9 +60,9 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('livewire-rate-limiter:5b5e86c7b451e5528739380cdc97d0344b1eb460', 'i:2;', 1786102554),
-('livewire-rate-limiter:5b5e86c7b451e5528739380cdc97d0344b1eb460:timer', 'i:1786102554;', 1786102554),
-('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:5:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"uuid\";s:1:\"c\";s:4:\"name\";s:1:\"d\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:14:{i:0;a:5:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"df3d9d9f-b3f5-4d1e-9710-cfd3dcda96ce\";s:1:\"c\";s:12:\"admins:index\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:5:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"4560ba48-7008-4b3c-ac0b-c11d1c175e4a\";s:1:\"c\";s:13:\"admins:create\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:5:{s:1:\"a\";i:3;s:1:\"b\";s:36:\"78ee9df0-9aa5-42d5-841b-1dcad0f363d3\";s:1:\"c\";s:12:\"admins:store\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:5:{s:1:\"a\";i:4;s:1:\"b\";s:36:\"ecf580a9-92ee-4e8e-8671-11d66a521050\";s:1:\"c\";s:11:\"admins:show\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:5:{s:1:\"a\";i:5;s:1:\"b\";s:36:\"7290dad5-306d-4ad3-bb36-40a035d16bc5\";s:1:\"c\";s:11:\"admins:edit\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:5;a:5:{s:1:\"a\";i:6;s:1:\"b\";s:36:\"5658a526-469e-4299-b8bb-68a8d0537f13\";s:1:\"c\";s:13:\"admins:update\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:5:{s:1:\"a\";i:7;s:1:\"b\";s:36:\"5e8a01ef-dcf2-47fc-b5cc-6c169b4f5a95\";s:1:\"c\";s:14:\"admins:destroy\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:7;a:5:{s:1:\"a\";i:8;s:1:\"b\";s:36:\"3422ac82-701e-4d9f-827d-f7dab24414c7\";s:1:\"c\";s:11:\"users:index\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:8;a:5:{s:1:\"a\";i:9;s:1:\"b\";s:36:\"fa03f2a2-2295-413c-91f5-e9ede229b181\";s:1:\"c\";s:12:\"users:create\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:9;a:5:{s:1:\"a\";i:10;s:1:\"b\";s:36:\"358a2e60-4e98-4f4f-8203-035e3714ce65\";s:1:\"c\";s:11:\"users:store\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:10;a:5:{s:1:\"a\";i:11;s:1:\"b\";s:36:\"11ba1be0-65be-4a69-841d-39d1c1d0226a\";s:1:\"c\";s:10:\"users:show\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:11;a:5:{s:1:\"a\";i:12;s:1:\"b\";s:36:\"592c8683-169a-4bc7-9904-7de3477bc01f\";s:1:\"c\";s:10:\"users:edit\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:12;a:5:{s:1:\"a\";i:13;s:1:\"b\";s:36:\"261868ff-c41a-48e5-8934-69fd1fba75fb\";s:1:\"c\";s:12:\"users:update\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:13;a:5:{s:1:\"a\";i:14;s:1:\"b\";s:36:\"5b3fb285-5052-4085-9713-418e5ac2ab81\";s:1:\"c\";s:13:\"users:destroy\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}}s:5:\"roles\";a:2:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"0065ce32-15dc-4057-845c-4a43d3e4b67d\";s:1:\"c\";s:5:\"Admin\";s:1:\"d\";s:3:\"web\";}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"89116468-5288-4469-81eb-afb1c62ec71b\";s:1:\"c\";s:4:\"User\";s:1:\"d\";s:3:\"web\";}}}', 1786124363);
+('livewire-rate-limiter:287b58015ec6ed41cc45119562d7402bb1069aed', 'i:1;', 1787573889),
+('livewire-rate-limiter:287b58015ec6ed41cc45119562d7402bb1069aed:timer', 'i:1787573889;', 1787573889),
+('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:5:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"uuid\";s:1:\"c\";s:4:\"name\";s:1:\"d\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:21:{i:0;a:5:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"f95479d5-ee5c-4f52-be46-12d759a9452d\";s:1:\"c\";s:12:\"admins:index\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:5:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"f22e18f9-39c6-48c4-a220-185b78063c75\";s:1:\"c\";s:13:\"admins:create\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:5:{s:1:\"a\";i:3;s:1:\"b\";s:36:\"dd46826e-c1e2-40bd-8988-07e1a51828a8\";s:1:\"c\";s:12:\"admins:store\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:5:{s:1:\"a\";i:4;s:1:\"b\";s:36:\"34c64b82-47f1-4553-b2bd-65d5e28714d2\";s:1:\"c\";s:11:\"admins:show\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:5:{s:1:\"a\";i:5;s:1:\"b\";s:36:\"d6b468a9-ba6b-4a7d-8079-849815fdc67f\";s:1:\"c\";s:11:\"admins:edit\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:5;a:5:{s:1:\"a\";i:6;s:1:\"b\";s:36:\"9b1a4bd6-4c78-4310-be45-f4f9424b2751\";s:1:\"c\";s:13:\"admins:update\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:5:{s:1:\"a\";i:7;s:1:\"b\";s:36:\"d118355f-ebd7-4700-a7c2-2d41cbbf4268\";s:1:\"c\";s:14:\"admins:destroy\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:7;a:5:{s:1:\"a\";i:8;s:1:\"b\";s:36:\"58544000-52b6-4f16-999a-b5a2373166fe\";s:1:\"c\";s:11:\"users:index\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:8;a:5:{s:1:\"a\";i:9;s:1:\"b\";s:36:\"e27f1aed-b079-4415-81ea-c6435e722066\";s:1:\"c\";s:12:\"users:create\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:9;a:5:{s:1:\"a\";i:10;s:1:\"b\";s:36:\"37a89056-238f-4107-a993-67ef779c84cd\";s:1:\"c\";s:11:\"users:store\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:10;a:5:{s:1:\"a\";i:11;s:1:\"b\";s:36:\"eb795bb3-99db-42d3-a53c-3c0aee96da22\";s:1:\"c\";s:10:\"users:show\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:11;a:5:{s:1:\"a\";i:12;s:1:\"b\";s:36:\"56d25af3-cf0b-4b5f-a03f-3ef778848f04\";s:1:\"c\";s:10:\"users:edit\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:12;a:5:{s:1:\"a\";i:13;s:1:\"b\";s:36:\"a628a13d-9011-4652-a9e8-12906710161b\";s:1:\"c\";s:12:\"users:update\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:13;a:5:{s:1:\"a\";i:14;s:1:\"b\";s:36:\"83a08cab-ffe8-44b6-8e53-b1445745eb33\";s:1:\"c\";s:13:\"users:destroy\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:2;}}i:14;a:5:{s:1:\"a\";i:15;s:1:\"b\";s:36:\"dda87f15-33be-4eff-9098-092844ad8dab\";s:1:\"c\";s:17:\"superadmins:index\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:3;}}i:15;a:5:{s:1:\"a\";i:16;s:1:\"b\";s:36:\"aa2fe32d-c1dd-478e-b68a-034c2f08a308\";s:1:\"c\";s:18:\"superadmins:create\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:3;}}i:16;a:5:{s:1:\"a\";i:17;s:1:\"b\";s:36:\"16eb2f3e-767a-4274-8eef-dd9e56260e08\";s:1:\"c\";s:17:\"superadmins:store\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:3;}}i:17;a:5:{s:1:\"a\";i:18;s:1:\"b\";s:36:\"c9b33460-af89-4fc6-a247-8a2875a9f481\";s:1:\"c\";s:16:\"superadmins:show\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:3;}}i:18;a:5:{s:1:\"a\";i:19;s:1:\"b\";s:36:\"a261e3c3-eb1f-44d3-be57-721332a63f00\";s:1:\"c\";s:16:\"superadmins:edit\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:3;}}i:19;a:5:{s:1:\"a\";i:20;s:1:\"b\";s:36:\"52904f5c-629a-4bde-9522-1156eedc76f6\";s:1:\"c\";s:18:\"superadmins:update\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:3;}}i:20;a:5:{s:1:\"a\";i:21;s:1:\"b\";s:36:\"6cb8ff5e-f96f-4532-ac4f-7552985d9206\";s:1:\"c\";s:19:\"superadmins:destroy\";s:1:\"d\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:3;}}}s:5:\"roles\";a:3:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:36:\"885df822-3974-420f-badb-042ee818e51c\";s:1:\"c\";s:5:\"Admin\";s:1:\"d\";s:3:\"web\";}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:36:\"ac4527b2-8907-4615-a1e0-38ee138e71d0\";s:1:\"c\";s:4:\"User\";s:1:\"d\";s:3:\"web\";}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:36:\"093fa50c-7f43-46ea-90ea-411142e93751\";s:1:\"c\";s:11:\"Super Admin\";s:1:\"d\";s:3:\"web\";}}}', 1787660230);
 
 -- --------------------------------------------------------
 
@@ -80,8 +71,8 @@ INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -93,12 +84,12 @@ CREATE TABLE `cache_locks` (
 
 CREATE TABLE `clientes` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cpf` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cpf` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -115,7 +106,7 @@ INSERT INTO `clientes` (`id`, `uuid`, `empresa_id`, `nome`, `cpf`, `email`, `tel
 (4, 'b1757db9-1dea-4c67-a9e8-78889a2a2ced', 3, 'Noriaki Kakyoin', '105.491.080-41', 'noriaki.kakyoin@email.com', '(77) 8898-0892', '2024-11-14 07:23:27', '2024-11-14 07:23:27', NULL),
 (5, 'cd79e476-00ac-452e-a280-3b95aba2d48f', 3, 'Jean Pierre Polnareff', '689.588.630-30', 'jean.polnareff@email.com', '(77) 9089-0758', '2024-11-14 07:24:07', '2024-11-14 07:24:07', NULL),
 (6, '14189f91-9b67-43c3-9139-e9fbc111c228', 3, 'Iggy', '755.128.680-20', 'iggy@email.com', '(77) 9891-7230', '2024-11-14 07:25:25', '2024-11-14 07:25:25', NULL),
-(7, 'c489a209-1f8b-433c-b356-90d38ae92611', 2, 'Bruno Bucciarati', '333.537.520-30', 'bruno.bucciarati@email.com', '(77) 9048-2384', '2024-11-14 07:35:13', '2024-12-23 11:52:35', NULL),
+(7, 'c489a209-1f8b-433c-b356-90d38ae92611', 2, 'Bruno Bucciarati', '333.537.520-30', 'bruno.bucciarati@email.com', '(77) 9048-2672', '2024-11-14 07:35:13', '2026-08-24 09:21:16', NULL),
 (8, '4456bfa7-fc83-4ba6-bcbf-d6756e0b1ae7', 2, 'Giorno Giovanna', '173.348.740-99', 'giorno.giovanna@email.com', '(77) 9890-8910', '2024-11-14 07:36:00', '2024-11-14 07:36:00', NULL),
 (9, '7bf4fd71-2517-4215-a141-848ba7263110', 2, 'Leone Abbacchio', '612.465.190-46', 'leone.abbacchio@email.com', '(77) 9078-9612', '2024-11-14 07:36:39', '2024-11-14 07:36:39', NULL),
 (10, '28a2b54f-b8c5-4c0b-bf50-bb9ac945d977', 2, 'Narancia Ghirga', '943.824.780-73', 'narancia.ghirga@email.com', '(77) 8890-8781', '2024-11-14 07:37:44', '2024-11-14 07:37:44', NULL),
@@ -155,8 +146,8 @@ INSERT INTO `clientes` (`id`, `uuid`, `empresa_id`, `nome`, `cpf`, `email`, `tel
 
 CREATE TABLE `coletas` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `codigo_coleta` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_coleta` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
   `local_coleta_id` bigint UNSIGNED NOT NULL,
   `tipo_residuo_id` bigint UNSIGNED NOT NULL,
@@ -168,8 +159,8 @@ CREATE TABLE `coletas` (
   `data_coleta` date NOT NULL,
   `hora_coleta` time NOT NULL,
   `valor_coleta` decimal(9,2) NOT NULL,
-  `finalidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `finalidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -226,18 +217,18 @@ INSERT INTO `coletas` (`id`, `uuid`, `codigo_coleta`, `empresa_id`, `local_colet
 
 CREATE TABLE `depositos_residuos` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cnpj` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cep` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uf` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cnpj` varchar(18) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cep` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `numero` int NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -269,17 +260,17 @@ INSERT INTO `depositos_residuos` (`id`, `uuid`, `empresa_id`, `nome`, `cnpj`, `c
 
 CREATE TABLE `empresas` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cnpj` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cep` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uf` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cnpj` varchar(18) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cep` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `numero` int NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -290,10 +281,10 @@ CREATE TABLE `empresas` (
 --
 
 INSERT INTO `empresas` (`id`, `uuid`, `nome`, `cnpj`, `cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `email`, `telefone`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '7399b972-4375-4cdf-80de-fed02f3f4e04', 'Scarlet Overdrive', '92.772.051/0001-50', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Phantom Blood', 140, 'scarlet.overdrive@email.com', '(77) 9090-5021', NULL, NULL, NULL),
-(2, '164bfe83-510d-419e-87d6-91684e22b665', 'The World', '68.611.034/0001-56', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stardust Crusaders', 138, 'the.world@email.com', '(77) 9980-9747', NULL, NULL, NULL),
-(3, 'f6afbfbf-0b63-4128-9dc6-827f66794a08', 'Tusk', '56.891.048/0001-91', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 159, 'tusk@email.com', '(77) 9804-7001', NULL, NULL, NULL),
-(4, '082f0447-a7d4-4967-a81c-24e26c61c496', 'Ball Breaker', '21.972.182/0001-32', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 128, 'ball.breaker@email.com', '(77) 9940-6801', NULL, NULL, NULL);
+(1, '3bf5d31e-af11-4b63-a5a9-74f0aea589b2', 'Scarlet Overdrive', '92.772.051/0001-50', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Phantom Blood', 140, 'scarlet.overdrive@email.com', '(77) 9090-5021', NULL, NULL, NULL),
+(2, 'cb1b2d11-aaa1-44c0-8902-0e2a301552ba', 'The World', '68.611.034/0001-56', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Stardust Crusaders', 138, 'the.world@email.com', '(77) 9980-9747', NULL, NULL, NULL),
+(3, 'bf7ad11c-58c8-480e-b4dd-41dfa72a692e', 'Tusk', '56.891.048/0001-91', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 159, 'tusk@email.com', '(77) 9804-7001', NULL, NULL, NULL),
+(4, '645eeac3-4e69-4493-b8b5-b4d0485df357', 'Ball Breaker', '21.972.182/0001-32', '46430-000', 'BA', 'Lucky Land', 'JoJo\'s Bizarre Adventure', 'Steel Ball Run', 128, 'ball.breaker@email.com', '(77) 9940-6801', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -303,11 +294,11 @@ INSERT INTO `empresas` (`id`, `uuid`, `nome`, `cnpj`, `cep`, `uf`, `cidade`, `ba
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -319,59 +310,13 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint UNSIGNED NOT NULL,
   `reserved_at` int UNSIGNED DEFAULT NULL,
   `available_at` int UNSIGNED NOT NULL,
   `created_at` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `jobs`
---
-
-INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
-(1, 'default', '{\"uuid\":\"31d91dec-78b6-4d60-aca0-c49cef27af94\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111492220E541 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"3e7fb18b-e55e-4adf-bd15-6ee239f3d1de\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049000, 1784049000),
-(2, 'default', '{\"uuid\":\"0e8cdf67-0ffc-40bf-ad07-bb26f541f857\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111492220E541 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"e63c5cc5-5e81-4eeb-a6ed-759227554d0c\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049050, 1784049050),
-(3, 'default', '{\"uuid\":\"7eb79db0-897a-46c6-8fa5-e2ee8068cc48\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111492220E541 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"dcfad851-2b9e-40ca-9e22-65ee5fc1763c\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049517, 1784049517),
-(4, 'default', '{\"uuid\":\"635a39ae-cc67-4b55-92a7-13efcdf4765d\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111466548Z508 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"1629114f-802a-40bd-8382-a4a7b83a7cd8\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049534, 1784049534),
-(5, 'default', '{\"uuid\":\"d5118385-5ed9-4a15-ace0-b80a8f03e0ec\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111458275N787 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"88dfd823-05ff-4d33-aa52-f3bcb9b147a8\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049542, 1784049542),
-(6, 'default', '{\"uuid\":\"b58dac0d-10da-4c0f-8398-fe86f24646d3\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111420310J249 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"ed5bb415-31ab-4b05-97ba-f0b2e68e858b\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049554, 1784049554),
-(7, 'default', '{\"uuid\":\"ec08400e-f0f1-440c-ab06-54f576c0999e\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111479383Z583 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"67a27ccb-305f-4b4c-b07a-4345958c8031\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049570, 1784049570),
-(8, 'default', '{\"uuid\":\"251dbba1-22dc-41ec-8365-84d5ac737c1c\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111486065E510 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"0172334b-768a-47fb-bc7b-d5577adb6dcb\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049584, 1784049584),
-(9, 'default', '{\"uuid\":\"616fdf48-e1b2-4ead-bec9-af3f9187634e\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111415062X989 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"e63352cb-a477-45f2-a301-9f51c4d1ba7b\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049597, 1784049597),
-(10, 'default', '{\"uuid\":\"8712faa4-193d-4641-bdc0-8d9178e81af5\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"25011259532N575 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"f1e2d34a-6fb4-4480-8117-60e74553908d\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049656, 1784049656),
-(11, 'default', '{\"uuid\":\"2fa1ea2b-6ea6-4a93-97b5-4bc4bc9131ee\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"25011291896Q684 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"2e72274f-9e5b-4748-ad32-41333b160909\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049668, 1784049668),
-(12, 'default', '{\"uuid\":\"06ded8de-5549-4769-b537-b1ce22266349\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"25011292601C786 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"9c4de4cb-9933-44ba-9924-25963dae2dbc\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049671, 1784049671),
-(13, 'default', '{\"uuid\":\"71c8a7e4-e52e-4f0f-9b36-9790550446dc\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"25022588851H403 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"798973c8-800a-469f-bec3-6583055a29ea\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049767, 1784049767),
-(14, 'default', '{\"uuid\":\"dfd8cccc-d6a3-4f1f-9274-8d34d68ed412\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"25021125858M337 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"7924686e-0cef-4b63-b1ee-1cf87d56ad1e\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049773, 1784049773),
-(15, 'default', '{\"uuid\":\"a3ff9ab7-979b-4ef1-80a0-b079ddf6e825\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"25020872813Z369 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"e0096f0e-8a7c-48df-a50e-de2f0804c32a\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049785, 1784049785),
-(16, 'default', '{\"uuid\":\"c1bd07cf-4a98-439b-aa5c-c80da64aa4f3\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"25020872252X972 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"7c75d632-361a-40bb-aee8-30cb1d2a02f9\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049800, 1784049800),
-(17, 'default', '{\"uuid\":\"7b725ac9-2a8a-410c-990f-795c1015a375\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"25020840136U808 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"02520b90-c504-4b1b-a9d1-b27846f458eb\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049817, 1784049817),
-(18, 'default', '{\"uuid\":\"86813416-05e1-46b0-b0d1-bbf3ee0a9bcc\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24123066965Q997 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"1115e9bb-0026-4924-9625-2d76762981cc\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049904, 1784049904),
-(19, 'default', '{\"uuid\":\"8ecc5eef-8ea1-44bc-ac8f-d7a459cf4cb2\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24122860539O165 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"4c29f60a-9ef9-493e-af5d-9f3b3f14cd94\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049930, 1784049930),
-(20, 'default', '{\"uuid\":\"ec344215-53a7-440e-be39-fabf1db7b3fe\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24121225183L848 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"3e68d34f-55ed-4b67-b6da-f964e5887e50\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784049945, 1784049945),
-(21, 'default', '{\"uuid\":\"e58a4be3-4fcc-413b-8a91-5a8ef5786cdf\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24120266295I566 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"4246fa19-963d-42c1-b1c7-38c5af2d9537\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050027, 1784050027),
-(22, 'default', '{\"uuid\":\"88e88c00-2a10-40a4-8775-e69e521a2d9c\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24120264704X856 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"6664644c-9b11-4fe0-b381-9ad34a9fb5e3\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050125, 1784050125),
-(23, 'default', '{\"uuid\":\"6ab3cf69-717e-4eba-8dc8-6f0c6773a0d3\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24120265095H982 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"c472e68b-ba1b-45c3-99c3-61e1980ee2c9\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050188, 1784050188),
-(24, 'default', '{\"uuid\":\"d2858f9e-0913-4a13-9484-68571e83715f\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24112658584M518 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"d8c24175-b293-4269-af02-6cfa870609dd\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050204, 1784050204),
-(25, 'default', '{\"uuid\":\"0af33fb5-1a2b-4b78-845c-fd8a430e28b3\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24112680297A878 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"d9c144c4-997d-4d57-9e45-87a980875e0c\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050219, 1784050219),
-(26, 'default', '{\"uuid\":\"bb3a4084-58c3-4d9b-b7ce-11168f608bc1\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24112429296J457 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"acd1eee3-74e1-4602-9ad0-a0d2f94fd7f7\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050250, 1784050250),
-(27, 'default', '{\"uuid\":\"c8381ff2-2ce2-498a-b3a8-2ea7de00c6fd\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24112439129X336 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"a0512eda-40a0-4253-bea1-aadabce7bd21\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050267, 1784050267),
-(28, 'default', '{\"uuid\":\"5ababcbd-c100-4929-8415-756714b113f6\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111836151X625 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"ff2d62f4-685b-40d6-b914-f77446fd413f\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050281, 1784050281),
-(29, 'default', '{\"uuid\":\"6c194eb9-a7c2-4f00-9a79-60516d9b6049\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111523821Z637 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"d98bdabf-6971-4d0c-b8c2-8ba2c91ffd6e\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050302, 1784050302),
-(30, 'default', '{\"uuid\":\"01c27c42-85b6-48c5-9980-dda4cde28180\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111510231L522 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"361bed3e-8f74-4b88-851b-5615540c1b5b\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050317, 1784050317),
-(31, 'default', '{\"uuid\":\"9c78abfa-67d8-4c91-8aec-3f0d3e6af689\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111585890B515 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"719f637a-a296-4c08-8e0c-6ea32e8575a5\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050338, 1784050338),
-(32, 'default', '{\"uuid\":\"a69e97fa-8958-4831-84b9-aac2c5e7069d\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111425240D441 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"da1e4c67-5010-427b-9744-2c0be0ee51de\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050353, 1784050353);
-INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
-(33, 'default', '{\"uuid\":\"87360292-3b70-437c-b5f3-89a05910c157\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111455620A462 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"dedecf04-b0a0-4d3c-8caf-07eb069add25\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050369, 1784050369),
-(34, 'default', '{\"uuid\":\"8d513f91-9383-4d93-ab32-b7ad09220a13\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111415328W990 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"3a2b52f5-f8ab-4770-979c-d1ed9ed1ad7c\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050429, 1784050429),
-(35, 'default', '{\"uuid\":\"1375c51f-ed53-4030-bcab-3cb7bf39d993\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111448857N447 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"0101cf16-5fff-42ba-bb49-824ffd357c2e\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050441, 1784050441),
-(36, 'default', '{\"uuid\":\"b3fb561a-1ace-40db-8ddd-1bf821867a12\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111458844O378 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"33434c48-7c3f-4f70-aeaa-797fae0dd7cd\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050453, 1784050453),
-(37, 'default', '{\"uuid\":\"aa3206f8-e474-4475-a608-e49d0454b505\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111483808O948 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"144c4a76-2710-4865-86fd-3da632eb6b34\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050467, 1784050467),
-(38, 'default', '{\"uuid\":\"5e28493a-dd42-4397-a6c5-ef9f3b30bd2f\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111443020I357 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"595ee0e0-bfb6-477a-9fa6-528adb4a2bd6\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050580, 1784050580),
-(39, 'default', '{\"uuid\":\"3550ac12-132c-4db9-95e9-83d7076ca664\",\"displayName\":\"Filament\\\\Notifications\\\\DatabaseNotification\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:1:{i:0;s:5:\\\"roles\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:43:\\\"Filament\\\\Notifications\\\\DatabaseNotification\\\":2:{s:4:\\\"data\\\";a:11:{s:7:\\\"actions\\\";a:0:{}s:4:\\\"body\\\";s:31:\\\"24111484431L491 foi atualizada.\\\";s:5:\\\"color\\\";N;s:8:\\\"duration\\\";s:10:\\\"persistent\\\";s:4:\\\"icon\\\";s:29:\\\"heroicon-o-information-circle\\\";s:9:\\\"iconColor\\\";s:4:\\\"info\\\";s:6:\\\"status\\\";s:4:\\\"info\\\";s:5:\\\"title\\\";s:17:\\\"Coleta atualizada\\\";s:4:\\\"view\\\";s:36:\\\"filament-notifications::notification\\\";s:8:\\\"viewData\\\";a:0:{}s:6:\\\"format\\\";s:8:\\\"filament\\\";}s:2:\\\"id\\\";s:36:\\\"90ce2e10-3cd7-40b7-b077-0b4859e824ac\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1784050599, 1784050599);
 
 -- --------------------------------------------------------
 
@@ -380,13 +325,13 @@ INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `availa
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int NOT NULL,
   `pending_jobs` int NOT NULL,
   `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
   `finished_at` int DEFAULT NULL
@@ -400,14 +345,14 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `locais_coleta` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
   `cliente_id` bigint UNSIGNED NOT NULL,
-  `cep` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uf` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cidade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bairro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logradouro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cep` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uf` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cidade` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bairro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logradouro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `numero` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -465,7 +410,7 @@ INSERT INTO `locais_coleta` (`id`, `uuid`, `empresa_id`, `cliente_id`, `cep`, `u
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -474,31 +419,31 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(20, '0001_01_01_000000_create_empresas_table', 1),
-(21, '0001_01_01_000000_create_users_table', 1),
-(22, '0001_01_01_000001_create_cache_table', 1),
-(23, '0001_01_01_000002_create_jobs_table', 1),
-(24, '2024_08_31_102921_create_clientes_table', 1),
-(25, '2024_08_31_102921_create_depositos_residuos_table', 1),
-(26, '2024_08_31_102921_create_tipos_residuos_table', 1),
-(27, '2024_08_31_104423_create_locais_coleta_table', 1),
-(28, '2024_08_31_114932_create_motoristas_table', 1),
-(29, '2024_08_31_115535_create_veiculos_table', 1),
-(30, '2024_09_02_082901_create_coletas_table', 1),
-(31, '2024_09_06_144200_create_ufs_table', 1),
-(32, '2024_09_27_150651_create_permission_tables', 1),
-(33, '2024_09_29_180549_create_users_empresas_table', 1),
-(34, '2024_11_30_113525_create_notifications_table', 1),
-(35, '2026_04_13_091001_add_custom_fields_to_users_table', 1),
-(36, '2026_04_13_091002_add_avatar_url_to_users_table', 1),
-(37, '2026_04_13_093402_create_personal_access_tokens_table', 1),
-(38, '2026_07_01_085425_add_valor_quilo_to_coletas_table', 1),
-(39, '2026_07_14_134652_change_columns_to_coletas_table', 1),
-(40, '2026_07_26_085919_alter_valor_diaria_precision_on_coletas_table', 2),
-(41, '2026_08_05_133247_create_activity_log_table', 2),
-(42, '2026_08_05_133248_add_event_column_to_activity_log_table', 2),
-(43, '2026_08_05_133249_add_batch_uuid_column_to_activity_log_table', 2),
-(44, '2026_08_06_095353_add_uuid_to_activity_log_table', 2);
+(101, '0001_01_01_000000_create_empresas_table', 1),
+(102, '0001_01_01_000000_create_users_table', 1),
+(103, '0001_01_01_000001_create_cache_table', 1),
+(104, '0001_01_01_000002_create_jobs_table', 1),
+(105, '2024_08_31_102921_create_clientes_table', 1),
+(106, '2024_08_31_102921_create_depositos_residuos_table', 1),
+(107, '2024_08_31_102921_create_tipos_residuos_table', 1),
+(108, '2024_08_31_104423_create_locais_coleta_table', 1),
+(109, '2024_08_31_114932_create_motoristas_table', 1),
+(110, '2024_08_31_115535_create_veiculos_table', 1),
+(111, '2024_09_02_082901_create_coletas_table', 1),
+(112, '2024_09_06_144200_create_ufs_table', 1),
+(113, '2024_09_27_150651_create_permission_tables', 1),
+(114, '2024_09_29_180549_create_users_empresas_table', 1),
+(115, '2024_11_30_113525_create_notifications_table', 1),
+(116, '2026_04_13_091001_add_custom_fields_to_users_table', 1),
+(117, '2026_04_13_091002_add_avatar_url_to_users_table', 1),
+(118, '2026_04_13_093402_create_personal_access_tokens_table', 1),
+(119, '2026_07_01_085425_add_valor_quilo_to_coletas_table', 1),
+(120, '2026_07_14_134652_change_columns_to_coletas_table', 1),
+(121, '2026_07_26_085919_alter_valor_diaria_precision_on_coletas_table', 1),
+(122, '2026_08_05_133247_create_activity_log_table', 1),
+(123, '2026_08_05_133248_add_event_column_to_activity_log_table', 1),
+(124, '2026_08_05_133249_add_batch_uuid_column_to_activity_log_table', 1),
+(125, '2026_08_06_095353_add_uuid_to_activity_log_table', 1);
 
 -- --------------------------------------------------------
 
@@ -508,7 +453,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -520,7 +465,7 @@ CREATE TABLE `model_has_permissions` (
 
 CREATE TABLE `model_has_roles` (
   `role_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -534,7 +479,8 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (2, 'App\\Models\\User', 2),
 (2, 'App\\Models\\User', 3),
 (2, 'App\\Models\\User', 4),
-(2, 'App\\Models\\User', 5);
+(2, 'App\\Models\\User', 5),
+(3, 'App\\Models\\User', 6);
 
 -- --------------------------------------------------------
 
@@ -544,14 +490,14 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 
 CREATE TABLE `motoristas` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cpf` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cnh` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categoria` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cpf` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cnh` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categoria` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -586,24 +532,15 @@ INSERT INTO `motoristas` (`id`, `uuid`, `empresa_id`, `nome`, `cpf`, `cnh`, `cat
 --
 
 CREATE TABLE `notifications` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notifiable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `notifiable_id` bigint UNSIGNED NOT NULL,
-  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `notifications`
---
-
-INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
-('4895dc9b-7eca-46ed-ad6e-cc1f899536e4', 'Filament\\Notifications\\DatabaseNotification', 'App\\Models\\User', 5, '{\"actions\":[],\"body\":\"24111466548Z508 foi atualizada.\",\"color\":null,\"duration\":\"persistent\",\"icon\":\"heroicon-o-information-circle\",\"iconColor\":\"info\",\"status\":\"info\",\"title\":\"Coleta atualizada\",\"view\":\"filament-notifications::notification\",\"viewData\":[],\"format\":\"filament\",\"tenant_id\":2}', NULL, '2026-08-07 08:34:41', '2026-08-07 08:34:41'),
-('bc42f696-9106-4d28-a43b-0a3d8cb02f4b', 'Filament\\Notifications\\DatabaseNotification', 'App\\Models\\User', 3, '{\"actions\":[],\"body\":\"25021125858M337 foi atualizada.\",\"color\":null,\"duration\":\"persistent\",\"icon\":\"heroicon-o-information-circle\",\"iconColor\":\"info\",\"status\":\"info\",\"title\":\"Coleta atualizada\",\"view\":\"filament-notifications::notification\",\"viewData\":[],\"format\":\"filament\",\"tenant_id\":3}', NULL, '2026-08-07 08:34:09', '2026-08-07 08:34:09'),
-('bcf0abaa-813d-4680-bba3-b300d2103579', 'Filament\\Notifications\\DatabaseNotification', 'App\\Models\\User', 4, '{\"actions\":[],\"body\":\"25011291896Q684 foi atualizada.\",\"color\":null,\"duration\":\"persistent\",\"icon\":\"heroicon-o-information-circle\",\"iconColor\":\"info\",\"status\":\"info\",\"title\":\"Coleta atualizada\",\"view\":\"filament-notifications::notification\",\"viewData\":[],\"format\":\"filament\",\"tenant_id\":4}', NULL, '2026-08-07 08:35:13', '2026-08-07 08:35:13');
 
 -- --------------------------------------------------------
 
@@ -612,8 +549,8 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -625,9 +562,9 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `permissions` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -638,20 +575,27 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `uuid`, `name`, `guard_name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'df3d9d9f-b3f5-4d1e-9710-cfd3dcda96ce', 'admins:index', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(2, '4560ba48-7008-4b3c-ac0b-c11d1c175e4a', 'admins:create', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(3, '78ee9df0-9aa5-42d5-841b-1dcad0f363d3', 'admins:store', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(4, 'ecf580a9-92ee-4e8e-8671-11d66a521050', 'admins:show', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(5, '7290dad5-306d-4ad3-bb36-40a035d16bc5', 'admins:edit', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(6, '5658a526-469e-4299-b8bb-68a8d0537f13', 'admins:update', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(7, '5e8a01ef-dcf2-47fc-b5cc-6c169b4f5a95', 'admins:destroy', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(8, '3422ac82-701e-4d9f-827d-f7dab24414c7', 'users:index', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(9, 'fa03f2a2-2295-413c-91f5-e9ede229b181', 'users:create', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(10, '358a2e60-4e98-4f4f-8203-035e3714ce65', 'users:store', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(11, '11ba1be0-65be-4a69-841d-39d1c1d0226a', 'users:show', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(12, '592c8683-169a-4bc7-9904-7de3477bc01f', 'users:edit', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(13, '261868ff-c41a-48e5-8934-69fd1fba75fb', 'users:update', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(14, '5b3fb285-5052-4085-9713-418e5ac2ab81', 'users:destroy', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL);
+(1, 'f95479d5-ee5c-4f52-be46-12d759a9452d', 'admins:index', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(2, 'f22e18f9-39c6-48c4-a220-185b78063c75', 'admins:create', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(3, 'dd46826e-c1e2-40bd-8988-07e1a51828a8', 'admins:store', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(4, '34c64b82-47f1-4553-b2bd-65d5e28714d2', 'admins:show', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(5, 'd6b468a9-ba6b-4a7d-8079-849815fdc67f', 'admins:edit', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(6, '9b1a4bd6-4c78-4310-be45-f4f9424b2751', 'admins:update', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(7, 'd118355f-ebd7-4700-a7c2-2d41cbbf4268', 'admins:destroy', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(8, '58544000-52b6-4f16-999a-b5a2373166fe', 'users:index', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(9, 'e27f1aed-b079-4415-81ea-c6435e722066', 'users:create', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(10, '37a89056-238f-4107-a993-67ef779c84cd', 'users:store', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(11, 'eb795bb3-99db-42d3-a53c-3c0aee96da22', 'users:show', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(12, '56d25af3-cf0b-4b5f-a03f-3ef778848f04', 'users:edit', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(13, 'a628a13d-9011-4652-a9e8-12906710161b', 'users:update', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(14, '83a08cab-ffe8-44b6-8e53-b1445745eb33', 'users:destroy', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(15, 'dda87f15-33be-4eff-9098-092844ad8dab', 'superadmins:index', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(16, 'aa2fe32d-c1dd-478e-b68a-034c2f08a308', 'superadmins:create', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(17, '16eb2f3e-767a-4274-8eef-dd9e56260e08', 'superadmins:store', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(18, 'c9b33460-af89-4fc6-a247-8a2875a9f481', 'superadmins:show', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(19, 'a261e3c3-eb1f-44d3-be57-721332a63f00', 'superadmins:edit', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(20, '52904f5c-629a-4bde-9522-1156eedc76f6', 'superadmins:update', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(21, '6cb8ff5e-f96f-4532-ac4f-7552985d9206', 'superadmins:destroy', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL);
 
 -- --------------------------------------------------------
 
@@ -661,11 +605,11 @@ INSERT INTO `permissions` (`id`, `uuid`, `name`, `guard_name`, `created_at`, `up
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -680,9 +624,9 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `roles` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -693,8 +637,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `uuid`, `name`, `guard_name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '0065ce32-15dc-4057-845c-4a43d3e4b67d', 'Admin', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL),
-(2, '89116468-5288-4469-81eb-afb1c62ec71b', 'User', 'web', '2026-07-14 13:53:12', '2026-07-14 13:53:12', NULL);
+(1, '885df822-3974-420f-badb-042ee818e51c', 'Admin', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(2, 'ac4527b2-8907-4615-a1e0-38ee138e71d0', 'User', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL),
+(3, '093fa50c-7f43-46ea-90ea-411142e93751', 'Super Admin', 'web', '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL);
 
 -- --------------------------------------------------------
 
@@ -725,7 +670,14 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (11, 2),
 (12, 2),
 (13, 2),
-(14, 2);
+(14, 2),
+(15, 3),
+(16, 3),
+(17, 3),
+(18, 3),
+(19, 3),
+(20, 3),
+(21, 3);
 
 -- --------------------------------------------------------
 
@@ -734,11 +686,11 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -747,9 +699,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('E3AY6b18pBD4hboIGYBNRrIVmBlO1XKkxNUjTWJZ', 2, '172.19.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'ZXlKcGRpSTZJbW8xYUhaUWF6ZzFVV0ZJS3pFeGFuaGlUVkF6ZEVFOVBTSXNJblpoYkhWbElqb2lOMkYwWnpoTE1rRjViRVJyUjNKV1RYcFNUMk4yZW5rMWRrVjNiMHN5Ym5kTVpUWkpZVFo2U1ZCQ09GRlpjalZaTWtSTmRVTlhXR1pVZGxoaWJIZEJjVlI1YlVwd1RETXlOVmQxT1ZSUVp6UjZTRlpxV2tsRlVHdHBOVzk0YW1acVdrNHZTRGRRTkZsbGEwdGtNbU15T0hWSmFERlNXVEV6ZDNaMVkwVmxSbEU0U1dKM1NsbENiREpJYVROS1NWWjVUMEY2ZVRORWNGUjZabXhIYUdWeWNuYzNSM2RWTVRsNFpVSnFkVzFKYm1wRmRYcGhTVnBKTlZoVGRsZE1OV2RyUkRkVEt6VnpiMDVwYlhKaVNGRktkVko0TDAxVVdVcGxiWEJQZDJaclVIVnJZWEZyWm1WMk5ERnRTbE5ZTDBSRUwwaFllbGROTTBWWVJGZHpZazVxYzFaT1dXVnRXWEY0TVVKMVJtVmlSRWhKWkhCTmRsYzJkMmc0Y1cxUmVHSmxUVlJqVG5SSlQzbHBielZVYkV3elpDc3JjRVEyVmpFelNXTllXRVpoTkRCSEsyUkJiRXBzYlRSellYQjFhbGQ1U205cU9HUTFWM050Ulc5VFdHVmlNVzFLT0V4V1VVcDRNbWxEV205U05rRkdURnAyY25GMFYzZGpaR2RKVDI1VlZtTldPRzExZWxORmRqZEJTVmMzVFhGWFVXcEtSWGw2TURkUFIxWndjbWt4V2sxeVpGWXpiRVJtWW5saVJtbEthMVJsY0RrMGVEUlhTamhoUm1ReGNFdExNWFZWVmpCa1UyZEtjVFpxWTBOcFNtOXRaR3RrUjNKdmQyUjNTVkZHTjBKSVltdDZiVFJZZW5WUFNHZ3JUVVl6WmtacVNIbG9hVFptWldaSWMza2lMQ0p0WVdNaU9pSmlZMlkxTkRBNU5XSXhZVGhoWW1WbE9XWmxaRE5tWVRFeU9ESmpOVEUxTWpCaU9HVm1Oek5rTkdVeE1ERTVPRGMzTURka1lXVmxaV0k1TmpVMlpqazNJaXdpZEdGbklqb2lJbjA9', 1786037984),
-('hV3ZX0QTlwsJgcBCLTuLPfyKWn6XFrW1BZMBa2Fb', 2, '172.19.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'ZXlKcGRpSTZJazUyYm14SU5tRm9WSHBsT1ZSMFlYcEtNWFZDV25jOVBTSXNJblpoYkhWbElqb2lSRkJVWVdGWGFsQnZMMkoxVDJOM2JuTlZVRmQ0VUU1UVUwbFhUekZxSzJGSlEwVXJjbXh6TjNwelQwcEhXSEZuZFdOQ2IzazVWRlpPTldoSmVqRlJVWHBKU1daM1pIQklaU3MzT0c5dVYzQnpOblJUY0M5ak5tYzRRV0pWWlRSUk1FSkRNbmdyWmxaSmR6QndTMUUxUlhsMUx6RkdWM0Y0U1VwQ1ZXUTBXbUpEUVhSb1lXeERZbTB3WTJGbU5rRTNRbnA0Wm5SQkwxUkRTbEpoTXpKWFUzRXdXWGMyS3pSRmRUWXJZVkkzUTFrMmNXSjBUa2RJV1RCTmNUWldSVUpCU0VjemRWWnVSMlZ3VFVabFRHVTROM2xQZVZkVVpuRXZSVTVMV0N0VFRuY3dUMWxrYURsMFlWZENlR3haZG5KaGRqVXdhbmxPVkdOYVNsSllkMUZSV2xZd1UxQndVV1JsYkd0eEwzRmthVWhDU0hsS2JITmhZelZsVUcxc2VuQkViazUzV25oa1oza3hiRTR6YjFab1dWZHJLMU14VkhWSVUwNTJlbVZ2YTFFNVNtOVlNRWwyZFRsUlVYZEVVWGw0Vms5QlVUZG9VRmQ0TlRkMVpISjNhblJLVFRkV1dHOTFRVVZqTjI1bFNVOWtSVVVyU1dGV1pEWnBSWFZPVjBsYVkxQkRjbmhFYjJoRU1HeDJVR3gyVlZNeVUyOHJTQ3N3T0hwbFlqSXhRbnBDUW01eWFsbzJXRWxpUjJkME5FZEZNbWMzV25SSGMzQXdMMXAxWjJsdlJtdDNVbVJ0TDNVeGEyeDNLMUl3ZHpZclEwRkVOREl4YVVWRU1WVkRNSFF3VVdkb1NEVjNSV1Z4ZUVWS1NIUm1abFYwU0VGR1dIVjBUMU56VjBWVVZYTWlMQ0p0WVdNaU9pSmxaVFEzTmpobE1HSmhZV1UzT1Roa04yVXdPVFU0WXpNMk9EVXdPREkxTnpoak9EaGtOamswT1dWbFltSm1aVEU1T1RFeVpqWTNOakZsTldWa016ZzJJaXdpZEdGbklqb2lJbjA9', 1786102568),
-('xlZW5UYf6grZfs3i2iKVmaxr598uHUwPUtwdEets', 2, '172.19.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'ZXlKcGRpSTZJbGRrTUdOVlRGZDRaRzQxWW5CT05EWlNhRXM1U0VFOVBTSXNJblpoYkhWbElqb2lPWFZrT1ZCUE1YRTRjRzFrUVRka2JrNWpUSGxVYTI5WGJFUnhSRVpvVTNRNWVrUkViVGhoVTFVck5XNUdjbE52TVZKc1NEbG5NVXd6T1V4RGJWRXlUVUZJVUVSaWN6WjZSalJqYjNsUmFHdElibko0WkZOV01YaFJhR0ZoVFd0VFlXTlNSSFpvY1ZSSll5dHdUVUZwV2xwU1dHdFJZazkyTDFoUVoxVTNjbE5oTTAwMlQwRlpkVTE0V0V4eVFqUlpWVE5ZVFhoTGNFMXNiMmMwY0RCVVdsazFWV055VmpKSlVYUldaMkU0VG1WVVFsRlhTRlJUYjJ0UWRtZHBZalJJTnpJeVl6UkdialJRUTBKNllqWXdTRXRqY1hOT2NGbFJTalJIYUhaeVlqVXdRVTR6VHpBM2VFcFdUa1I1U25sRk1EWmlaVlZFVUdSdGFFOURXVzR2ZEVaUlFYSmpORTF6V25GWlVFSTBUMGhGTldaMVJ5dE1TM2N6UjJsM05rUkZXWE5rTUZCQmVrVnpjbGw1UTNadFMwVXdiR2h4UWxJNWRGcExSVVJPWldKWVVHRldSMWd2U2toblpsSktiVTF5Y0M5NWRDOVJOWFpMUjFCU1ZISnBVVXBEUWk5SWR5czBaVkF6Ym1oQlZUSXZSeTlPYUdWTmQzbGlTRTFhYmxOclpTdFBZMUJvVFVObGVEbHVUVGR2YTJKVWRVcDJZMU5JVmtwWmJtMXRPRkJMYTNvNE5GWlBSbmxUTTBWMmFEaHJXazlzYTFkMVpXNHlNRTVpYm1sMVdXaEZSSEJpWTFOQ2NsbFRWMGw2VHpONVJuaFNNblJOVUVwNWNYcFRUMlpsVGs5V1oyOVpNa05SWkVSbU4wMWhWVEZqYWl0QlExRjVMM1ZvVUdoWGEwbzFWME5tYUc1UUwwTjZialF4SzFsT2QxQkROMWRCU3pSVWFuSXpWMnd6TVVwaVpGQnRXVkUxVGtFMFRrNU5USEJzVVdJME0wWjRPVlZ2SzFWS1pGY3dXV3R4YWl0ek1YVlBObUpNUmxwM01IbEhWV2R2YUdKMVVIQjJiblZZUVdsSFZVUXphRVZJVjNKSFptcG9WV3MzWVRGeVFVOVNNeXRIUzAxSlJTdEhRbWQ1Y1ZobFMwOXpWa2h6TW0xRWQyaEdjQzh2TlhOWFZIbEpVV014TnpaUGJFNTZjU3QyT0VGRVlsazlJaXdpYldGaklqb2lPR00wWTJZMU1XWXhZVEJpWXpjME1qaGhNMk5tWXpRMU1EVmpNVE16WWpnNVpUYzVZekl5TlRneVptVXhZelUyWTJZd01HWTBZVFJrT1RWalpXUmtNaUlzSW5SaFp5STZJaUo5', 1784050609);
+('4adfTsuNWuvYNv6Yoi8c1UnWSQIY1EtM7wPGErLL', 2, '172.18.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', 'ZXlKcGRpSTZJbXA2TTB3eGEzVjJVbTA0UVZOdGRHNWxWbEIyVjJjOVBTSXNJblpoYkhWbElqb2lhR1ZpTlhWbVdFaFJkRU4wZGt4WVdXTjRZMGRaWldWbGNsZG9NaTl0Y2xvNU1qZEROeXQ0ZVZKNFpTOWFiVVk0VTBJMGFqQjBkbk5OWlVGQldWWjVSMVJ1WlRjemVHdEJORnBKT0dnMGJqSmFRMFE0VTA1clYxUklaQzk2TXpoM1ducHBaa1JFVlVwdVYxWXZhMWhwVTJ0VVduSjBkRU5LWjJGU1ZUZG1lRlJCWldaMFNFMUNla0poY2poSllUbDJSVWcxYlhOeFVrRTVXR0lyZWpWblFXWjVSRW8wSzB3MFdVdFFTR3RCUWtwSGVUZEZaWEEyY1Vsb2R6QnlSWEoxVFd4UmNHSkhLMFYwTm5obWN6aFJSRlV4WmxsM1EwVnNLMlZuU3k5RWVYUkNkRzlhYWswelUyOTNXWGhKVlRaa2RHczNXVmxHV2pJclFYTXJVSFEwZEVKSFZEZGlhM0ppVmxaTFJVbFpVMDQwV0dJd1FrdE1NM2gyY1ZsYWMydEpkbTkzVjJkbFEwWXJWVFZsTDBkNWJYSkhRbW94VTFCWmQxbHdRbXBoV0Roa1QwNHJWblkxVkhnNVpERm1lWE50ZDNvcldFVnhWakkxYzI1cFFXSjJTM0JtZFdwVFRrNW5ObFZSV0RSWmFYa3daa3c0Y1dZMGNYSktaVWRsUVdGb1NsaFJUR0pQWTNCUVRsSnpiVUpuVm0xMlJrRXJlRlJ3YUdZdlRFbzJhMHRqTmtkVlZYWmtXV1p4ZG5aNVoxZDJWM0JuYVZCTGRHODBjME5NWVV0c2JHZFhWVU5oYzNaMVVEVnhObVJ3VFRJeVdUTldURmszV1UxaWNFUnllRWR4ZURRelZtUnhTVkpIWW5aS2JGcElRVEZESzNaeFdrRTBkMko1THl0cVlqSlFlbXRWYkVkaUwyaGpTazV1ZWxwdWVFdE1Xbk15V1U5TlkyeFFOR3hZZDFCc1RXUm9USGRhYzBGYWQzRlpTM1ZWVjBSRkwyOU1URzVaVUhsNWFVMVJJaXdpYldGaklqb2laR1V6TVRWbU16VTRPRFEzTkRSaE5ERTRZMlJqTVRObE9UTm1OVGxoWVRaa01qZzVNVEUxT0RRek16UmtORFUwTkRZeVpqUXlZV00zWW1Zd09HVXdZaUlzSW5SaFp5STZJaUo5', 1787574225);
 
 -- --------------------------------------------------------
 
@@ -759,9 +709,9 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 
 CREATE TABLE `tipos_residuos` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `descricao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -790,8 +740,8 @@ INSERT INTO `tipos_residuos` (`id`, `uuid`, `empresa_id`, `descricao`, `created_
 
 CREATE TABLE `ufs` (
   `id` bigint UNSIGNED NOT NULL,
-  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sigla` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sigla` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -838,17 +788,17 @@ INSERT INTO `ufs` (`id`, `estado`, `sigla`, `created_at`, `updated_at`, `deleted
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `custom_fields` json DEFAULT NULL,
-  `avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `avatar_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -856,11 +806,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `uuid`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`, `custom_fields`, `avatar_url`) VALUES
-(1, 'bee8c8fc-c55b-452f-9505-edb43be0e403', 'Jonathan Joestar', 'jonathan.joestar@email.com', '2026-07-14 13:53:12', '$2y$12$oCU3fwPuF//ahyh7YfWUq.QYnW6liZNAAHYLlVqpxdy0QH9UokI9y', NULL, '2026-07-14 13:53:13', '2026-07-14 13:53:13', NULL, NULL, NULL),
-(2, '74180cdd-c6ef-4769-81cc-05f9abc27a1b', 'Dio Brando', 'dio.brando@email.com', '2026-07-14 13:53:13', '$2y$12$dAhrWYwobD.L6UPurWy7aeR9nYSBF72rP3QN7dmFTaFWWE/QMEQyO', NULL, '2026-07-14 13:53:14', '2026-07-14 13:53:14', NULL, NULL, NULL),
-(3, '4cf6b12a-848e-485f-a149-1ed83f8df3c9', 'Johnny Joestar', 'johnny.joestar@email.com', '2026-07-14 13:53:14', '$2y$12$aDfMN3vU3Nuv9z9p08webuQdZiJIa/d07XF3ftN0TF.TlBFJAbzlO', NULL, '2026-07-14 13:53:14', '2026-07-14 13:53:14', NULL, NULL, NULL),
-(4, 'bb8ba707-e248-408e-b715-f17f9ef3f96d', 'Gyro Zeppeli', 'gyro.zeppeli@email.com', '2026-07-14 13:53:14', '$2y$12$Jbx487Bg8D/mB/stOORfGu6V/0I3kbicyCMh9d1zsDOuPGznnDdxm', NULL, '2026-07-14 13:53:15', '2026-07-14 13:53:15', NULL, NULL, NULL),
-(5, 'dd6029a6-0e8b-425a-9a9e-1baad033310c', 'Diego Brando', 'diego.brando@email.com', '2026-07-14 13:53:15', '$2y$12$eIEabYQYdxp3wljRZzGWJuD64.SJUIjjkSGcfp3fjSUpwLINmc066', NULL, '2026-07-14 13:53:15', '2026-07-14 13:53:15', NULL, NULL, NULL);
+(1, 'aba0f5aa-d476-4795-ac73-982887429614', 'Jonathan Joestar', 'jonathan.joestar@email.com', '2026-08-24 09:16:55', '$2y$12$FQnkfRyJJEMC9pj/mmPogeWMlThHanCxyOtZnryyVrjKaP8ILvRs6', NULL, '2026-08-24 09:16:55', '2026-08-24 09:16:55', NULL, NULL, NULL),
+(2, 'e10ec504-0bc6-4828-9378-8fca9369039f', 'Dio Brando', 'dio.brando@email.com', '2026-08-24 09:16:55', '$2y$12$t0ufJ72v4rZbMHIAq/mGM.p7S6185umwtO6B97eK01TKSb/Tn9/0W', NULL, '2026-08-24 09:16:56', '2026-08-24 09:16:56', NULL, NULL, NULL),
+(3, '5485b30d-6433-4f9d-9ab2-3aaa6845d712', 'Johnny Joestar', 'johnny.joestar@email.com', '2026-08-24 09:16:56', '$2y$12$8hS9ezcMigubw1OmLyKmlO3GJ7D3w.Wa9oPzvl425a7.2Z21cxvnq', NULL, '2026-08-24 09:16:57', '2026-08-24 09:16:57', NULL, NULL, NULL),
+(4, '15bedd84-347b-4ed5-8c06-188929fe31a1', 'Gyro Zeppeli', 'gyro.zeppeli@email.com', '2026-08-24 09:16:57', '$2y$12$WmSp5gpISBzrPUh.Wxa9NeHOqOr2UXD6L/pJStvEKmdLsoWRo6Hw6', NULL, '2026-08-24 09:16:57', '2026-08-24 09:16:57', NULL, NULL, NULL),
+(5, 'dd63f28a-499f-4edc-b2c2-2e6618e7ef9d', 'Diego Brando', 'diego.brando@email.com', '2026-08-24 09:16:57', '$2y$12$HrNMAqGGXkkpzYX5Frv5zOfatBJ9bkudqisPYZkJ6mzpgH.BbhsbS', NULL, '2026-08-24 09:16:58', '2026-08-24 09:16:58', NULL, NULL, NULL),
+(6, 'efa430ce-13d6-4198-aa1b-94e4466d23e2', 'Hirohiko Araki', 'hirohiko.araki@email.com', '2026-08-24 09:16:58', '$2y$12$Dmh8YKWkldOZGu8xfL1jIejRWoksvS508nfUhwDCD73NbblEfGAQa', NULL, '2026-08-24 09:16:59', '2026-08-24 09:16:59', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -898,11 +849,11 @@ INSERT INTO `users_empresas` (`id`, `user_id`, `empresa_id`, `created_at`, `upda
 
 CREATE TABLE `veiculos` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `empresa_id` bigint UNSIGNED NOT NULL,
-  `placa_veiculo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `modelo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `placa_veiculo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modelo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1145,7 +1096,7 @@ ALTER TABLE `veiculos`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `clientes`
@@ -1181,7 +1132,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `locais_coleta`
@@ -1193,7 +1144,7 @@ ALTER TABLE `locais_coleta`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `motoristas`
@@ -1205,7 +1156,7 @@ ALTER TABLE `motoristas`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -1217,7 +1168,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tipos_residuos`
@@ -1235,7 +1186,7 @@ ALTER TABLE `ufs`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users_empresas`

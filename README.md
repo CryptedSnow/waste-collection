@@ -5,6 +5,15 @@ Panels (Admin and User)
 - User: http://localhost:8000/user/login
 
 ```
+Name: Hirohiko Araki
+Email: hirohiko.araki@email.com
+Password: 12345678
+Role: Super Admin
+Permission: Many permissions
+Companies:
+```
+
+```
 Name: Jonathan Joestar
 Email: jonathan.joestar@email.com
 Password: 12345678
@@ -109,7 +118,7 @@ MAIL_PORT=1025
 MAIL_USERNAME=null
 MAIL_PASSWORD=null
 MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS="teste@example.com"
+MAIL_FROM_ADDRESS="example-test@email.com"
 MAIL_FROM_NAME="${APP_NAME}"
 ```
 

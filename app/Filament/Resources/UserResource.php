@@ -63,7 +63,7 @@ class UserResource extends Resource
                     ->required()
                     ->label('Papéis')
                     ->multiple()
-                    ->relationship('roles', 'name')
+                    ->relationship('roles', 'name', fn ($query) => $query->where('name', '!=', 'Super Admin'))
                     ->preload(),
                 Select::make('empresas')
                     ->required()
@@ -144,7 +144,7 @@ class UserResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                     //Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
@@ -173,12 +173,9 @@ class UserResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ])
-            ->when(Auth::user()?->hasRole('Admin'), function ($query) {
-                $query->where(function ($query) {
-                    $query->where('id', Auth::id())
-                        ->orWhereDoesntHave('roles', function ($query) {
-                            $query->where('name', 'Admin');
-                        });
+            ->when(!Auth::user()?->hasRole('Super Admin'), function ($query) {
+                $query->whereDoesntHave('roles', function ($query) {
+                    $query->where('name', 'Super Admin');
                 });
             });
     }
@@ -186,32 +183,57 @@ class UserResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::withoutTrashed()
-            ->when(Auth::user()?->hasRole('Admin'), function ($query) {
-                $query->where(function ($query) {
-                    $query->where('id', Auth::id())
-                        ->orWhereDoesntHave('roles', function ($query) {
-                            $query->where('name', 'Admin');
-                        });
+            ->when(!Auth::user()?->hasRole('Super Admin'), function ($query) {
+                $query->whereDoesntHave('roles', function ($query) {
+                    $query->where('name', 'Super Admin');
                 });
-            })->count();
+            })
+            ->count();
     }
 
     public static function canEdit($record): bool
     {
-      $user = Auth::user();
-      return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
+        $user = Auth::user();
+
+        if ($user->hasRole('Super Admin')) {
+            return true;
+        }
+
+        if ($record->hasRole('Super Admin')) {
+            return false;
+        }
+
+        return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
     }
 
     public static function canView($record): bool
     {
-      $user = Auth::user();
-      return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
+        $user = Auth::user();
+
+        if ($user->hasRole('Super Admin')) {
+            return true;
+        }
+
+        if ($record->hasRole('Super Admin')) {
+            return false;
+        }
+
+        return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
     }
 
     public static function canDelete($record): bool
     {
-      $user = Auth::user();
-      return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
+        $user = Auth::user();
+
+        if ($user->hasRole('Super Admin')) {
+            return true;
+        }
+
+        if ($record->hasRole('Super Admin')) {
+            return false;
+        }
+
+        return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
     }
 
 }

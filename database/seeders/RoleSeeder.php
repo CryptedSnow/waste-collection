@@ -24,6 +24,11 @@ class RoleSeeder extends Seeder
             ['uuid' => Str::uuid()->toString()]
         );
 
+        $superAdminRole = Role::firstOrCreate(
+            ['name' => 'Super Admin'],
+            ['uuid' => Str::uuid()->toString()]
+        );
+
         $adminPermissions = Permission::whereIn('name', [
             'admins:index',
             'admins:create',
@@ -44,7 +49,18 @@ class RoleSeeder extends Seeder
             'users:destroy',
         ])->get();
 
+        $superAdminPermissions = Permission::whereIn('name', [
+            'superadmins:index',
+            'superadmins:create',
+            'superadmins:store',
+            'superadmins:show',
+            'superadmins:edit',
+            'superadmins:update',
+            'superadmins:destroy',
+        ])->get();
+
         $adminRole->syncPermissions($adminPermissions);
         $userRole->syncPermissions($userPermissions);
+        $superAdminRole->syncPermissions($superAdminPermissions);
     }
 }

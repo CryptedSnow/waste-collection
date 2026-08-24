@@ -4,11 +4,13 @@ namespace App\Providers\Filament;
 
 use App\Filament\User\Widgets\DashboardOverview;
 use App\Models\Empresa;
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
 use Filament\Pages;
+use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -38,6 +40,7 @@ class UserPanelProvider extends PanelProvider
             ->login()
             ->passwordReset()
             ->sidebarCollapsibleOnDesktop()
+            ->emailVerification()
             ->databaseNotifications()
             ->tenant(Empresa::class)
             ->renderHook(
@@ -51,6 +54,11 @@ class UserPanelProvider extends PanelProvider
             ->renderHook(
                 PanelsRenderHook::AUTH_PASSWORD_RESET_RESET_FORM_AFTER,
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-user.css\')')
+            )
+            ->renderHook(
+                PanelsRenderHook::SIMPLE_PAGE_START,
+                fn (): string => Blade::render('@vite(\'resources/css/custom-cover-user.css\')'),
+                scopes: EmailVerificationPrompt::class,
             )
             ->colors([
                 'primary' => Color::Indigo,
@@ -95,7 +103,16 @@ class UserPanelProvider extends PanelProvider
             ->userMenuItems([
                 'profile' => MenuItem::make()
                     ->label(fn () => auth()->user()->name ?? 'Perfil')
-                    ->url(fn () => EditProfilePage::getUrl())
+                    ->url(function (): string {
+                        $tenant = Filament::getTenant();
+                        if (! $tenant) {
+                            return '#';
+                        }
+                        return EditProfilePage::getUrl(
+                            parameters: ['tenant' => $tenant],
+                            isAbsolute: false,
+                        );
+                    })
                     ->icon('heroicon-m-user-circle'),
             ]);
     }
