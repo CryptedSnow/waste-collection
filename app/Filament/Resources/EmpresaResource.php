@@ -7,15 +7,16 @@ use App\Filament\Resources\EmpresaResource\RelationManagers;
 use App\Models\{Empresa, UF};
 use App\Rules\UniqueValueTable;
 use Filament\Forms;
+use Filament\Forms\Components\{Select, TextInput};
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\{ImageColumn, TextColumn};
 use Filament\Tables\Table;
-use Filament\Forms\Components\{Select, TextInput};
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Notifications\Notification;
 use Leandrocfe\FilamentPtbrFormFields\Cep;
 
 class EmpresaResource extends Resource
@@ -87,6 +88,15 @@ class EmpresaResource extends Resource
                     ->mask('(99) 9999-9999')
                     ->rules(['celular_com_ddd', new UniqueValueTable('telefone', ['clientes', 'motoristas'])])
                     ->unique(ignoreRecord: true),
+                FileUpload::make('avatar_url')
+                    ->label('Avatar')
+                    ->disk('public')
+                    ->image()
+                    ->previewable()
+                    ->imageEditor()
+                    ->preserveFilenames()
+                    ->maxSize(2048)
+                    ->directory('logo-empresas'),
             ]);
     }
 
@@ -94,6 +104,10 @@ class EmpresaResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('avatar_url')
+                    ->circular()
+                    ->label('Foto')
+                    ->placeholder('Sem foto'),
                 TextColumn::make('nome')
                     ->label('Nome')
                     ->searchable()

@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Filament\Models\Contracts\HasName;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Observers\EmpresaObserver;
+use Filament\Models\Contracts\{HasName, HasAvatar};
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class Empresa extends Model implements HasName
+class Empresa extends Model implements HasName, HasAvatar
 {
     use HasFactory, SoftDeletes;
 
@@ -26,6 +28,7 @@ class Empresa extends Model implements HasName
         'numero',
         'email',
         'telefone',
+        'avatar_url',
     ];
 
     protected static function boot()
@@ -34,6 +37,7 @@ class Empresa extends Model implements HasName
         static::creating(function ($model) {
             $model->uuid = (string) Str::uuid();
         });
+        static::observe(EmpresaObserver::class);
     }
 
     public function getRouteKeyName()
@@ -44,6 +48,21 @@ class Empresa extends Model implements HasName
     public function getFilamentName(): string
     {
         return "{$this->nome}";
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        if (empty($this->avatar_url)) {
+            return null;
+        }
+
+        $path = $this->avatar_url;
+
+        if (!str_starts_with($path, 'logo-empresas/')) {
+            $path = 'logo-empresas/' . ltrim($path, '/');
+        }
+
+        return Storage::disk('public')->url($path);
     }
 
     public function clienteTenant(): HasMany
