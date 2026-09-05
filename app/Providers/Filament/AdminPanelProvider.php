@@ -60,6 +60,10 @@ class AdminPanelProvider extends PanelProvider
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-admin.css\')'),
                 scopes: EmailVerificationPrompt::class,
             )
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn (): string => auth()->check() ? Blade::render("@include('custom-footer')") : '',
+            )
             ->colors([
                 'primary' => "#F7931A",
             ])

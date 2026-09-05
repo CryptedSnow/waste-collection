@@ -60,6 +60,10 @@ class UserPanelProvider extends PanelProvider
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-user.css\')'),
                 scopes: EmailVerificationPrompt::class,
             )
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn (): string => auth()->check() ? Blade::render("@include('custom-footer')") : '',
+            )
             ->colors([
                 'primary' => Color::Indigo,
             ])
