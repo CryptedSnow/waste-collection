@@ -43,6 +43,7 @@ class UserPanelProvider extends PanelProvider
             ->emailVerification()
             ->databaseNotifications()
             ->tenant(Empresa::class)
+            ->darkMode(false)
             ->renderHook(
                 PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-user.css\')')

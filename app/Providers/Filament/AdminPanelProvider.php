@@ -43,6 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotifications()
             ->emailVerification()
             ->sidebarCollapsibleOnDesktop()
+            ->darkMode(false)
             ->renderHook(
                 PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-admin.css\')')
