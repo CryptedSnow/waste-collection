@@ -26,6 +26,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Rmsramos\Activitylog\ActivitylogPlugin;
+use Illuminate\Contracts\View\View;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -60,6 +61,10 @@ class AdminPanelProvider extends PanelProvider
                 PanelsRenderHook::SIMPLE_PAGE_START,
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-admin.css\')'),
                 scopes: EmailVerificationPrompt::class,
+            )
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn (): View|string => auth()->check() ? view('custom-footer') : '',
             )
             ->colors([
                 'primary' => "#F7931A",

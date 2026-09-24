@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Illuminate\Contracts\View\View;
 
 class UserPanelProvider extends PanelProvider
 {
@@ -60,6 +61,10 @@ class UserPanelProvider extends PanelProvider
                 PanelsRenderHook::SIMPLE_PAGE_START,
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-user.css\')'),
                 scopes: EmailVerificationPrompt::class,
+            )
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn (): View|string => auth()->check() ? view('custom-footer') : '',
             )
             ->colors([
                 'primary' => Color::Indigo,
