@@ -5,24 +5,30 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use App\Rules\UniqueValueTable;
+use BackedEnum;
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
 use Filament\Forms;
+use Filament\Forms\Components\{Select, TextInput};
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\{TextColumn, ImageColumn};
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select, TextInput};
-use Filament\Tables\Columns\{TextColumn, ImageColumn};
-use App\Rules\UniqueValueTable;
 use Illuminate\Support\Facades\{Hash, Auth};
-use Filament\Notifications\Notification;
+use Illuminate\Contracts\Support\Htmlable;
+use UnitEnum;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-circle';
 
     protected static ?string $navigationLabel = 'Usuários';
 
@@ -30,17 +36,17 @@ class UserResource extends Resource
 
     protected static ?string $pluralLabel = 'Usuários';
 
-    protected static ?string $navigationBadgeTooltip = 'Número de usuários';
+    protected static string | Htmlable | null $navigationBadgeTooltip = 'Número de usuários';
 
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationGroup = 'Controle de acesso';
+    protected static string | UnitEnum | null $navigationGroup = 'Controle de acesso';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 TextInput::make('name')
                     ->required()
@@ -92,26 +98,26 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('roles')
                     ->label('Papéis')
-                    ->formatStateUsing(function ($record) {
-                        if ($record->roles->isNotEmpty()) {
-                            return $record->roles->pluck('name')->join(', ');
-                        }
+                    ->state(function ($record) {
+                        return $record->roles->isNotEmpty()
+                            ? $record->roles->pluck('name')->join(', ')
+                            : null;
                     })
                     ->searchable(query: function (Builder $query, string $search) {
-                        $query->whereHas('roles', function ($query) use ($search) {
+                        return $query->whereHas('roles', function ($query) use ($search) {
                             $query->where('name', 'like', "%{$search}%");
                         });
                     })
                     ->placeholder('Sem papéis'),
                 TextColumn::make('empresas')
                     ->label('Empresas')
-                    ->formatStateUsing(function ($record) {
-                        if ($record->empresas->isNotEmpty()) {
-                            return $record->empresas->pluck('nome')->join(', ');
-                        }
+                    ->state(function ($record) {
+                        return $record->empresas->isNotEmpty()
+                            ? $record->empresas->pluck('nome')->join(', ')
+                            : null;
                     })
                     ->searchable(query: function (Builder $query, string $search) {
-                        $query->whereHas('empresas', function ($query) use ($search) {
+                        return $query->whereHas('empresas', function ($query) use ($search) {
                             $query->where('nome', 'like', "%{$search}%");
                         });
                     })
@@ -123,17 +129,18 @@ class UserResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make()
+            ->recordActions([
+                ViewAction::make()->visible(fn ($record) => static::canView($record)),
+                EditAction::make()->visible(fn ($record) => static::canEdit($record) && !$record->trashed()),
+                DeleteAction::make()
+                    ->visible(fn ($record) => static::canDelete($record) && !$record->trashed())
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
                             ->title("Usuário(a) inativo(a)")
                             ->body("<strong>{$record->name}</strong> está na lixeira.");
                     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
@@ -142,11 +149,11 @@ class UserResource extends Resource
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    //Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    //DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -191,21 +198,6 @@ class UserResource extends Resource
             ->count();
     }
 
-    public static function canEdit($record): bool
-    {
-        $user = Auth::user();
-
-        if ($user->hasRole('Super Admin')) {
-            return true;
-        }
-
-        if ($record->hasRole('Super Admin')) {
-            return false;
-        }
-
-        return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
-    }
-
     public static function canView($record): bool
     {
         $user = Auth::user();
@@ -214,26 +206,21 @@ class UserResource extends Resource
             return true;
         }
 
-        if ($record->hasRole('Super Admin')) {
-            return false;
+        if ($record->hasRole('Super Admin') || $record->hasRole('Admin')) {
+            return $user->id === $record->id;
         }
 
-        return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
+        return $user->hasRole('Admin');
+    }
+
+    public static function canEdit($record): bool
+    {
+        return static::canView($record);
     }
 
     public static function canDelete($record): bool
     {
-        $user = Auth::user();
-
-        if ($user->hasRole('Super Admin')) {
-            return true;
-        }
-
-        if ($record->hasRole('Super Admin')) {
-            return false;
-        }
-
-        return $user->hasRole('Admin') && ($user->id === $record->id || !$record->hasRole('Admin'));
+        return static::canView($record);
     }
 
 }

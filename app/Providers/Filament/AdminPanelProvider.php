@@ -9,7 +9,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
 use Filament\Pages;
-use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
+use Filament\Auth\Pages\EmailVerification\EmailVerificationPrompt;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -60,10 +60,6 @@ class AdminPanelProvider extends PanelProvider
                 PanelsRenderHook::SIMPLE_PAGE_START,
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-admin.css\')'),
                 scopes: EmailVerificationPrompt::class,
-            )
-            ->renderHook(
-                PanelsRenderHook::BODY_END,
-                fn (): string => auth()->check() ? Blade::render("@include('custom-footer')") : '',
             )
             ->colors([
                 'primary' => "#F7931A",

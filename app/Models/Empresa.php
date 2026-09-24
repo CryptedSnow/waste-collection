@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Observers\EmpresaObserver;
 use Filament\Models\Contracts\{HasName, HasAvatar};
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,7 +36,6 @@ class Empresa extends Model implements HasName, HasAvatar
         static::creating(function ($model) {
             $model->uuid = (string) Str::uuid();
         });
-        static::observe(EmpresaObserver::class);
     }
 
     public function getRouteKeyName()

@@ -1,6 +1,6 @@
 body {
-    background: rgb(var(--primary-900));
+    background: var(--primary-900);
     background: url("/images/cover-user.jpg") center / cover,
-                linear-gradient(0deg, rgba(var(--primary-900), 1) 0%, rgba(var(--primary-500)) 100%);
+                linear-gradient(0deg, var(--primary-900) 0%, var(--primary-500) 100%);
     background-attachment: fixed;
 }

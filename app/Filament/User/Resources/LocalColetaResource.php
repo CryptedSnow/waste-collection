@@ -5,8 +5,10 @@ namespace App\Filament\User\Resources;
 use App\Filament\User\Resources\LocalColetaResource\Pages;
 use App\Filament\User\Resources\LocalColetaResource\RelationManagers;
 use App\Models\{LocalColeta, Cliente, UF};
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
+use BackedEnum;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -16,13 +18,16 @@ use Filament\Forms\Components\{Select, TextInput};
 use Filament\Tables\Columns\TextColumn;
 use Filament\Notifications\Notification;
 use Filament\Facades\Filament;
+use Filament\Schemas\Components\Utilities\Set;
+use Leandrocfe\FilamentPtbrFormFields\Enums\CepFieldMode;
+use Leandrocfe\FilamentPtbrFormFields\Providers\ViaCepProvider;
 use Leandrocfe\FilamentPtbrFormFields\Cep;
 
 class LocalColetaResource extends Resource
 {
     protected static ?string $model = LocalColeta::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-map-pin';
 
     protected static ?string $tenantRelationshipName = 'localColetaTenant';
 
@@ -36,9 +41,9 @@ class LocalColetaResource extends Resource
 
     protected static ?int $navigationSort = 6;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Select::make('cliente_id')
                     ->label('Cliente')
@@ -57,16 +62,15 @@ class LocalColetaResource extends Resource
                     ->label('CEP')
                     ->mask('99999-999')
                     ->required()
-                    ->live(onBlur: true)
-                    ->helperText('Digite um CEP válido e depois clique sobre a lupa')
-                    ->viaCep(
-                        mode: 'suffix',
-                        errorMessage: 'CEP inválido.',
-                        setFields: [
-                            'uf' => 'uf',
-                            'cidade' => 'localidade',
-                            ]
-                        ),
+                    ->mode(CepFieldMode::SUFFIX)
+                    ->errorMessage('CEP inválido.')
+                    ->api(ViaCepProvider::class, function (Set $set, ?array $response): void {
+                        if (blank($response) || data_get($response, 'erro')) {
+                            return;
+                        }
+                        $set('uf', data_get($response, 'uf'));
+                        $set('cidade', data_get($response, 'localidade'));
+                    }),
                 Select::make('uf')->label('Estado')
                     ->options(UF::all()->pluck('estado', 'sigla'))
                     ->required()
@@ -122,17 +126,17 @@ class LocalColetaResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make()
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                DeleteAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
                             ->title("Local de coleta inativo")
                             ->body("<strong>{$record->logradouro}, {$record->numero}</strong> está na lixeira.");
                     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
@@ -141,11 +145,11 @@ class LocalColetaResource extends Resource
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }

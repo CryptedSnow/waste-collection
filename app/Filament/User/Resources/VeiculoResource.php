@@ -6,23 +6,24 @@ use App\Filament\User\Resources\VeiculoResource\Pages;
 use App\Filament\User\Resources\VeiculoResource\RelationManagers;
 use App\Models\Veiculo;
 use App\Enum\StatusVeiculoEnum;
-use Filament\Forms;
-use Filament\Forms\Form;
+use BackedEnum;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\{Select, TextInput};
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Validation\Rule;
 use Filament\Notifications\Notification;
 
 class VeiculoResource extends Resource
 {
     protected static ?string $model = Veiculo::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-truck';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-truck';
 
     protected static ?string $tenantRelationshipName = 'veiculoTenant';
 
@@ -36,9 +37,9 @@ class VeiculoResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 TextInput::make('placa_veiculo')
                     ->label('Placa do veículo')
@@ -85,17 +86,17 @@ class VeiculoResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make()
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                DeleteAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
                             ->title("Veículo inativo")
                             ->body("x<strong>{$record->placa_veiculo}</strong> está na lixeira.");
                     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
@@ -104,11 +105,11 @@ class VeiculoResource extends Resource
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }

@@ -2,28 +2,34 @@
 
 namespace App\Filament\Resources;
 
+use BackedEnum;
 use App\Filament\Resources\EmpresaResource\Pages;
 use App\Filament\Resources\EmpresaResource\RelationManagers;
 use App\Models\{Empresa, UF};
 use App\Rules\UniqueValueTable;
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
 use Filament\Forms;
 use Filament\Forms\Components\{Select, TextInput};
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\{ImageColumn, TextColumn};
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Schemas\Components\Utilities\Set;
+use Leandrocfe\FilamentPtbrFormFields\Enums\CepFieldMode;
+use Leandrocfe\FilamentPtbrFormFields\Providers\ViaCepProvider;
 use Leandrocfe\FilamentPtbrFormFields\Cep;
 
 class EmpresaResource extends Resource
 {
     protected static ?string $model = Empresa::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $navigationLabel = 'Empresas';
 
@@ -35,9 +41,9 @@ class EmpresaResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 TextInput::make('nome')
                     ->required(),
@@ -51,16 +57,15 @@ class EmpresaResource extends Resource
                     ->label('CEP')
                     ->mask('99999-999')
                     ->required()
-                    ->live(onBlur: true)
-                    ->helperText('Digite um CEP válido e depois clique sobre a lupa')
-                    ->viaCep(
-                        mode: 'suffix',
-                        errorMessage: 'CEP inválido.',
-                        setFields: [
-                            'uf' => 'uf',
-                            'cidade' => 'localidade',
-                            ]
-                        ),
+                    ->mode(CepFieldMode::SUFFIX)
+                    ->errorMessage('CEP inválido.')
+                    ->api(ViaCepProvider::class, function (Set $set, ?array $response): void {
+                        if (blank($response) || data_get($response, 'erro')) {
+                            return;
+                        }
+                        $set('uf', data_get($response, 'uf'));
+                        $set('cidade', data_get($response, 'localidade'));
+                    }),
                 Select::make('uf')
                     ->label('Estado')
                     ->options(UF::all()->pluck('estado', 'sigla'))
@@ -142,30 +147,30 @@ class EmpresaResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make()
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                DeleteAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
                             ->title("Empresa inativa")
                             ->body("<strong>{$record->nome}</strong> está na lixeira.");
                     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
                             ->title("Empresa restaurada")
                             ->body("<strong>{$record->nome}</strong> está restaurada.");
                     })
-                ->visible(fn ($record) => $record->trashed()),
+                    ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }

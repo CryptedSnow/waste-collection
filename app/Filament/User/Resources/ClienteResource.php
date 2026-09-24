@@ -6,22 +6,25 @@ use App\Filament\User\Resources\ClienteResource\Pages;
 use App\Filament\User\Resources\ClienteResource\RelationManagers;
 use App\Models\Cliente;
 use App\Rules\UniqueValueTable;
+use BackedEnum;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Notifications\Notification;
 
 class ClienteResource extends Resource
 {
     protected static ?string $model = Cliente::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $tenantRelationshipName = 'clienteTenant';
 
@@ -35,9 +38,9 @@ class ClienteResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 TextInput::make('nome')
                     ->required(),
@@ -85,17 +88,17 @@ class ClienteResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make()
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                DeleteAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
                             ->title("Cliente inativo(a)")
                             ->body("<strong>{$record->nome}</strong> está na lixeira.");
                     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
@@ -104,11 +107,11 @@ class ClienteResource extends Resource
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }

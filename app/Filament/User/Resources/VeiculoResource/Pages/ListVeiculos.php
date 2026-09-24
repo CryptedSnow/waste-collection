@@ -7,7 +7,7 @@ use App\Models\Veiculo;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Resources\Components\Tab;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Facades\Filament;
 
 class ListVeiculos extends ListRecords

@@ -5,8 +5,10 @@ namespace App\Filament\User\Resources;
 use App\Filament\User\Resources\TipoResiduoResource\Pages;
 use App\Filament\User\Resources\TipoResiduoResource\RelationManagers;
 use App\Models\TipoResiduo;
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
+use BackedEnum;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,7 +22,7 @@ class TipoResiduoResource extends Resource
 {
     protected static ?string $model = TipoResiduo::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-trash';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-trash';
 
     protected static ?string $tenantRelationshipName = 'tipoResiduoTenant';
 
@@ -34,9 +36,9 @@ class TipoResiduoResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 TextInput::make('descricao')
                     ->label('Descrição')
@@ -59,17 +61,17 @@ class TipoResiduoResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make()
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                DeleteAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
                             ->title("Resíduo inativo")
                             ->body("<strong>{$record->descricao}</strong> está na lixeira.");
                     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
@@ -78,11 +80,11 @@ class TipoResiduoResource extends Resource
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }

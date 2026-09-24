@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Observers\UserObserver;
 use Filament\Models\Contracts\{FilamentUser, HasAvatar};
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -67,7 +66,6 @@ class User extends Authenticatable implements FilamentUser, HasTenants, HasAvata
         static::creating(function ($model) {
             $model->uuid = (string) Str::uuid();
         });
-        static::observe(UserObserver::class);
     }
 
     public function getRouteKeyName()

@@ -6,15 +6,18 @@ use App\Enum\{FinalidadeColetaEnum, StatusColetaEnum};
 use App\Filament\User\Resources\ColetaResource\Pages;
 use App\Filament\User\Resources\ColetaResource\RelationManagers;
 use App\Models\{Coleta, LocalColeta, TipoResiduo, Motorista, Veiculo, DepositoResiduo};
+use BackedEnum;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
+use Filament\Actions\Action;
 use Filament\Facades\Filament;
-use Filament\Forms;
-use Filament\Forms\{Get, Set};
+use Filament\Schemas\Components\Utilities\{Get, Set};
 use Filament\Forms\Components\{Select, TextInput, DatePicker, TimePicker, Hidden};
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\{TextColumn, SelectColumn};
 use Filament\Tables\Columns\Summarizers\Summarizer;
@@ -28,7 +31,7 @@ class ColetaResource extends Resource
 {
     protected static ?string $model = Coleta::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-sparkles';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-sparkles';
 
     protected static ?string $tenantRelationshipName = 'coletaTenant';
 
@@ -42,9 +45,9 @@ class ColetaResource extends Resource
 
     protected static ?int $navigationSort = 7;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Hidden::make('codigo_coleta')
                     ->default(fn () => self::gerarCodigoColeta())
@@ -303,9 +306,9 @@ class ColetaResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\Action::make('pdf')
+            ->recordActions([
+                ViewAction::make(),
+                Action::make('pdf')
                     ->label('PDF')
                     ->color('success')
                     ->icon('heroicon-o-document-arrow-down')
@@ -317,15 +320,15 @@ class ColetaResource extends Resource
                             )->stream();
                         }, "Comprovante de coleta para $clienteNome" . '.pdf');
                     }),
-                Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make()
+                EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                DeleteAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
                             ->title("Coleta inativa")
                             ->body("<strong>{$record->codigo_coleta}</strong> está na lixeira.");
                     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
@@ -334,11 +337,11 @@ class ColetaResource extends Resource
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ])
             ->groups([

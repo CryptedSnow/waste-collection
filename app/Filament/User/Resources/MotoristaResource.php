@@ -2,28 +2,29 @@
 
 namespace App\Filament\User\Resources;
 
+use App\Enum\CategoriaHabilitacaoEnum;
 use App\Filament\User\Resources\MotoristaResource\Pages;
 use App\Filament\User\Resources\MotoristaResource\RelationManagers;
 use App\Models\Motorista;
 use App\Rules\UniqueValueTable;
-use App\Enum\CategoriaHabilitacaoEnum;
-use Filament\Forms;
-use Filament\Forms\Form;
+use BackedEnum;
+use Filament\Forms\Components\{Select, TextInput};
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\{TextColumn, SelectColumn};
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\{Select, TextInput};
-use Filament\Tables\Columns\{TextColumn, SelectColumn};
-use Illuminate\Validation\Rule;
-use Filament\Notifications\Notification;
 
 class MotoristaResource extends Resource
 {
     protected static ?string $model = Motorista::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-identification';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-identification';
 
     protected static ?string $tenantRelationshipName = 'motoristaTenant';
 
@@ -37,9 +38,9 @@ class MotoristaResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 TextInput::make('nome')
                     ->required(),
@@ -104,17 +105,17 @@ class MotoristaResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                Tables\Actions\DeleteAction::make()
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                DeleteAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->warning()
                             ->title("Motorista inativo(a)")
                             ->body("<strong>{$record->nome}</strong> está na lixeira.");
                     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
@@ -123,11 +124,11 @@ class MotoristaResource extends Resource
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }

@@ -5,11 +5,15 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PermissionResource\Pages;
 use App\Filament\Resources\PermissionResource\RelationManagers;
 use App\Models\Permission;
+use BackedEnum;
+use UnitEnum;
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -21,7 +25,7 @@ class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-key';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-key';
 
     protected static ?string $navigationLabel = 'Permissões';
 
@@ -33,11 +37,11 @@ class PermissionResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationGroup = 'Controle de acesso';
+    protected static string | UnitEnum | null $navigationGroup = 'Controle de acesso';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 TextInput::make('name')
                     ->required()
@@ -57,17 +61,17 @@ class PermissionResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                //Tables\Actions\ViewAction::make(),
-                //Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                // Tables\Actions\DeleteAction::make()
+            ->recordActions([
+                //ViewAction::make(),
+                //EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                //  DeleteAction::make()
                 //     ->successNotification(function ($record) {
                 //         return Notification::make()
                 //             ->warning()
                 //             ->title("Permissão inativa")
                 //             ->body("<strong>{$record->name}</strong> está na lixeira.");
                 //     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
@@ -76,11 +80,11 @@ class PermissionResource extends Resource
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    //Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    //DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ])
             ->recordUrl(null);

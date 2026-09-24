@@ -5,7 +5,7 @@ namespace App\Filament\User\Resources\ColetaResource\Pages;
 use App\Filament\User\Resources\ColetaResource;
 use App\Models\Coleta;
 use Filament\Actions;
-use Filament\Resources\Components\Tab;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Facades\Filament;

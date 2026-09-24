@@ -4,9 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Models\Activity;
 use Filament\Tables\Table;
-use Rmsramos\Activitylog\Resources\ActivitylogResource as BaseActivitylogResource;
-use Rmsramos\Activitylog\Resources\ActivitylogResource\Pages\ListActivitylog;
-use Rmsramos\Activitylog\Resources\ActivitylogResource\Pages\ViewActivitylog;
+use Rmsramos\Activitylog\Resources\Activitylog\ActivitylogResource as BaseActivitylogResource;
+use Rmsramos\Activitylog\Resources\Activitylog\Pages\ListActivitylog;
+use Rmsramos\Activitylog\Resources\Activitylog\Pages\ViewActivitylog;
 
 class ActivitylogResource extends BaseActivitylogResource
 {

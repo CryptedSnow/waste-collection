@@ -5,11 +5,15 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RoleResource\Pages;
 use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Role;
-use Filament\Forms;
+use BackedEnum;
+use UnitEnum;
 use Filament\Forms\Components\{TextInput, Select};
+use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditAction};
+use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -21,7 +25,7 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-identification';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-identification';
 
     protected static ?string $navigationLabel = 'Papéis';
 
@@ -33,11 +37,11 @@ class RoleResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $navigationGroup = 'Controle de acesso';
+    protected static string | UnitEnum | null $navigationGroup = 'Controle de acesso';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 TextInput::make('name')
                     ->required()
@@ -55,16 +59,19 @@ class RoleResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Papel')->searchable()->sortable(),
-                TextColumn::make('permissions')
-                        ->label('Permissões')
-                        ->formatStateUsing(function ($record) {
-                            if ($record->permissions->isNotEmpty()) {
-                                return $record->permissions->pluck('name')->join(', ');
-                            }
-                            return 'Sem permissões';
-                        })
-                        ->searchable()
-                        ->placeholder('Sem permissões'),
+                TextColumn::make('permissions_list')
+                    ->label('Permissões')
+                    ->state(function ($record) {
+                        return $record->permissions->isNotEmpty()
+                            ? $record->permissions->pluck('name')->join(', ')
+                            : 'Sem permissões';
+                    })
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas('permissions', function (Builder $query) use ($search) {
+                            $query->where('name', 'like', "%{$search}%");
+                        });
+                    })
+                    ->placeholder('Sem permissões'),
             ])
             ->modifyQueryUsing(function (Builder $query) {
                 $query->with('permissions');
@@ -72,17 +79,17 @@ class RoleResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->actions([
-                //Tables\Actions\ViewAction::make(),
-                //Tables\Actions\EditAction::make()->visible(fn ($record) => !$record->trashed()),
-                // Tables\Actions\DeleteAction::make()
+            ->recordActions([
+                //ViewAction::make(),
+                //EditAction::make()->visible(fn ($record) => !$record->trashed()),
+                // DeleteAction::make()
                 //     ->successNotification(function ($record) {
                 //         return Notification::make()
                 //             ->warning()
                 //             ->title("Papel inativo")
                 //             ->body("<strong>{$record->name}</strong> está na lixeira.");
                 //     }),
-                Tables\Actions\RestoreAction::make()
+                RestoreAction::make()
                     ->successNotification(function ($record) {
                         return Notification::make()
                             ->success()
@@ -91,11 +98,11 @@ class RoleResource extends Resource
                     })
                 ->visible(fn ($record) => $record->trashed()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    //Tables\Actions\DeleteBulkAction::make(),
-                    //Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    //DeleteBulkAction::make(),
+                    //ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ])
             ->recordUrl(null);
