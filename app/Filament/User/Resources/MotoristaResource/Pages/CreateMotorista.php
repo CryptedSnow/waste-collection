@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\MotoristaResource\Pages;
 
 use App\Filament\User\Resources\MotoristaResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\HtmlString;
 
 class CreateMotorista extends CreateRecord
 {
@@ -16,13 +17,13 @@ class CreateMotorista extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getCreatedNotification(): ?Notification
+    protected function getCreatedNotification(): ?Notification
     {
-        $motorista = $this->record;
+        $motorista = $this->getRecord();
 
         return Notification::make()
             ->success()
             ->title('Motorista criado(a)')
-            ->body("<strong>{$motorista->nome}</strong> foi criado(a).");
+            ->body(new HtmlString("<strong>{$motorista->nome}</strong> foi criado(a)."));
     }
 }

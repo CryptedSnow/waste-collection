@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\ClienteResource\Pages;
 
 use App\Filament\User\Resources\ClienteResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\HtmlString;
 
 class CreateCliente extends CreateRecord
 {
@@ -16,13 +17,13 @@ class CreateCliente extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getCreatedNotification(): ?Notification
+    protected function getCreatedNotification(): ?Notification
     {
-        $cliente = $this->record;
+        $cliente = $this->getRecord();
 
         return Notification::make()
             ->success()
             ->title('Cliente criado(a)')
-            ->body("<strong>{$cliente->nome}</strong> foi criado(a).");
+            ->body(new HtmlString("<strong>{$cliente->nome}</strong> foi criado(a)."));
     }
 }

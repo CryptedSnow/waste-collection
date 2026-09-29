@@ -4,8 +4,9 @@ namespace App\Filament\Resources\RoleResource\Pages;
 
 use App\Filament\Resources\RoleResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditRole extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditRole extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $role = $this->record;
+        $role = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Papel alterado')
-            ->body("<strong>{$role->name}</strong> foi alterado.");
+            ->body(new HtmlString("<strong>{$role->name}</strong> foi alterado."));
     }
 }

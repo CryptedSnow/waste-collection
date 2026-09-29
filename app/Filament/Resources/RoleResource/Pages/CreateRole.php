@@ -4,8 +4,9 @@ namespace App\Filament\Resources\RoleResource\Pages;
 
 use App\Filament\Resources\RoleResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\HtmlString;
 
 class CreateRole extends CreateRecord
 {
@@ -16,13 +17,13 @@ class CreateRole extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getCreatedNotification(): ?Notification
+    protected function getCreatedNotification(): ?Notification
     {
-        $role = $this->record;
+        $role = $this->getRecord();
 
         return Notification::make()
             ->success()
             ->title('Papel criado')
-            ->body("<strong>{$role->name}</strong> foi criado.");
+            ->body(new HtmlString("<strong>{$role->name}</strong> foi criado."));
     }
 }

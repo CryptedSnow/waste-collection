@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\LocalColetaResource\Pages;
 
 use App\Filament\User\Resources\LocalColetaResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditLocalColeta extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditLocalColeta extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $localColeta = $this->record;
+        $localColeta = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Local de coleta alterado')
-            ->body("<strong>{$localColeta->logradouro}, {$localColeta->numero}</strong> foi alterado.");
+            ->body(new HtmlString("<strong>{$localColeta->logradouro}, {$localColeta->numero}</strong> foi alterado."));
     }
 }

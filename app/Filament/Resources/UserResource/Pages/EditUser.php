@@ -4,9 +4,10 @@ namespace App\Filament\Resources\UserResource\Pages;
 
 use App\Filament\Resources\UserResource;
 use Filament\Actions;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
-use Filament\Notifications\Notification;
+use Illuminate\Support\HtmlString;
 
 class EditUser extends EditRecord
 {
@@ -26,14 +27,14 @@ class EditUser extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $user = $this->record;
+        $user = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Usuário(a) alterado(a)')
-            ->body("<strong>{$user->name}</strong> foi alterado(a).");
+            ->body(new HtmlString("<strong>{$user->name}</strong> foi alterado(a)."));
     }
 
 }

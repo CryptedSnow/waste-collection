@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\TipoResiduoResource\Pages;
 
 use App\Filament\User\Resources\TipoResiduoResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\HtmlString;
 
 class CreateTipoResiduo extends CreateRecord
 {
@@ -16,13 +17,13 @@ class CreateTipoResiduo extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getCreatedNotification(): ?Notification
+    protected function getCreatedNotification(): ?Notification
     {
-        $tipoResiduo = $this->record;
+        $tipoResiduo = $this->getRecord();
 
         return Notification::make()
             ->success()
             ->title('Resíduo criado')
-            ->body("<strong>{$tipoResiduo->descricao}</strong> foi criado.");
+            ->body(new HtmlString("<strong>{$tipoResiduo->descricao}</strong> foi criado."));
     }
 }

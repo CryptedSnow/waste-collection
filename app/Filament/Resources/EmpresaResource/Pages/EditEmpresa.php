@@ -4,8 +4,9 @@ namespace App\Filament\Resources\EmpresaResource\Pages;
 
 use App\Filament\Resources\EmpresaResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditEmpresa extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditEmpresa extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $permissao = $this->record;
+        $permissao = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Empresa alterada')
-            ->body("<strong>{$permissao->nome}</strong> foi alterada.");
+            ->body(new HtmlString("<strong>{$permissao->nome}</strong> foi alterada."));
     }
 }

@@ -4,8 +4,9 @@ namespace App\Filament\Resources\EmpresaResource\Pages;
 
 use App\Filament\Resources\EmpresaResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\HtmlString;
 
 class CreateEmpresa extends CreateRecord
 {
@@ -16,13 +17,13 @@ class CreateEmpresa extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getCreatedNotification(): ?Notification
+    protected function getCreatedNotification(): ?Notification
     {
-        $empresa = $this->record;
+        $empresa = $this->getRecord();
 
         return Notification::make()
             ->success()
             ->title('Empresa criada')
-            ->body("<strong>{$empresa->nome}</strong> foi criada.");
+            ->body(new HtmlString("<strong>{$empresa->nome}</strong> foi criada."));
     }
 }

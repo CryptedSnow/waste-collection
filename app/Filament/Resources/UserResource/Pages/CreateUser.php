@@ -4,8 +4,9 @@ namespace App\Filament\Resources\UserResource\Pages;
 
 use App\Filament\Resources\UserResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\HtmlString;
 
 class CreateUser extends CreateRecord
 {
@@ -16,14 +17,14 @@ class CreateUser extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getCreatedNotification(): ?Notification
+    protected function getCreatedNotification(): ?Notification
     {
-        $user = $this->record;
+        $user = $this->getRecord();
 
         return Notification::make()
             ->success()
             ->title('Usuário(a) criado(a)')
-            ->body("<strong>{$user->name}</strong> foi criado(a).");
+            ->body(new HtmlString("<strong>{$user->name}</strong> foi criado(a)."));
     }
 
 }

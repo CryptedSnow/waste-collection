@@ -4,8 +4,9 @@ namespace App\Filament\Resources\PermissionResource\Pages;
 
 use App\Filament\Resources\PermissionResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditPermission extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditPermission extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $permission = $this->record;
+        $permission = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Permissão alterada')
-            ->body("<strong>{$permission->name}</strong> foi alterada.");
+            ->body(new HtmlString("<strong>{$permission->name}</strong> foi alterada."));
     }
 }

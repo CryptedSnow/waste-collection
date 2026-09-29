@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\DepositoResiduoResource\Pages;
 
 use App\Filament\User\Resources\DepositoResiduoResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditDepositoResiduo extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditDepositoResiduo extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $depositoResiduo = $this->record;
+        $depositoResiduo = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Depósito de resíduos alterado')
-            ->body("<strong>{$depositoResiduo->nome}</strong> foi alterado.");
+            ->body(new HtmlString("<strong>{$depositoResiduo->nome}</strong> foi alterado."));
     }
 }

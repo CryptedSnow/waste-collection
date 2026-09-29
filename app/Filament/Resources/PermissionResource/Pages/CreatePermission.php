@@ -4,8 +4,9 @@ namespace App\Filament\Resources\PermissionResource\Pages;
 
 use App\Filament\Resources\PermissionResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\HtmlString;
 
 class CreatePermission extends CreateRecord
 {
@@ -16,13 +17,13 @@ class CreatePermission extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getCreatedNotification(): ?Notification
+    protected function getCreatedNotification(): ?Notification
     {
-        $permission = $this->record;
+        $permission = $this->getRecord();
 
         return Notification::make()
             ->success()
             ->title('Permissão criada')
-            ->body("<strong>{$permission->name}</strong> foi criada.");
+            ->body(new HtmlString("<strong>{$permission->name}</strong> foi criada."));
     }
 }

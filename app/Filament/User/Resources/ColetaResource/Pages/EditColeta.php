@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\ColetaResource\Pages;
 
 use App\Filament\User\Resources\ColetaResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditColeta extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditColeta extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $coleta = $this->record;
+        $coleta = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Coleta alterada')
-            ->body("<strong>{$coleta->codigo_coleta}</strong> foi alterada.");
+            ->body(new HtmlString("<strong>{$coleta->codigo_coleta}</strong> foi alterada."));
     }
 }

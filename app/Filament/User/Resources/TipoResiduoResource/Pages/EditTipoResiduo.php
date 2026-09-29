@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\TipoResiduoResource\Pages;
 
 use App\Filament\User\Resources\TipoResiduoResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditTipoResiduo extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditTipoResiduo extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $tipoResiduo = $this->record;
+        $tipoResiduo = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Resíduo alterado')
-            ->body("<strong>{$tipoResiduo->descricao}</strong> foi alterado.");
+            ->body(new HtmlString("<strong>{$tipoResiduo->descricao}</strong> foi alterado."));
     }
 }

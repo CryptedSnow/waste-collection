@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\VeiculoResource\Pages;
 
 use App\Filament\User\Resources\VeiculoResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\HtmlString;
 
 class CreateVeiculo extends CreateRecord
 {
@@ -16,13 +17,13 @@ class CreateVeiculo extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getCreatedNotification(): ?Notification
+    protected function getCreatedNotification(): ?Notification
     {
-        $veiculo = $this->record;
+        $veiculo = $this->getRecord();
 
         return Notification::make()
             ->success()
             ->title('Veículo criado')
-            ->body("<strong>{$veiculo->placa_veiculo}</strong> foi criado.");
+            ->body(new HtmlString("<strong>{$veiculo->placa_veiculo}</strong> foi criado."));
     }
 }

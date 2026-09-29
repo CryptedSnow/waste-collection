@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\ColetaResource\Pages;
 
 use App\Filament\User\Resources\ColetaResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\HtmlString;
 
 class CreateColeta extends CreateRecord
 {
@@ -16,14 +17,14 @@ class CreateColeta extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getCreatedNotification(): ?Notification
+    protected function getCreatedNotification(): ?Notification
     {
-        $coleta = $this->record;
+        $coleta = $this->getRecord();
 
         return Notification::make()
             ->success()
             ->title('Coleta criada')
-            ->body("<strong>{$coleta->codigo_coleta}</strong> foi criada.");
+            ->body(new HtmlString("<strong>{$coleta->codigo_coleta}</strong> foi criada."));
     }
 
 }

@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\ClienteResource\Pages;
 
 use App\Filament\User\Resources\ClienteResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditCliente extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditCliente extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $cliente = $this->record;
+        $cliente = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Cliente alterado(a)')
-            ->body("<strong>{$cliente->nome}</strong> foi alterado(a).");
+            ->body(new HtmlString("<strong>{$cliente->nome}</strong> foi alterado(a)."));
     }
 }

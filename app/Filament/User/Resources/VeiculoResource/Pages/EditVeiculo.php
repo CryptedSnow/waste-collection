@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\VeiculoResource\Pages;
 
 use App\Filament\User\Resources\VeiculoResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditVeiculo extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditVeiculo extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $veiculo = $this->record;
+        $veiculo = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Veículo alterado')
-            ->body("<strong>{$veiculo->placa_veiculo}</strong> foi alterado.");
+            ->body(new HtmlString("<strong>{$veiculo->placa_veiculo}</strong> foi alterado."));
     }
 }

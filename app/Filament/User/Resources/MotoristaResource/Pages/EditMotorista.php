@@ -4,8 +4,9 @@ namespace App\Filament\User\Resources\MotoristaResource\Pages;
 
 use App\Filament\User\Resources\MotoristaResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\HtmlString;
 
 class EditMotorista extends EditRecord
 {
@@ -25,13 +26,13 @@ class EditMotorista extends EditRecord
         return $this->getResource()::getUrl('index');
     }
 
-    public function getSavedNotification(): ?Notification
+    protected function getSavedNotification(): ?Notification
     {
-        $motorista = $this->record;
+        $motorista = $this->getRecord();
 
         return Notification::make()
             ->info()
             ->title('Motorista alterado')
-            ->body("<strong>{$motorista->nome}</strong> foi alterado.");
+            ->body(new HtmlString("<strong>{$motorista->nome}</strong> foi alterado."));
     }
 }
