@@ -3,18 +3,20 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Resources\ActivitylogResource;
+use Filament\Auth\Pages\EmailVerification\EmailVerificationPrompt;
+use Filament\Enums\ThemeMode;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
 use Filament\Pages;
-use Filament\Auth\Pages\EmailVerification\EmailVerificationPrompt;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\View\PanelsRenderHook;
 use Filament\Widgets;
+use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -26,7 +28,6 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Rmsramos\Activitylog\ActivitylogPlugin;
-use Illuminate\Contracts\View\View;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -44,7 +45,7 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotifications()
             ->emailVerification()
             ->sidebarCollapsibleOnDesktop()
-            ->darkMode(false)
+            ->defaultThemeMode(ThemeMode::Light)
             ->renderHook(
                 PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
                 fn (): string => Blade::render('@vite(\'resources/css/custom-cover-admin.css\')')
