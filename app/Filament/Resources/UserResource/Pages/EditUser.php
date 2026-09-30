@@ -6,7 +6,6 @@ use App\Filament\Resources\UserResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\HtmlString;
 
 class EditUser extends EditRecord
