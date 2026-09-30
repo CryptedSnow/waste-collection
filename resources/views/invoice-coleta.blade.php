@@ -73,14 +73,16 @@
             border-bottom: 2px solid #1f4d38;
         }
 
+        .grid { table-layout: fixed; }
         .grid td { padding: 6px 12px 8px 0; width: 50%; }
-        .grid td.third { width: 33.33%; }
+        .grid td.third  { width: 33.33%; }
+        .grid td.fourth { width: 25%; }
         .label { display: block; font-size: 9.5px; color: #71817a; margin-bottom: 1px; }
         .value { display: block; font-size: 11.5px; font-weight: bold; color: #1f2a24; }
 
         /* Valores */
         .money { margin: 6px 24px 0; border: 1px solid #dfe6e1; }
-        .money td { padding: 12px 16px; }
+        .money td { padding: 12px 16px; text-align: center; }
         .money .sep { border-left: 1px solid #dfe6e1; }
         .money .amount { font-size: 17px; font-weight: bold; color: #1f4d38; margin-top: 2px; }
         .money .note { font-size: 9.5px; color: #71817a; margin-top: 2px; }
@@ -194,15 +196,19 @@
         <h2>Período</h2>
         <table class="grid">
             <tr>
-                <td class="third">
+                <td class="fourth">
                     <span class="label">Início</span>
                     <span class="value">{{ $dataColeta->format('d/m/Y') }}</span>
                 </td>
-                <td class="third">
+                <td class="fourth">
                     <span class="label">Término</span>
                     <span class="value">{{ $termino->format('d/m/Y') }}</span>
                 </td>
-                <td class="third">
+                <td class="fourth">
+                    <span class="label">Valor da diária</span>
+                    <span class="value">R$ {{ number_format($record->valor_diaria, 2, ',', '.') }}</span>
+                </td>
+                <td class="fourth">
                     <span class="label">Duração da diária</span>
                     <span class="value">{{ $record->dias_diaria }} {{ $diasLabel }}</span>
                 </td>
@@ -216,15 +222,10 @@
     </div>
     <table class="money">
         <tr>
-            <td class="sep" style="width: 50%;">
-                <span class="label">Valor da diária</span>
-                <div class="amount">R$ {{ number_format($record->valor_diaria, 2, ',', '.') }}</div>
-            </td>
             <td style="width: 50%;">
                 <span class="label">Valor da coleta</span>
                 <div class="amount">R$ {{ number_format($record->valor_coleta, 2, ',', '.') }}</div>
             </td>
-
         </tr>
     </table>
 
