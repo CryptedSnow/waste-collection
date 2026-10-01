@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasOneThrough};
 use Illuminate\Support\Str;
-use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Coleta extends Model
 {
@@ -104,7 +104,7 @@ class Coleta extends Model
             'status',
         ])
         ->logOnlyDirty()
-        ->dontSubmitEmptyLogs()
+        ->dontLogEmptyChanges()
         ->useLogName('coletas')
         ->setDescriptionForEvent(function (string $eventName) {
             $codigo = $this->codigo_coleta ?? $this->uuid ?? $this->id;

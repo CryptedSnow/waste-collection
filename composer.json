@@ -16,7 +16,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "leandrocfe/filament-ptbr-form-fields": "^5.0",
         "rmsramos/activitylog": "^4.0",
-        "spatie/laravel-permission": "^6.9"
+        "spatie/laravel-permission": "^8.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
