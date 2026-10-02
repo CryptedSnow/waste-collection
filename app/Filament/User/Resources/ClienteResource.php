@@ -48,7 +48,7 @@ class ClienteResource extends Resource
                     ->label('CPF')
                     ->required()
                     ->mask('999.999.999-99')
-                    ->rules(['cpf', new UniqueValueTable('cpf', ['motoristas'])])
+                    ->rules(['cpf'])
                     ->unique(ignoreRecord: true),
                 TextInput::make('email')
                     ->required()

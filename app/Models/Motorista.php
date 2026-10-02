@@ -17,7 +17,6 @@ class Motorista extends Model
         'uuid',
         'empresa_id',
         'nome',
-        'cpf',
         'cnh',
         'categoria',
         'email',

@@ -44,12 +44,6 @@ class MotoristaResource extends Resource
             ->schema([
                 TextInput::make('nome')
                     ->required(),
-                TextInput::make('cpf')
-                    ->label('CPF')
-                    ->required()
-                    ->mask('999.999.999-99')
-                    ->rules(['cpf', new UniqueValueTable('cpf', ['clientes'])])
-                    ->unique(ignoreRecord: true),
                 TextInput::make('cnh')
                     ->label('CNH')
                     ->required()
@@ -80,9 +74,6 @@ class MotoristaResource extends Resource
                 TextColumn::make('nome')
                     ->label('Nome')
                     ->searchable()
-                    ->sortable(),
-                TextColumn::make('cpf')
-                    ->label('CPF')
                     ->sortable(),
                 TextColumn::make('cnh')
                     ->label('CNH')
