@@ -19,6 +19,7 @@ use Filament\Tables\Columns\{TextColumn, SelectColumn};
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Leandrocfe\FilamentPtbrFormFields\PhoneNumber;
 
 class MotoristaResource extends Resource
 {
@@ -59,7 +60,7 @@ class MotoristaResource extends Resource
                     ->email()
                     ->unique(ignoreRecord: true)
                     ->rules(['email', new UniqueValueTable('email', ['empresas','clientes'])]),
-                TextInput::make('telefone')
+                PhoneNumber::make('telefone')
                     ->label('Telefone')
                     ->required()
                     ->mask('(99) 9999-9999')->rules(['celular_com_ddd', new UniqueValueTable('telefone', ['empresas', 'clientes'])])

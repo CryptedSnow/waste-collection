@@ -21,6 +21,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Schemas\Components\Utilities\Set;
+use Leandrocfe\FilamentPtbrFormFields\PhoneNumber;
+use Leandrocfe\FilamentPtbrFormFields\Document;
 use Leandrocfe\FilamentPtbrFormFields\Enums\CepFieldMode;
 use Leandrocfe\FilamentPtbrFormFields\Providers\ViaCepProvider;
 use Leandrocfe\FilamentPtbrFormFields\Cep;
@@ -47,11 +49,13 @@ class EmpresaResource extends Resource
             ->schema([
                 TextInput::make('nome')
                     ->required(),
-                TextInput::make('cnpj')
+                Document::make('cnpj')
                     ->label('CNPJ')
                     ->required()
-                    ->mask('99.999.999/9999-99')
-                    ->rules(['cnpj', new UniqueValueTable('cnpj', ['depositos_residuos'])])
+                    ->cnpj('**.***.***/****-99')
+                    ->extraInputAttributes(['style' => 'text-transform: uppercase'])
+                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                    ->rules([new UniqueValueTable('cnpj', ['depositos_residuos'])])
                     ->unique(ignoreRecord: true),
                 Cep::make('cep')
                     ->label('CEP')
@@ -87,7 +91,7 @@ class EmpresaResource extends Resource
                     ->email()
                     ->unique(ignoreRecord: true)
                     ->rules(['email', new UniqueValueTable('email', ['clientes','motoristas'])]),
-                TextInput::make('telefone')
+                PhoneNumber::make('telefone')
                     ->label('Telefone')
                     ->required()
                     ->mask('(99) 9999-9999')

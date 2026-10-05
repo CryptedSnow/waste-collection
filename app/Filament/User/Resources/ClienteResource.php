@@ -19,6 +19,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Leandrocfe\FilamentPtbrFormFields\Document;
+use Leandrocfe\FilamentPtbrFormFields\PhoneNumber;
 
 class ClienteResource extends Resource
 {
@@ -44,10 +46,10 @@ class ClienteResource extends Resource
             ->schema([
                 TextInput::make('nome')
                     ->required(),
-                TextInput::make('cpf')
+                Document::make('cpf')
                     ->label('CPF')
                     ->required()
-                    ->mask('999.999.999-99')
+                    ->cpf()
                     ->rules(['cpf'])
                     ->unique(ignoreRecord: true),
                 TextInput::make('email')
@@ -55,7 +57,7 @@ class ClienteResource extends Resource
                     ->email()
                     ->unique(ignoreRecord: true)
                     ->rules(['email', new UniqueValueTable('email', ['empresas','motoristas'])]),
-                TextInput::make('telefone')
+                PhoneNumber::make('telefone')
                     ->label('Telefone')
                     ->required()
                     ->mask('(99) 9999-9999')
