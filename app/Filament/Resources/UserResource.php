@@ -69,7 +69,13 @@ class UserResource extends Resource
                     ->required()
                     ->label('Papéis')
                     ->multiple()
-                    ->relationship('roles', 'name', fn ($query) => $query->where('name', '!=', 'Super Admin'))
+                    ->relationship('roles', 'name', function (Builder $query) {
+                        $query->where('name', '!=', 'Super Admin');
+                        
+                        if (!auth()->user()->hasRole('Super Admin')) {
+                            $query->where('name', '!=', 'Admin');
+                        }
+                    })
                     ->preload(),
                 Select::make('empresas')
                     ->required()
