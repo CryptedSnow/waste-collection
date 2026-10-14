@@ -42,7 +42,6 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('3rem')
             ->login()
             ->passwordReset()
-            ->databaseNotifications()
             ->emailVerification()
             ->sidebarCollapsibleOnDesktop()
             ->defaultThemeMode(ThemeMode::Light)
