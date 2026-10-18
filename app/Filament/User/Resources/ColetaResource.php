@@ -13,14 +13,13 @@ use Filament\Actions\{BulkActionGroup, DeleteAction, DeleteBulkAction, EditActio
 use Filament\Actions\{RestoreAction, RestoreBulkAction, ViewAction};
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
-use Filament\Schemas\Components\Utilities\{Get, Set};
 use Filament\Forms\Components\{Select, TextInput, DatePicker, TimePicker, Hidden};
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\{Get, Set};
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\{TextColumn, SelectColumn};
-use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -267,17 +266,7 @@ class ColetaResource extends Resource
                     ->html(),
                 TextColumn::make('valor_coleta')
                     ->label('Valor da coleta')
-                    ->money('BRL')
-                    ->summarize([
-                        Summarizer::make()
-                            ->label('Total concluído')
-                            ->using(fn ($query) => $query->where('status', 'Concluído')->sum('valor_coleta'))
-                            ->money('BRL'),
-                        Summarizer::make()
-                            ->label('Total em andamento')
-                            ->using(fn ($query) => $query->where('status', 'Em andamento')->sum('valor_coleta'))
-                            ->money('BRL'),
-                    ]),
+                    ->money('BRL'),
                 SelectColumn::make('finalidade')
                     ->label('Finalidade')
                     ->sortable()
